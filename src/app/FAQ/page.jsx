@@ -5,7 +5,7 @@ export default function page() {
   return (
     <>
       <div>
-        Activity
+        FAQ
       </div>
       <div>
           <Link href="/">back</Link>
