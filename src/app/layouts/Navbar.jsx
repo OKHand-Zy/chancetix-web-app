@@ -1,30 +1,34 @@
 import React from 'react'
 import { IoMdSearch } from "icons-react/io";
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Header() {
   return (
-    <div className=''>
+    <header>
         <div className='bg-gray-500 h-16 px-96 flex justify-between border-double border border-gray-500 '>
             
-            <div className='bg-grat-500 h-16 flex justify-between space-x-10 items-center gap-2 mr-2'>
-                <div>image</div>
-
+            <div className='bg-grat-500 h-16 flex justify-between space-x-10 items-center'>
+                
                 <div>
-                    <Link href="/Activity">活動分類</Link>
+                    <Link href="/">
+                        <Image
+                            src="/images/activity_img/boat.jpg"
+                            alt="BS_Logo"
+                            width={150}
+                            height={100}
+                            priority={true}
+                        />
+                    </Link>
                 </div>
 
-                <div>
-                    <Link href="/News">最新公告</Link>
-                </div>
 
-                <div>
-                    <Link href="/FAQ">常見問題</Link>
-                </div>
-
-                <div>
-                    <Link href="/About">關於我們</Link>
-                </div>
+                <ul className='flex justify-between space-x-10 items-center'>
+                    <li> <Link href="/Activity">活動分類</Link> </li>
+                    <li> <Link href="/News">最新公告</Link> </li>
+                    <li> <Link href="/FAQ">常見問題</Link> </li>
+                    <li> <Link href="/About">關於我們</Link> </li>
+                </ul>
             
                 <div className='relative'>
                     <IoMdSearch fontSize={20} className='text-gray-400 absolute top-1/2 -translate-y-1/2 left-3'/>
@@ -37,6 +41,6 @@ export default function Header() {
             </div>
 
         </div>
-    </div>
+    </header>
   )
 }
