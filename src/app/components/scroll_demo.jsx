@@ -2,7 +2,7 @@ import React from 'react';
 
 const ScrollDemo = ({ children }) => {
   return (
-    <div>{children}</div>
+    <div>456</div>
   );
 }
 
