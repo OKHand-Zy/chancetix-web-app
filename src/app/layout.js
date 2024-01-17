@@ -1,10 +1,9 @@
-import { Inter,Noto_Sans_TC } from 'next/font/google'
+import { Noto_Sans_TC } from 'next/font/google'
 import './globals.css'
-import Navbar from './layouts/Navbar'
-import Footer from './layouts/Footer'
+import Navbar from '../components/ui/Navbar'
+import Footer from '../components/ui/Footer'
 
-
-const inter = Inter({ subsets: ['latin'] })
+// Golbal Font: Noto Sans Traditional Chinese 
 const NotoSansTC = Noto_Sans_TC({
   subsets: ['latin'],
   display: 'swap',

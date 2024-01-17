@@ -3,12 +3,14 @@ import { useState,useEffect } from 'react';
 import activityImagList from './activityImagList';
 import ShowImg from './ShowImg';
 
-export default function ScrollAcImage() {
-  const [Index_c, setIndex_c] = useState(count);
+export default function ScrollAcImage({children}) {
+  const start_count = 0
+  const full_count = 5
+  const [Index_c, setIndex_c] = useState(start_count);
   const image_C = activityImagList[Index_c];
   const [Index_l, setIndex_l] = useState(full_count-1);
   const image_L = activityImagList[Index_l];
-  const [Index_r, setIndex_r] = useState(count+1);
+  const [Index_r, setIndex_r] = useState(start_count+1);
   const image_R = activityImagList[Index_r];
   
   // Back Button Function
@@ -52,13 +54,17 @@ export default function ScrollAcImage() {
   return (
     <div>
       <div className='columns-5'>
-        <ShowImg image_L={image_L} image_C={image_C} image_R={image_R} />
+        
         <button onClick={next} className='bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow'>
           Next
         </button>
+
+        <ShowImg image_L={image_L} image_C={image_C} image_R={image_R} />
+        
         <button onClick={back} className='bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow'>
           back
         </button>
+      
       </div>
       {children}
     </div>
