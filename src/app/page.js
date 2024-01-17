@@ -1,5 +1,4 @@
-import ScrollAcImage from '../components/ScrollAcImage'
-
+import ScrollAcImage from '../components/scrollAcShow/ScrollAcImage'
 
 export default function Home() {
   return (
