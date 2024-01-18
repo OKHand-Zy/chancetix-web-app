@@ -2,7 +2,7 @@ import { Pool } from 'pg';
 
 const pool = new Pool({
   user: 'root',
-  host: '172.28.112.1',
+  host: 'localhost',
   database: 'test',
   password: '111111',
   port: 5432, // 請確保與你的資料庫端口一致
