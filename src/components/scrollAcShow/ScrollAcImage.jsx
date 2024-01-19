@@ -1,17 +1,23 @@
 'use client';
 import { useState,useEffect } from 'react';
-import activityImagList from './activityImagList';
-import ShowImg from './ShowImg';
+import Image from 'next/image';
 
 export default function ScrollAcImage({children}) {
+  const imagePaths = [
+    "/images/activity_img/boat.jpg",
+    "/images/activity_img/rocks.jpg",
+    "/images/activity_img/cat.jpg",
+    "/images/activity_img/corgi.jpg",
+    "/images/activity_img/avenue.jpg",
+  ];
   const start_count = 0
   const full_count = 5
   const [Index_c, setIndex_c] = useState(start_count);
-  const image_C = activityImagList[Index_c];
+  const image_C = imagePaths[Index_c];
   const [Index_l, setIndex_l] = useState(full_count-1);
-  const image_L = activityImagList[Index_l];
+  const image_L = imagePaths[Index_l];
   const [Index_r, setIndex_r] = useState(start_count+1);
-  const image_R = activityImagList[Index_r];
+  const image_R = imagePaths[Index_r];
   
   // Back Button Function
   const  back = () => {
@@ -59,7 +65,29 @@ export default function ScrollAcImage({children}) {
           Next
         </button>
 
-        <ShowImg image_L={image_L} image_C={image_C} image_R={image_R} />
+        <div>
+            <Image
+                src={image_L}
+                alt="activity_image"
+                width={150}
+                height={100}
+                priority={true}
+            />
+            <Image
+                src={image_C}
+                alt="activity_image"
+                width={150}
+                height={100}
+                priority={true}
+            />
+            <Image
+                src={image_R}
+                alt="activity_image"
+                width={150}
+                height={100}
+                priority={true}
+            />
+        </div>
         
         <button onClick={back} className='bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow'>
           back
