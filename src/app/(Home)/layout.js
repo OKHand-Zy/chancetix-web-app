@@ -1,6 +1,7 @@
-// Setting global layout file but Don't modify this file , effect all layout
 import { Noto_Sans_TC } from 'next/font/google'
-import './globals.css'
+import '@/src/app/globals.css'
+import Navbar from '@/src/components/ui/Navbar'
+import Footer from '@/src/components/ui/Footer'
 
 // Golbal Font: Noto Sans Traditional Chinese 
 const NotoSansTC = Noto_Sans_TC({
@@ -8,11 +9,13 @@ const NotoSansTC = Noto_Sans_TC({
   display: 'swap',
 })
 
-export default function RootLayout({ children }) {
+export default function WebLayout({ children }) {
   return (
     <html lang="en">
       <body className={NotoSansTC.className}>
-        {children}
+        <Navbar/>
+          {children}
+        <Footer/>
       </body>
     </html>
   )

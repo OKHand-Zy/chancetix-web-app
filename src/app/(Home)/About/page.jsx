@@ -9,7 +9,7 @@ export default function page() {
     <ErrorBoundary FallbackComponent={<Error/>}>
       
       <div>
-        Activity
+        About
       </div>
       <div>
           <Link href="/">back</Link>
