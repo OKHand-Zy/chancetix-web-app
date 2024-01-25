@@ -3,13 +3,15 @@ import { useState,useEffect } from 'react';
 import Image from 'next/image';
 
 export default function ScrollAcImage({children}) {
-  const imagePaths = [
-    "/images/activity_img/boat.jpg",
+  
+  const imagePaths = [ // Activity List Image 
+    "/images/activity_img/boat.jpg", 
     "/images/activity_img/rocks.jpg",
     "/images/activity_img/cat.jpg",
     "/images/activity_img/corgi.jpg",
     "/images/activity_img/avenue.jpg",
   ];
+
   const start_count = 0
   const full_count = 5
   const [Index_c, setIndex_c] = useState(start_count);
@@ -92,10 +94,11 @@ export default function ScrollAcImage({children}) {
         <button onClick={back} className='bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow'>
           back
         </button>
-      
       </div>
+      
       {children}
     </div>
+
   );
 }
 
