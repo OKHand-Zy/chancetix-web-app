@@ -2,6 +2,7 @@ import React from 'react'
 import { IoMdSearch } from "icons-react/io";
 import Link from 'next/link';
 import Image from 'next/image';
+import LoginWindow from '../Login/LoginWindow';
 
 export default function Header() {
   return (
@@ -37,7 +38,7 @@ export default function Header() {
                         className='text-sm focus:outline-none active:outline-none h-10 w-[16rem] border border-gray-300 rounded-sm pl-11 px-4'/> 
                 </div>
 
-                <div>account</div>
+                <div><LoginWindow/></div>
             </div>
 
         </div>

@@ -1,11 +1,11 @@
 import { Pool } from 'pg';
 
 const pool = new Pool({
-  user: 'root',
-  host: 'localhost',
-  database: 'test',
-  password: '111111',
-  port: 5432, // 請確保與你的資料庫端口一致
+  user: process.env.PGSQL_USER,
+  host: process.env.PGSQL_HOST,
+  database: process.env.PGSQL_DATABASE,
+  password: process.env.PGSQL_PASSWORD,
+  port: process.env.PGSQL_PORT, // 請確保與你的資料庫端口一致
 });
 
 export default async (req, res) => {
