@@ -1,6 +1,7 @@
+"use client";
 import React, { useState } from 'react';
 
-const PopWindw = ({ togglePopup }) => {
+const CreateWind = ({ togglePopup }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -22,6 +23,7 @@ const PopWindw = ({ togglePopup }) => {
           setUsername('');
           setPassword('');
           setErrorMessage('');
+          togglePopup();
       } else {
           const data = await response.json();
           console.error('Failed to create user:', data.error);
@@ -38,7 +40,9 @@ const PopWindw = ({ togglePopup }) => {
       <div className="w-300 bg-white p-40 rounded-8">
         <div className="text-black p-2 cursor-pointer w-90 text-center">
           <p>Login.</p>
+          
           <div className="flex flex-col space-y-4">
+            
             <div className="flex items-center">
               <label htmlFor="username" className="mr-2">Username:</label>
               <input
@@ -48,6 +52,7 @@ const PopWindw = ({ togglePopup }) => {
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
+            
             <div className="flex items-center">
               <label htmlFor="password" className="mr-2">Password:</label>
               <input
@@ -57,8 +62,10 @@ const PopWindw = ({ togglePopup }) => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+            
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
           </div>
+          
           <div className="flex justify-between mt-4">
             <button className="bg-blue-500 text-black p-2 cursor-pointer w-48 text-center"
               onClick={handleCreateUser}
@@ -68,10 +75,11 @@ const PopWindw = ({ togglePopup }) => {
               onClick={togglePopup}
             >Close</button>
           </div>
+
         </div>
       </div>
     </div>
   );
 };
 
-export default PopWindw;
+export default CreateWind;
