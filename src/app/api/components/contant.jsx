@@ -8,7 +8,7 @@ const ApiContant = ({ data }) => {
     // 在 useEffect 內執行異步函數
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/v1/getAllapi');
+        const response = await fetch('/api/v1/getAllapi');
         const responseData = await response.json();
         // 這裡可能需要根據實際的 API 回傳結構來取得想要的數據，下面是一個示例：
         const newData = responseData.data;
