@@ -23,7 +23,7 @@ const LoginWind = ({ togglePopup }) => {
         setUsername('');
         setPassword('');
         setErrorMessage('');
-        togglePopup(data.account);
+        togglePopup(data.user.account);
       } else {
         const data = await response.json();
         console.error('Login failed:', data.error);
@@ -33,6 +33,16 @@ const LoginWind = ({ togglePopup }) => {
       console.error('Error during login', error);
       setErrorMessage('Internal Server Error');
     }
+  };
+  
+  const handleOpenCreateWind = () => {
+    // 在這裡處理開啟 CreateWind 的相應邏輯，例如傳遞數據或其他操作
+    togglePopup('CreateAccount');
+  };
+  
+  const handleClose = () => {
+    togglePopup(); // 关闭弹窗
+    setErrorMessage(''); // 清除错误消息
   };
 
   return (
@@ -67,8 +77,11 @@ const LoginWind = ({ togglePopup }) => {
             >Login</button>
             <button
               className="bg-blue-500 text-black p-2 cursor-pointer w-48 text-center"
-              onClick={togglePopup}
+              onClick={handleClose}
             >Close</button>
+          </div>
+          <div>
+          <button onClick={handleOpenCreateWind}>Open CreateWind</button>
           </div>
         </div>
       </div>
