@@ -2,6 +2,7 @@
 import React,{useState} from 'react'
 import CreateWind from './CreateWind';
 import LoginWind from './LoginWind';
+import JwtLogin from './JwtLogin';
 
 export default function LoginButton() {
 // LoginPopup
@@ -30,7 +31,7 @@ export default function LoginButton() {
     return (
         <div className='flex justify-between space-x-10 items-center'>
             <div>
-                {LoginPopupOpen && <LoginWind togglePopup={LoginData} />}
+                {LoginPopupOpen && <JwtLogin togglePopup={LoginData} />}
                 {welcomMessage
                     ? <button onClick={() => LogOut()}>{welcomMessage}</button>  // 登入後顯示
                     : <button onClick={() => LoginData()}>Login Account</button> // 登入前顯示
