@@ -7,8 +7,11 @@ export default init({
       credentials: {
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" }
+        // email: { label: "Email", type: "email", required: true },
+        // password: { label: "Password", type: "password", required: true }
       },
       async authorize(credentials) {
+        console.log('credentials', credentials)
         // 在這裡處理身份驗證邏輯
         const user = { id: 1, name: 'Lin' }; // 用實際的用戶對象替換這裡
 
