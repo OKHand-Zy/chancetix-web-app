@@ -1,7 +1,7 @@
 import { Noto_Sans_TC } from 'next/font/google'
-import '@/src/app/globals.css'
-import Navbar from '@/src/components/ui/Navbar'
-import Footer from '@/src/components/ui/Footer'
+import '@/app/globals.css'
+import Navbar from '@/components/ui/Navbar'
+import Footer from '@/components/ui/Footer'
 
 // Golbal Font: Noto Sans Traditional Chinese 
 const NotoSansTC = Noto_Sans_TC({
