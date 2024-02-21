@@ -1,4 +1,4 @@
-import LoginButton from '@/src/components/Auth/login-button'
+import LoginButton from '@/components/Auth/login-button'
 import React from 'react'
 
 type Props = {}

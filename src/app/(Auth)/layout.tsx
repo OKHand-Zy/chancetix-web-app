@@ -1,7 +1,7 @@
 import { Noto_Sans_TC } from 'next/font/google'
-import '@/src/app/globals.css'
-import Navbar from '@/src/components/ui/Navbar'
-import Footer from '@/src/components/ui/Footer'
+import '@/app/globals.css'
+import Navbar from '@/components/ui/Navbar'
+import Footer from '@/components/ui/Footer'
 import { ReactNode } from 'react'
 
 // Golbal Font: Noto Sans Traditional Chinese 
