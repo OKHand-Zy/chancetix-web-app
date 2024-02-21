@@ -1,7 +1,7 @@
-import React from 'react'
-import Image from 'next/image'
+import React from 'react';
+import Image from 'next/image';
 
-export default function Footer() {
+const Footer: React.FC = () => {
   return (
     <footer>
       <div className='bg-gray-500 h-40 px-4 justify-center border-solid border border-gray-500 grid grid-cols-1'>
@@ -25,5 +25,7 @@ export default function Footer() {
           </div>
       </div>
     </footer>
-  )
+  );
 }
+
+export default Footer;
