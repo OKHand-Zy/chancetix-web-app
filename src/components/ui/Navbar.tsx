@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { FC } from 'react';
 import { IoMdSearch } from "icons-react/io";
 import Link from 'next/link';
 import Image from 'next/image';
 import LoginButton from '../Login/LoginButton';
 
-export default function Header() {
+const Header: FC = () => {
     return (
         <header>
             <div className='bg-gray-500 h-16 px-4 flex justify-center border-double border border-gray-500 '>
@@ -38,3 +38,5 @@ export default function Header() {
         </header>
     )
 }
+
+export default Header;
