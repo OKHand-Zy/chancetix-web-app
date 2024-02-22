@@ -4,7 +4,7 @@ import {
     CardContent,
     CardHeader,
     CardFooter,
-} from "@/components/ui/card";
+} from "@/components/ui/auth/card";
 
 import { Header } from "@/components/auth/header";
 import { Social } from "@/components/auth/social";

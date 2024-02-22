@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { IoMdSearch } from "icons-react/io";
 import Link from 'next/link';
 import Image from 'next/image';
-import LoginButton from '../Login/LoginButton';
+import LoginButton from '../../Login/LoginButton';
 
 const Header: FC = () => {
     return (
