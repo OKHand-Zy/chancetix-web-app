@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { Button } from "@/components/ui/auth/button";
+import { Button } from "@/components/ui/Shadcn/button";
 
 interface BackButtonProps {
     href: string;

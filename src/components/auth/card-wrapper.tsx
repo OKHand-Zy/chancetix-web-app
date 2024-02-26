@@ -4,7 +4,7 @@ import {
     CardContent,
     CardHeader,
     CardFooter,
-} from "@/components/ui/auth/card";
+} from "@/components/ui/Shadcn/card";
 
 import { Header } from "@/components/auth/header";
 import { Social } from "@/components/auth/social";
