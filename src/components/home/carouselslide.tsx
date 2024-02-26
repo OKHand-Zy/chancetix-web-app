@@ -62,13 +62,13 @@ export default function CarouselSlide() {
                 <CarouselPrevious onClick={prevSlide} />
                 <CarouselNext onClick={nextSlide} />
             </Carousel>
-
+            
             <div className="flex justify-center mt-4">
                 {images.map((_, index) => (
                 <span
                     key={index}
                     onClick={() => setActiveIndex(index)}
-                    className={`w-4 h-4 mx-2 cursor-pointer rounded-full ${index === activeIndex ? "bg-indigo-500" : "bg-gray-400"
+                    className={`w-4 h-4 mx-2 cursor-pointer rounded-full ${index === activeIndex ? "bg-red-600" : "bg-blue-600"
                     }`}
                 ></span>
                 ))}
