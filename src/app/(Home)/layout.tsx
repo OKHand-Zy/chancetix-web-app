@@ -16,9 +16,11 @@ const NotoSansTC = Noto_Sans_TC({
 const WebLayout: FC<WebLayoutProps> = ({ children }) => {
   return (
     <html lang="en">
-      <body className={NotoSansTC.className}>
+      <body className= {NotoSansTC.className}>
         <Header/>
-          {children}
+          <div className='flex-grow '>
+            {children}
+          </div>
         <Footer/>
       </body>
     </html>

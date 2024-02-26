@@ -3,11 +3,11 @@ import { useState } from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/Shadcn/card";
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
 } from "@/components/ui/Shadcn/carousel";
 
 const images = [
@@ -16,7 +16,7 @@ const images = [
     "/images/activity_img/cat.jpg",
     "/images/activity_img/corgi.jpg",
     "/images/activity_img/avenue.jpg",
-  ];
+];
 
 export default function CarouselSlide() {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -33,35 +33,36 @@ export default function CarouselSlide() {
     };
 
     return (
-        <div className="w-full lg:max-w-5xl mx-auto">
-            <Carousel className="relative">
+        <div className="w-full lg:max-w-5xl mx-auto max-w-full max-h-full" >
+            <Carousel className="relative w-full max-w-full max-h-full">
                 <CarouselContent
-                style={{
-                    transform: `translateX(-${activeIndex * 100}%)`,
-                    transition: "transform 0.5s ease-in-out",
-                }}
+                    style={{
+                        transform: `translateX(-${activeIndex * 100}%)`,
+                        transition: "transform 0.5s ease-in-out",
+                    }}
                 >
                 {images.map((image, index) => (
-                    <CarouselItem key={index}>
-                    <div className="p-1">
-                        <Card>
-                        <CardContent className="aspect-banner">
-                            <Image className="w-auto h-auto object-contain"
-                                src={image}
-                                alt={`Slide ${index + 1}`}
-                                width={1024} 
-                                height={576} 
-                                priority={true}
-                            />
-                        </CardContent>
-                        </Card>
-                    </div>
+                    <CarouselItem key={index} className="max-w-full max-h-full">
+                        <div className="p-1 max-w-full max-h-full" style={{ maxHeight: 'calc(100% - 64px)' }}>
+                            <Card>
+                            <CardContent className="aspect-banner ">
+                                <Image className="w-auto h-auto object-contain "
+                                    src={image}
+                                    alt={`Slide ${index + 1}`}
+                                    width={1024} 
+                                    height={576} 
+                                    priority={true}
+                                />
+                            </CardContent>
+                            </Card>
+                        </div>
                     </CarouselItem>
                 ))}
                 </CarouselContent>
                 <CarouselPrevious onClick={prevSlide} />
                 <CarouselNext onClick={nextSlide} />
             </Carousel>
+
             <div className="flex justify-center mt-4">
                 {images.map((_, index) => (
                 <span
@@ -72,6 +73,7 @@ export default function CarouselSlide() {
                 ></span>
                 ))}
             </div>
+
         </div> 
     );
 }
@@ -79,7 +81,4 @@ export default function CarouselSlide() {
 /*
 Carouselsilde
 ref : https://frontendshape.com/post/how-to-use-carousel-slider-in-shadcn-ui-with-nextjs
-
-Product Cards
-ref : https://frontendshape.com/post/nextjs-with-shadcn-ui-product-cards-example
 */
