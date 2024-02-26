@@ -5,7 +5,7 @@ import Error from './error'
 
 export default function page() {
     return (
-      <div className=''>
+      <div  className='h-full'>
       <ErrorBoundary FallbackComponent={<Error/>}>
       
         <h1 className='text-2xl'>News</h1>

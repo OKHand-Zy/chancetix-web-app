@@ -1,13 +1,15 @@
-import CarouselSlide from '@/components/scrollAcShow/carouselslide';
+import CarouselSlide from '@/components/home/carouselslide';
+import ProductCard from '@/components/home/productcards';
 import React from 'react';
 
 
 const Home: React.FC = () => {
   return (
     <>
-      <main className="bg-gray-400 flex h-full flex-col items-center justify-center p-24 ">
+      <main className="bg-black h-full flex flex-col p-8">
         <div>
           <CarouselSlide />
+          <ProductCard />
         </div>
       </main>
     </>
