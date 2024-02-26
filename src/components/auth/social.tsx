@@ -3,7 +3,7 @@
 import {FcGoogle} from "react-icons/fc";
 import {FaGithub} from "react-icons/fa";
 
-import { Button } from "@/components/ui/auth/button";
+import { Button } from "@/components/ui/Shadcn/button";
 
 export const Social = () => {
     return (
