@@ -6,12 +6,10 @@ import React from 'react';
 const Home: React.FC = () => {
   return (
     <>
-      <main className="bg-black h-full flex flex-col p-8">
-        <div>
+      <div className="bg-black h-full flex flex-col p-8">
           <CarouselSlide />
           <ProductCard />
-        </div>
-      </main>
+      </div>
     </>
   );
 }
