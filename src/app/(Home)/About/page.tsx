@@ -6,7 +6,7 @@ type Props = {}
 
 function aboutpage({}: Props) {
   return (
-    <div className='bg-red-400'>
+    <div className='bg-gradient-to-b from-orange-400 to-amber-300 text-center '>
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
         The Joke Tax Chronicles
       </h1>

@@ -43,14 +43,14 @@ export default function CarouselSlide() {
                 >
                 {images.map((image, index) => (
                     <CarouselItem key={index} className="max-w-full max-h-full">
-                        <div className="p-1 max-w-full max-h-full" style={{ maxHeight: 'calc(100% - 64px)' }}>
+                        <div className="p-1 max-w-full max-h-full flex items-center justify-center">
                             <Card>
                             <CardContent className="aspect-banner ">
-                                <Image className="w-auto h-auto object-contain "
+                                <Image className="w-auto h-auto object-contain mt-5"
                                     src={image}
                                     alt={`Slide ${index + 1}`}
-                                    width={1024} 
-                                    height={576} 
+                                    width={512} 
+                                    height={288} 
                                     priority={true}
                                 />
                             </CardContent>
