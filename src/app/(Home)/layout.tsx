@@ -18,9 +18,9 @@ const WebLayout: FC<WebLayoutProps> = ({ children }) => {
     <html lang="en">
       <body className= {NotoSansTC.className}>
         <Header/>
-          <div className='flex-grow '>
+          <main className='flex-grow '>
             {children}
-          </div>
+          </main>
         <Footer/>
       </body>
     </html>
