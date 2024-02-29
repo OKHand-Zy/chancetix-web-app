@@ -6,7 +6,7 @@ import React from 'react';
 const Home: React.FC = () => {
   return (
     <>
-      <div className="bg-black h-full flex flex-col p-8">
+      <div className="h-full flex flex-col p-8">
           <CarouselSlide />
           <ProductCard />
       </div>

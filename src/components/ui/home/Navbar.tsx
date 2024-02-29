@@ -8,7 +8,7 @@ const Header: React.FC = () => {
     return (
         <header>
             <div className='bg-gray-500 h-16 px-4 flex justify-center border-double border border-gray-500 '>
-                <div className='bg-gray-500 h-16 px-4 flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 space-x-0 md:space-x-4 items-center'>
+                <div className='h-16 px-4 flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 space-x-0 md:space-x-4 items-center'>
                     <div>
                         <Link href="/">
                             <Image
