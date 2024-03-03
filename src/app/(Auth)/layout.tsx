@@ -14,18 +14,20 @@ interface WebLayoutProps {
   children: ReactNode;
 }
 
-const AuthLayout: React.FC<WebLayoutProps> = ({ children } : any) => {
-  return (
-    <html lang="en">
-      <body className={NotoSansTC.className}>
-        <Navbar/>
-          <div className='h-full flex items-center justify-center bg-blue-500'>
-            {children}
-          </div>
-        <Footer/>
-      </body>
-    </html>
-  )
+export default function AuthLayout ({
+    children, 
+  } : {
+    children: React.ReactNode;
+  }) {
+    return (
+      <html lang="en">
+        <body className={NotoSansTC.className}>
+          <Navbar/>
+            <div className='h-full flex items-center justify-center bg-blue-500'>
+              {children}
+            </div>
+          <Footer/>
+        </body>
+      </html>
+    )
 }
-
-export default AuthLayout;

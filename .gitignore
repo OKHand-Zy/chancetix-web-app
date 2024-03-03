@@ -27,6 +27,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+# .env 正式環境要開
 
 # vercel
 .vercel

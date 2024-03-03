@@ -5,7 +5,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {CardWrapper} from "@/components/auth/card-wrapper";
-import { LoginSchema } from "@/schemas";
+import { RegisterSchema } from "@/schemas";
 
 import { Input } from "@/components/ui/Shadcn/input";
 import { Button } from "@/components/ui/Shadcn/button";
@@ -20,29 +20,30 @@ import {
 
 import { FormError } from "@/components/Login/form-error";
 import { FormSuccess } from "@/components/Login/form-success";
-import { login } from "@/action/login";
+import { register } from "@/action/register";
 
 
 
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
 
-    const from = useForm<z.infer<typeof LoginSchema>>({
-        resolver: zodResolver(LoginSchema),
+    const from = useForm<z.infer<typeof RegisterSchema>>({
+        resolver: zodResolver(RegisterSchema),
         defaultValues: {
             email: "",
             password: "",
+            name: "",
         }
     });
 
-    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
         setError("");
         setSuccess("");
         startTransition(() => {
-            login(values)
+            register(values)
             .then((data) => {
                 setError(data.error);
                 setSuccess(data.success);
@@ -53,9 +54,9 @@ export const LoginForm = () => {
 
     return (
         <CardWrapper 
-            headerLabel="Welcome back"
-            backButtonLabel="Don't have an account?"
-            backButtonHref="/auth/register"
+            headerLabel="Create an account"
+            backButtonLabel="Already have an account? Login"
+            backButtonHref="/auth/login"
             showSocial
         >
             <Form {...from}>
@@ -64,6 +65,22 @@ export const LoginForm = () => {
                     className="space-y-6"
                 >
                     <div className="space-y-4">
+                        <FormField
+                            control={from.control}
+                            name = "name"
+                            render={({ field}) => (
+                                <FormItem>
+                                    <FormLabel>Name：</FormLabel>
+                                    <FormControl> 
+                                        <Input {...field} 
+                                            disabled={isPending}
+                                            placeholder="Name"
+                                        /> 
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                         <FormField
                             control={from.control}
                             name = "email"
@@ -90,7 +107,7 @@ export const LoginForm = () => {
                                     <FormControl> 
                                         <Input {...field} 
                                             disabled={isPending}
-                                            placeholder="密碼"
+                                            placeholder="******"
                                             type="password"
                                         /> 
                                     </FormControl>
@@ -106,7 +123,7 @@ export const LoginForm = () => {
                         type="submit"
                         className="w-full"
                     >
-                        Login
+                        Create Account
                     </Button>
                 </form>
             </Form>
