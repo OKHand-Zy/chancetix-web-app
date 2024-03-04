@@ -11,11 +11,11 @@ import {
 } from "@/components/ui/Shadcn/carousel";
 
 const images = [
-    "/images/activity_img/boat.jpg", 
-    "/images/activity_img/rocks.jpg",
-    "/images/activity_img/cat.jpg",
-    "/images/activity_img/corgi.jpg",
-    "/images/activity_img/avenue.jpg",
+    "/images/activity_img/Null.png", 
+    "/images/activity_img/Null.png",
+    "/images/activity_img/Null.png",
+    "/images/activity_img/Null.png",
+    "/images/activity_img/Null.png",
 ];
 
 export default function CarouselSlide() {
