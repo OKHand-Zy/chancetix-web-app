@@ -49,7 +49,6 @@ export const RegisterForm = () => {
                 setSuccess(data.success);
             });
         });
-        
     }
 
     return (
