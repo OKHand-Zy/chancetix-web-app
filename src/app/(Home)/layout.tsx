@@ -18,7 +18,7 @@ const WebLayout: FC<WebLayoutProps> = ({ children }) => {
     <html lang="en">
       <body className= {NotoSansTC.className}>
         <Header/>
-          <main className='bg-gradient-to-b from-orange-400 to-amber-300 flex-grow '>
+          <main className=' bg-gradient-to-b from-orange-400 to-amber-300 flex-grow '>
             {children}
           </main>
         <Footer/>
