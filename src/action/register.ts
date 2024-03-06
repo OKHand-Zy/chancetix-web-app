@@ -8,20 +8,23 @@ import bcrypt from "bcryptjs";  //ref:https://blog.csdn.net/weixin_68714627/arti
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
     console.log(values);
+    // 確認資料符合 schema 規則
     const validatedFields = RegisterSchema.safeParse(values);
-
     if (!validatedFields.success) {
         return { error: "Invalid fields!" };
         };
     
+    // 把拿進來的資料定義成 email password name 
     const { email, password, name } = validatedFields.data;
+    // 產生 hash 密碼
     const hashedPassword = await bcrypt.hash(password, 10);
+    // 確認 email 是否已經被使用
     const existingUser = await getUserByEmail(email);
-    
     if (existingUser) {
         return { error: "Email already use!" };
     }
-
+    
+    // 寫入資料到資料庫
     await db.user.create({
         data: {
             name,
@@ -29,6 +32,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
             password: hashedPassword,
         },
     });
+    
     // TODO: Send Verification token Email
     return { success: "User Created!"}; 
     
