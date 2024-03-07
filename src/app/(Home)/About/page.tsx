@@ -1,7 +1,6 @@
 import React from 'react'
+import { Suspense } from 'react'
 import Link from 'next/link'
-import ErrorBoundary from './error';
-
 import {
   Accordion,
   AccordionContent,
@@ -9,11 +8,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/Shadcn/accordion"
 
+import ErrorBoundary from './error'
+import Loading from './loading';
+
 type Props = {}
 
 function aboutpage({}: Props) {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary >
+    <Suspense fallback={ <Loading /> }>
       <div className='p-20 flex flex-col items-center justify-center text-center '>
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
           關於 ChanceTix
@@ -61,6 +64,7 @@ function aboutpage({}: Props) {
         </Accordion>
 
       </div>
+    </Suspense>
     </ErrorBoundary>
   )
 }

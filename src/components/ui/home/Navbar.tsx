@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { NavigationAccountButton } from '@/components/ui/home/NavbarAccountButton';
 import { NavigationButton } from '@/components/ui/home/NavbarButtom';
-import { NavbarSearch } from '@/components/ui/home/NavbarInput';
+import { NavbarSearch } from '@/components/ui/home/NavbarSearch';
 interface HeaderProps {
     // define props here if needed
 }

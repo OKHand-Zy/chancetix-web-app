@@ -68,7 +68,7 @@ export default function CarouselSlide() {
                 <span
                     key={index}
                     onClick={() => setActiveIndex(index)}
-                    className={`w-4 h-4 mx-2 cursor-pointer rounded-full ${index === activeIndex ? "bg-red-600" : "bg-blue-600"
+                    className={`w-4 h-4 mx-2 cursor-pointer rounded-full ${index === activeIndex ? "bg-indigo-500" : "bg-gray-100"
                     }`}
                 ></span>
                 ))}
