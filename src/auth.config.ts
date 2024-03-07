@@ -1,39 +1,32 @@
 import type { NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import Google from "next-auth/providers/google";
-import { resolve } from 'path'
+import GitHub from "next-auth/providers/github";
 
-export const authConfig: NextAuthConfig = {
-  secret: process.env.NEXTAUTH_SECRET,
-  providers: [
-    Google({
-        clientId: process.env.GOOGLE_CLIENT_ID!,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
+import bcrypt from 'bcryptjs';
+
+import { LoginSchema } from '@/schemas';
+import { getUserByEmail } from '@/data/user';
+
+
+export default {
+  providers: [ 
     Credentials({
-        async authorize(credentials) {
-            await new Promise((resolve) => setTimeout(resolve, 5000))
-            const email = 'user@nextemail.com'
-            return credentials.email === email && credentials.password === '123456'
-                ? { id: 'userId', email }
-                : null
-            },
-    }),
-  ],
-  pages: {
-    signIn: '/auth/login',
-  },
-  callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
-        const isLoggedIn = !!auth?.user
-        const isOnDashboard = nextUrl.pathname.startsWith('/')
-        if (isOnDashboard) {
-            if (isLoggedIn) return true
-            return false
-        } else if (isLoggedIn) {
-            return Response.redirect(new URL('/', nextUrl))
+      async authorize(credentials) {
+        const validatedFields = LoginSchema.safeParse(credentials);
+        if (validatedFields.success) {
+          const { email, password } = validatedFields.data;
+          const user = await getUserByEmail(email);
+          
+          if (!user || !user.password) {
+            return null;
+          }
+          
+          const passwordsMatch = await bcrypt.compare(password, user.password);
+          if (passwordsMatch) return user;
         }
-        return true
-    },
-  },
-}
+        
+        return null;
+      }
+  }), GitHub, Google ]
+} satisfies NextAuthConfig
