@@ -22,31 +22,31 @@ export function NavigationButton() {
             
             <NavigationMenuItem>
                 <Link href="/Activity" legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    <NavigationMenuLink>
                         活動分類
                     </NavigationMenuLink>
                 </Link>
             </NavigationMenuItem>
-
+            <p> ／ </p>
             <NavigationMenuItem>
                 <Link href="/News" legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    <NavigationMenuLink>
                         最新公告
                     </NavigationMenuLink>
                 </Link>
             </NavigationMenuItem>
-
+            <p> ／ </p>
             <NavigationMenuItem>
                 <Link href="/FAQ" legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    <NavigationMenuLink>
                         常見問題
                     </NavigationMenuLink>
                 </Link>
             </NavigationMenuItem>
-
+            <p> ／ </p>
             <NavigationMenuItem>
                 <Link href="/About" legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    <NavigationMenuLink>
                         關於我們
                     </NavigationMenuLink>
                 </Link>

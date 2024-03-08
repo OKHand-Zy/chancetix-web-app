@@ -44,8 +44,14 @@ export const LoginForm = () => {
         startTransition(() => {
             login(values)
             .then((data) => {
-                setError(data.error);
-                setSuccess(data.success);
+                if (data?.error) {
+                    setError(data.error);
+                }
+                // TO DO Email verification retrun success message  
+                if (data?.success) {
+                    setSuccess(data.success);    
+                }
+                
             });
         });
         

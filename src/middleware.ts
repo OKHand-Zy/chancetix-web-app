@@ -18,18 +18,19 @@ export default auth( (req) => {
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-  
+  // 確認開頭是 api router
   if (isApiAuthRoute) {
     return null;
   }
-
+  // 確認是否前往 登入 router
   if (isAuthRoute){
+    // 如果已經登入，直接重定向前往 default
     if (isLoggedIn){
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl) )
     }
     return null;
   }
-
+  // 如果 沒登入 與 前往非公開路由 就導向 登入頁面
   if (!isLoggedIn && !isPublicRoute) {
     return Response.redirect(new URL("/auth/login", nextUrl) )
   }

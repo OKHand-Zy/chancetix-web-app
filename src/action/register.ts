@@ -16,7 +16,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     
     // 把拿進來的資料定義成 email password name 
     const { email, password, name } = validatedFields.data;
-    // 產生 hash 密碼
+    // 產生 hash 密碼 加鹽 10 次
     const hashedPassword = await bcrypt.hash(password, 10);
     // 確認 email 是否已經被使用
     const existingUser = await getUserByEmail(email);

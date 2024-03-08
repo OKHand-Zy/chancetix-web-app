@@ -4,7 +4,11 @@
     @type {string[]}
 */
 export const publicRoutes = [
-    "/"
+    "/",
+    "/About",
+    "/Activity",
+    "/FAQ",
+    "/News",
 ];
 
 /*
