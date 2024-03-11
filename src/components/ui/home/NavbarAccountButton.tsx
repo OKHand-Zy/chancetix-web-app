@@ -22,7 +22,7 @@ export function NavigationAccountButton() {
             
             <NavigationMenuItem>
                 <Link href="/auth/login" legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle({ bg: 'transparent' })}>
                         Login
                     </NavigationMenuLink>
                 </Link>
@@ -30,7 +30,7 @@ export function NavigationAccountButton() {
 
             <NavigationMenuItem>
                 <Link href="/auth/register" legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle({ bg: 'transparent' })}>
                         Register
                     </NavigationMenuLink>
                 </Link>
