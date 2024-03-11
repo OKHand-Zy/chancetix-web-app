@@ -56,7 +56,7 @@ export const {
             return baseUrl
         },
         async session({ session, user, token }) {
-            // 
+            // 如果 token 中的 sub 與 session 中的 user.id 都存在的話，將 token.sub 值給予 seesion.user.id 以确保会话对象中的用户ID是正确的
             if (token.sub && session.user){
                 session.user.id = token.sub
             }

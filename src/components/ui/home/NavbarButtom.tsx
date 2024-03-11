@@ -15,12 +15,13 @@ import {
 } from "@/components/ui/Shadcn/navigation-menu"
 
 
+
 export function NavigationButton() {
     return (
         <NavigationMenu>
         <NavigationMenuList>
             
-            <NavigationMenuItem>
+            <NavigationMenuItem className={navigationMenuTriggerStyle({ bg: 'transparent' })}>
                 <Link href="/Activity" legacyBehavior passHref>
                     <NavigationMenuLink>
                         活動分類
@@ -28,7 +29,7 @@ export function NavigationButton() {
                 </Link>
             </NavigationMenuItem>
             <p> ／ </p>
-            <NavigationMenuItem>
+            <NavigationMenuItem className={navigationMenuTriggerStyle({ bg: 'transparent' })}>
                 <Link href="/News" legacyBehavior passHref>
                     <NavigationMenuLink>
                         最新公告
@@ -36,7 +37,7 @@ export function NavigationButton() {
                 </Link>
             </NavigationMenuItem>
             <p> ／ </p>
-            <NavigationMenuItem>
+            <NavigationMenuItem className={navigationMenuTriggerStyle({ bg: 'transparent' })}>
                 <Link href="/FAQ" legacyBehavior passHref>
                     <NavigationMenuLink>
                         常見問題
@@ -44,7 +45,7 @@ export function NavigationButton() {
                 </Link>
             </NavigationMenuItem>
             <p> ／ </p>
-            <NavigationMenuItem>
+            <NavigationMenuItem className={navigationMenuTriggerStyle({ bg: 'transparent' })}>
                 <Link href="/About" legacyBehavior passHref>
                     <NavigationMenuLink>
                         關於我們
