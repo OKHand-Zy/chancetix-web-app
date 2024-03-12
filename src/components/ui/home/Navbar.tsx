@@ -34,7 +34,7 @@ const Header: FC<HeaderProps> = () => {
             <div className='flex items-center'>
                 <Link href="/">
                     <Image
-                        src="/images/activity_img/boat.jpg"
+                        src="/images/chancetix.png"
                         alt="BS_Logo"
                         width={100}
                         height={100}
