@@ -1,14 +1,13 @@
 import type { NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import Google from "next-auth/providers/google";
-import GitHub from "next-auth/providers/github";
 import Line from "next-auth/providers/line";
 import bcrypt from 'bcryptjs';
 
 import { LoginSchema } from '@/schemas';
 import { getUserByEmail } from '@/data/user';
 
-
+// /api/auth/providers
 export default {
   providers: [ 
     Credentials({
@@ -28,11 +27,7 @@ export default {
         
         return null;
       }
-  }), 
-    GitHub({ // change to line
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-    }), 
+  }),  
     Line({
       clientId: process.env.LINE_ID,
       clientSecret: process.env.LINE_SECRET,
