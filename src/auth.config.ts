@@ -29,12 +29,12 @@ export default {
       }
   }),  
     Line({
-      clientId: process.env.LINE_ID,
-      clientSecret: process.env.LINE_SECRET,
+      clientId: process.env.REACT_APP_LINE_ID,
+      clientSecret: process.env.REACT_APP_LINE_SECRET,
     }),
     Google({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
+      clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+      clientSecret: process.env.REACT_APP_GOOGLE_CLIENT_SECRET,
     }), 
   ],
 
