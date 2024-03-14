@@ -31,6 +31,7 @@ export default {
     Line({
       clientId: process.env.REACT_APP_LINE_ID,
       clientSecret: process.env.REACT_APP_LINE_SECRET,
+      checks: ["state"],
     }),
     Google({
       clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
