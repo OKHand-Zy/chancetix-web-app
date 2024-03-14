@@ -9,6 +9,7 @@ export const publicRoutes = [
     "/Activity",
     "/FAQ",
     "/News",
+    "/SwitchTix",
 ];
 
 /*
