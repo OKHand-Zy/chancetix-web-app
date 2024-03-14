@@ -1,10 +1,10 @@
-
+import TixpoolFrom from "@/components/home/SwitchTix/tixpoolfrom";
 
 
 function SwitchTix() {
     return (
         <div>
-            SwitchTix
+            <TixpoolFrom/>
         </div>
     )
 }
