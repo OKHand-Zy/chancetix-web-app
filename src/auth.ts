@@ -48,42 +48,53 @@ export const {
     signOut,
     auth, 
 } = NextAuth({
-    callbacks: {
-        async signIn({ user, account, profile, email, credentials }) {
-            return true
-        },
-        async redirect({ url, baseUrl }) {
-            return baseUrl
-        },
-        async session({ session, user, token }) {
-            // 如果 token 中的 sub 與 session 中的 user.id 都存在的話，將 token.sub 值給予 seesion.user.id 以确保会话对象中的用户ID是正确的
-            if (token.sub && session.user){
-                session.user.id = token.sub
-            }
-            // 
-            if (token.role && session.user){
-                session.user.role = token.role as UserRole ;
-            }
-
-            return session
-        },
-        async jwt({ token }) {
-            // 
-            if (!token.sub) {
-                return token
-            }
-            // 
-            const existingUser = await getUserById(token.sub)
-            if (!existingUser) {
-                return token
-            }
-            token.role = existingUser.role
-            return token
-        }
+  pages: {
+    signIn: '/auth/login',
+    error: '/auth/error',
+  },
+  events: {
+    async linkAccount( { user } ) {
+      await db.user.update({
+        where: { id: user.id},
+        data: { emailVerified: new Date() }
+      })
     },
-    adapter: PrismaAdapter(db),
-    session: { strategy: 'jwt' },
-    ...authConfig
+  },
+  callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      return true
+    },
+    async redirect({ url, baseUrl }) {
+      return baseUrl
+    },
+    async session({ session, user, token }) {
+        // 如果 token 中的 sub 與 session 中的 user.id 都存在的話，將 token.sub 值給予 seesion.user.id 以确保会话对象中的用户ID是正确的
+      if (token.sub && session.user){
+          session.user.id = token.sub
+      }
+      // 
+      if (token.role && session.user){
+          session.user.role = token.role as UserRole ;
+      }
+      return session
+    },
+    async jwt({ token }) {
+      // 
+      if (!token.sub) {
+        return token
+      }
+      // 
+      const existingUser = await getUserById(token.sub)
+      if (!existingUser) {
+        return token
+      }
+      token.role = existingUser.role
+      return token
+    }
+  },
+  adapter: PrismaAdapter(db),
+  session: { strategy: 'jwt' },
+  ...authConfig
 })
 
 // can review https://authjs.dev/getting-started/typescript
