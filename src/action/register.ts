@@ -4,7 +4,10 @@ import { db } from "@/lib/db";
 import { RegisterSchema } from "@/schemas";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { getUserByEmail } from "@/data/user";
-import bcrypt from "bcryptjs";  //ref:https://blog.csdn.net/weixin_68714627/article/details/133216921
+import { generateVerificationToken } from "@/lib/tokens";
+import { sendVerificationEmail } from "@/lib/mail";
+
+import bcrypt from "bcryptjs";  
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
     console.log(values);
@@ -32,8 +35,13 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
             password: hashedPassword,
         },
     });
+
+    const verificationToken = await generateVerificationToken(email);
     
-    // TODO: Send Verification token Email
-    return { success: "User Created!"}; 
+    await sendVerificationEmail(
+        verificationToken.email, 
+        verificationToken.token,
+        );
+    return { success: "Confication email sent!" }; 
     
 };
