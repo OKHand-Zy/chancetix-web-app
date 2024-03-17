@@ -62,6 +62,14 @@ export const {
   },
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
+      // Allow OAuth without email verification
+      if (account?.provider !== "credentials") return true ;
+      
+      // Prevent sing in without email verification
+      const existingUser = await getUserById(user.id);
+      if (!existingUser?.emailVerified) return false ;
+
+      // To Do 2FA Check
       return true
     },
     async redirect({ url, baseUrl }) {

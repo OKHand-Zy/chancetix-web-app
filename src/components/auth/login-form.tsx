@@ -50,11 +50,9 @@ export const LoginForm = () => {
             login(values)
             .then((data) => {
                 setError(data?.error);
-                // TO DO Email verification retrun success message (2FA) 
                 setSuccess(data?.success);
             });
         });
-        
     }
 
     return (

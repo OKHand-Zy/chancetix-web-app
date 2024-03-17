@@ -10,6 +10,7 @@ export const publicRoutes = [
     "/FAQ",
     "/News",
     "/SwitchTix",
+    "/auth/new-verification",
 ];
 
 /*
