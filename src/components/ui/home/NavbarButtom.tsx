@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-
+import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
     NavigationMenu,
@@ -17,45 +17,45 @@ import {
 
 
 export function NavigationButton() {
-    return (
-        <NavigationMenu>
-        <NavigationMenuList>
-            
-            <NavigationMenuItem className={navigationMenuTriggerStyle({ bg: 'transparent' })}>
-                <Link href="/Activity" legacyBehavior passHref>
-                    <NavigationMenuLink>
-                        活動分類
-                    </NavigationMenuLink>
-                </Link>
-            </NavigationMenuItem>
-            <p> ／ </p>
-            <NavigationMenuItem className={navigationMenuTriggerStyle({ bg: 'transparent' })}>
-                <Link href="/News" legacyBehavior passHref>
-                    <NavigationMenuLink>
-                        最新公告
-                    </NavigationMenuLink>
-                </Link>
-            </NavigationMenuItem>
-            <p> ／ </p>
-            <NavigationMenuItem className={navigationMenuTriggerStyle({ bg: 'transparent' })}>
-                <Link href="/FAQ" legacyBehavior passHref>
-                    <NavigationMenuLink>
-                        常見問題
-                    </NavigationMenuLink>
-                </Link>
-            </NavigationMenuItem>
-            <p> ／ </p>
-            <NavigationMenuItem className={navigationMenuTriggerStyle({ bg: 'transparent' })}>
-                <Link href="/About" legacyBehavior passHref>
-                    <NavigationMenuLink>
-                        關於我們
-                    </NavigationMenuLink>
-                </Link>
-            </NavigationMenuItem>
+  const pathname = usePathname()
+  return (
+    <NavigationMenu>
+    <NavigationMenuList>
+        <NavigationMenuItem className={navigationMenuTriggerStyle({ bg: 'transparent' })}>
+            <Link href="/Activity" legacyBehavior passHref>
+                <NavigationMenuLink className={pathname === "/Activity" ? "text-yellow-300" : "text-black"}>
+                    活動分類
+                </NavigationMenuLink>
+            </Link>
+        </NavigationMenuItem>
+        <p> ／ </p>
+        <NavigationMenuItem className={navigationMenuTriggerStyle({ bg: 'transparent' })}>
+            <Link href="/News" legacyBehavior passHref>
+                <NavigationMenuLink className={pathname === "/News" ? "text-yellow-300" : "text-black"}>
+                    最新公告
+                </NavigationMenuLink>
+            </Link>
+        </NavigationMenuItem>
+        <p> ／ </p>
+        <NavigationMenuItem className={navigationMenuTriggerStyle({ bg: 'transparent' })}>
+            <Link href="/FAQ" legacyBehavior passHref>
+                <NavigationMenuLink className={pathname === "/FAQ" ? "text-yellow-300" : "text-black"}>
+                    常見問題
+                </NavigationMenuLink>
+            </Link>
+        </NavigationMenuItem>
+        <p> ／ </p>
+        <NavigationMenuItem className={navigationMenuTriggerStyle({ bg: 'transparent' })}>
+            <Link href="/About" legacyBehavior passHref>
+                <NavigationMenuLink className={pathname === "/About" ? "text-yellow-300" : "text-black"}>
+                    關於我們
+                </NavigationMenuLink>
+            </Link>
+        </NavigationMenuItem>
 
-        </NavigationMenuList>
-        </NavigationMenu>
-    )
+    </NavigationMenuList>
+    </NavigationMenu>
+  )
 }
 
 const ListItem = React.forwardRef<
