@@ -16,7 +16,7 @@ import {
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>
 }
-
+{/*View Option : 負責顯示欄位*/}
 export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {

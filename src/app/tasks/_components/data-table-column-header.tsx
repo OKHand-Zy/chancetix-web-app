@@ -21,7 +21,7 @@ interface DataTableColumnHeaderProps<TData, TValue>
   column: Column<TData, TValue>
   title: string
 }
-
+{/* 把 title 傳入創建 dropdown menu */}
 export function DataTableColumnHeader<TData, TValue>({
   column,
   title,
@@ -66,7 +66,7 @@ export function DataTableColumnHeader<TData, TValue>({
             Hide
           </DropdownMenuItem>
         </DropdownMenuContent>
-        
+
       </DropdownMenu>
     </div>
   )
