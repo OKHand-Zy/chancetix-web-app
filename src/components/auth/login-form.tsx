@@ -1,6 +1,7 @@
 "use client";
 import { useTransition, useState } from "react";
 import { set, useForm } from "react-hook-form";
+import Link from "next/link";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
@@ -55,66 +56,76 @@ export const LoginForm = () => {
         });
     }
 
-    return (
-        <CardWrapper 
-            headerLabel="Welcome back"
-            backButtonLabel="Don't have an account?"
-            backButtonHref="/auth/register"
-            showSocial
-        >
-            <Form {...from}>
-                <form 
-                    onSubmit = {from.handleSubmit(onSubmit)}
-                    className="space-y-6"
-                >
-                    <div className="space-y-4">
-                        <FormField
-                            control={from.control}
-                            name = "email"
-                            render={({ field}) => (
-                                <FormItem>
-                                    <FormLabel>Email：</FormLabel>
-                                    <FormControl> 
-                                        <Input {...field} 
-                                            disabled={isPending}
-                                            placeholder="Email"
-                                            type="email"
-                                        /> 
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={from.control}
-                            name = "password"
-                            render={({ field}) => (
-                                <FormItem>
-                                    <FormLabel>Password：</FormLabel>
-                                    <FormControl> 
-                                        <Input {...field} 
-                                            disabled={isPending}
-                                            placeholder="密碼"
-                                            type="password"
-                                        /> 
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />    
-                    </div>
-                    <FormError message={error || urlError}/>
-                    <FormSuccess message={success}/>
-                    <Button 
-                        disabled={isPending}
-                        type="submit"
-                        className="w-full"
-                    >
-                        Login
-                    </Button>
-                </form>
-            </Form>
-            
-        </CardWrapper>
-    );
+  return (
+    <CardWrapper 
+      headerLabel="Welcome back"
+      backButtonLabel="Don't have an account?"
+      backButtonHref="/auth/register"
+      showSocial
+    >
+      <Form {...from}>
+          <form 
+              onSubmit = {from.handleSubmit(onSubmit)}
+              className="space-y-6"
+          >
+              <div className="space-y-4">
+                  <FormField
+                      control={from.control}
+                      name = "email"
+                      render={({ field}) => (
+                          <FormItem>
+                              <FormLabel>Email：</FormLabel>
+                              <FormControl> 
+                                  <Input {...field} 
+                                      disabled={isPending}
+                                      placeholder="Email"
+                                      type="email"
+                                  /> 
+                              </FormControl>
+                              <FormMessage />
+                          </FormItem>
+                      )}
+                  />
+                  <FormField
+                      control={from.control}
+                      name = "password"
+                      render={({ field}) => (
+                          <FormItem>
+                              <FormLabel>Password：</FormLabel>
+                              <FormControl> 
+                                  <Input {...field} 
+                                    disabled={isPending}
+                                    placeholder="密碼"
+                                    type="password"
+                                  /> 
+                              </FormControl>
+                              <Button
+                                size = "sm"
+                                variant="link"
+                                asChild
+                                className="px-0 font-normal"
+                              >
+                                <Link href={"/auth/reset"}>
+                                  Forgot Password?
+                                </Link>
+                              </Button>
+                              <FormMessage />
+                          </FormItem>
+                      )}
+                  />    
+              </div>
+              <FormError message={error || urlError}/>
+              <FormSuccess message={success}/>
+              <Button 
+                  disabled={isPending}
+                  type="submit"
+                  className="w-full"
+              >
+                  Login
+              </Button>
+          </form>
+      </Form>
+      
+    </CardWrapper>
+  );
 }
