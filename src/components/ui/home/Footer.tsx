@@ -2,6 +2,12 @@ import React from 'react';
 import Image from 'next/image';
 
 const Footer: React.FC = () => {
+  // 創建一個 Date 物件
+  const date = new Date();
+  // 使用 Intl.DateTimeFormat 來格式化日期，並指定時區為 'Asia/Shanghai'（UTC+8 時區）
+  const formatter = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Taipei', year: 'numeric' });
+  // 使用 format 方法來獲取格式化後的年份
+  const year = formatter.format(date);
   return (
     <footer>
       <div className='bg-gray-500 h-40 px-4 justify-center border-solid border border-gray-500 grid grid-cols-1'>
@@ -21,7 +27,7 @@ const Footer: React.FC = () => {
           </div>
           <hr></hr>
           <div className='justify-center flex flex-col items-center'>
-            <p className='flex justify-center items-center gap-10'>© 2023 XXX網，版權所有。</p>
+            <p className='flex justify-center items-center gap-10'>© {year} ChanceTix，版權所有。</p>
           </div>
       </div>
     </footer>
