@@ -3,7 +3,7 @@ import React, { FC, useState, useEffect } from 'react';
 import { IoMdSearch } from "icons-react/io";
 import Link from 'next/link';
 import Image from 'next/image';
-import { NavigationAccountButton } from '@/components/ui/home/NavbarAccountButton';
+import { NavbarAccountButton } from '@/components/ui/home/NavbarAccountButton';
 import { NavigationButton } from '@/components/ui/home/NavbarButtom';
 import { NavbarSearch } from '@/components/ui/home/NavbarSearch';
 import { NavbarSidebar } from '@/components/ui/home/NavbarSidebar';
@@ -49,7 +49,7 @@ const Header: FC<HeaderProps> = () => {
                             <IoMdSearch fontSize={20} className='text-gray-400 absolute top-1/2 -translate-y-1/2 left-3'/>
                             <NavbarSearch />
                         </div>
-                        <NavigationAccountButton />
+                        <NavbarAccountButton />
                     </>
                 )}
                 {isMobileView && (

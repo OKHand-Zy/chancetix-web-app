@@ -12,6 +12,9 @@ export const publicRoutes = [
     "/SwitchTix",
     "/auth/new-verification",
     "/tasks",
+    "/Activity/info/Activity_1",
+    "/Activity/info/Activity_2",
+    "/Activity/info/Activity_3",
 ];
 
 /*
@@ -38,3 +41,4 @@ export const apiAuthPrefix = "/api/auth";
     @type {string}
 */
 export const DEFAULT_LOGIN_REDIRECT = "/settings";
+
