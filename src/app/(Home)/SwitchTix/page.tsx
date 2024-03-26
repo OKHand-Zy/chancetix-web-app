@@ -1,12 +1,11 @@
-import TixpoolFrom from "@/components/home/SwitchTix/tixpoolfrom";
-
+import TixpoolFrom from '@/components/home/SwitchTix/tixpoolfrom';
 
 function SwitchTix() {
-    return (
-        <div>
-            <TixpoolFrom/>
-        </div>
-    )
+  return (
+    <div>
+      <TixpoolFrom />
+    </div>
+  );
 }
 
 export default SwitchTix;

@@ -16,15 +16,15 @@ const NotoSansTC = Noto_Sans_TC({
 const WebLayout: FC<WebLayoutProps> = ({ children }) => {
   return (
     <html lang="en">
-      <body className= {NotoSansTC.className}>
-        <Header/>
-          <main className=' bg-gradient-to-b from-orange-400 to-amber-300 flex-grow '>
-            {children}
-          </main>
-        <Footer/>
+      <body className={NotoSansTC.className}>
+        <Header />
+        <main className=" bg-gradient-to-b from-orange-400 to-amber-300 flex-grow ">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
-}
+};
 
 export default WebLayout;

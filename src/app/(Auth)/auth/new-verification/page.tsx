@@ -1,11 +1,11 @@
-import { NewVerificationForm } from "@/components/auth/NewVerificationForm";
+import { NewVerificationForm } from '@/components/auth/NewVerificationForm';
 
-function NewVerificationPage () {
-    return (
-        <div>
-            <NewVerificationForm/>
-        </div>
-    )
+function NewVerificationPage() {
+  return (
+    <div>
+      <NewVerificationForm />
+    </div>
+  );
 }
 
 export default NewVerificationPage;

@@ -12,55 +12,52 @@ interface HeaderProps {
 }
 
 const Header: FC<HeaderProps> = () => {
-    const [isMobileView, setIsMobileView] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileView(window.innerWidth < 768); // 假設 768px 為移動端閾值
+    };  
+    window.addEventListener('resize', handleResize);
+    handleResize(); // 初始化檢查視窗大小
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
-    useEffect(() => {
-      const handleResize = () => {
-        setIsMobileView(window.innerWidth < 768); // 假設 768px 為移動端閾值
-      };
-  
-      window.addEventListener('resize', handleResize);
-      handleResize(); // 初始化檢查視窗大小
-  
-      return () => {
-        window.removeEventListener('resize', handleResize);
-      };
-    }, []);
-
-    return (
-      <header>
-        <div className='bg-gray-500 h-16 px-4 flex justify-center border-double border border-gray-500 '>
-          <div className='h-16 px-4 flex justify-between items-center w-full'>
-            <div className='flex items-center'>
-                <Link href="/">
-                    <Image
-                        src="/images/chancetix.png"
-                        alt="BS_Logo"
-                        width={100}
-                        height={100}
-                        priority={true}
-                    />
-                </Link>
-            </div>
-                {!isMobileView && (
-                    <>
-                        <NavigationButton />
-                        <div className='relative'>
-                            <IoMdSearch fontSize={20} className='text-gray-400 absolute top-1/2 -translate-y-1/2 left-3'/>
-                            <NavbarSearch />
-                        </div>
-                        <NavbarAccountButton />
-                    </>
-                )}
-                {isMobileView && (
-                    <div className='md:hidden justify-end '>
-                        <NavbarSidebar />
-                    </div>
-                )}
+  return (
+    <header>
+      <div className='bg-gray-500 h-16 px-4 flex justify-center border-double border border-gray-500 '>
+        <div className='h-16 px-4 flex justify-between items-center w-full'>
+          <div className='flex items-center'>
+            <Link href="/">
+              <Image
+                src="/images/chancetix.png"
+                alt="BS_Logo"
+                width={100}
+                height={100}
+                priority={true}
+              />
+            </Link>
           </div>
+            {!isMobileView && (
+              <>
+                <NavigationButton />
+                <div className='relative'>
+                  <IoMdSearch fontSize={20} className='text-gray-400 absolute top-1/2 -translate-y-1/2 left-3'/>
+                  <NavbarSearch />
+                </div>
+                <NavbarAccountButton />
+              </>
+            )}
+            {isMobileView && (
+              <div className='md:hidden justify-end '>
+                <NavbarSidebar />
+              </div>
+            )}
         </div>
-      </header>
-    );
-  };
+      </div>
+    </header>
+  );
+};
   
-  export default Header;
+export default Header;
