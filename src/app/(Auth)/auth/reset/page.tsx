@@ -2,9 +2,9 @@ import { ResetForm } from "@/components/auth/reset-form";
 
 
 const ResetPage = () => {
-    return (
-        <ResetForm />
-    )
+  return (
+    <ResetForm />
+  )
 }
 
 export default ResetPage;

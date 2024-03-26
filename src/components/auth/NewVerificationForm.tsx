@@ -1,17 +1,17 @@
-"use client";
-import { useCallback, useEffect, useState } from "react";
-import { CardWrapper } from "@/components/auth/card-wrapper";
-import { FormError } from "@/components/Login/form-error";
-import { FormSuccess } from "@/components/Login/form-success";
-import { BeatLoader} from "react-spinners" 
+'use client';
+import { useCallback, useEffect, useState } from 'react';
+import { CardWrapper } from '@/components/auth/card-wrapper';
+import { FormError } from '@/components/Login/form-error';
+import { FormSuccess } from '@/components/Login/form-success';
+import { BeatLoader } from 'react-spinners';
 
-import { useSearchParams } from "next/navigation";
-import { newVerification } from "@/action/new-verification";
+import { useSearchParams } from 'next/navigation';
+import { newVerification } from '@/action/new-verification';
 export const NewVerificationForm = () => {
-  const [error, setError] = useState<string | undefined>("");
-  const [success, setSuccess] = useState<string | undefined>("");
+  const [error, setError] = useState<string | undefined>('');
+  const [success, setSuccess] = useState<string | undefined>('');
   const searchParams = useSearchParams();
-  const token = searchParams.get("token");
+  const token = searchParams.get('token');
 
   const onSubmit = useCallback(() => {
     if (success || error) {
@@ -19,7 +19,7 @@ export const NewVerificationForm = () => {
     }
 
     if (!token) {
-      setError("Miss token!");
+      setError('Miss token!');
       return;
     }
     newVerification(token)
@@ -28,7 +28,7 @@ export const NewVerificationForm = () => {
         setError(data.error);
       })
       .catch(() => {
-        setError("something went wrong!");
+        setError('something went wrong!');
       });
   }, [token, success, error]);
 
@@ -37,16 +37,16 @@ export const NewVerificationForm = () => {
   }, [onSubmit]);
 
   return (
-      <CardWrapper
-        headerLabel="Confirm Email"
-        backButtonLabel="Back to Login"
-        backButtonHref="/auth/login"
-      >
-        <div className="flex item-center w-full justify-center">
-          {!error && !success && (<BeatLoader/>)}
-          <FormSuccess message={success}/>
-          {!success && (<FormError message={error}/>)}
-        </div>
-      </CardWrapper>
-  )
-}
+    <CardWrapper
+      headerLabel="Confirm Email"
+      backButtonLabel="Back to Login"
+      backButtonHref="/auth/login"
+    >
+      <div className="flex item-center w-full justify-center">
+        {!error && !success && <BeatLoader />}
+        <FormSuccess message={success} />
+        {!success && <FormError message={error} />}
+      </div>
+    </CardWrapper>
+  );
+};
