@@ -4,6 +4,18 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.REACT_APP_RESEND_API_KEY);
 
+export const sendTwoFactorTokenEmail = async (
+  email: string, 
+  token: string
+) => {
+  await resend.emails.send({
+    from: "ChanceTixService@resend.dev",
+    to: email,
+    subject: "2FA Code",
+    html: `<p>Your 2FA code is ${token}.</p>`,
+  })
+}
+
 export const sendPasswordResetEmail = async (
   email: string, 
   token: string
