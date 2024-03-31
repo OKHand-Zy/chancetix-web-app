@@ -1,4 +1,4 @@
-import NextAuth, {DefaultSession} from 'next-auth'
+import NextAuth, { type DefaultSession} from 'next-auth'
 import authConfig  from '@/auth.config'
 
 import { db } from '@/lib/db'
@@ -7,6 +7,11 @@ import { UserRole } from '@prisma/client'
 
 import { getUserByEmail, getUserById } from '@/data/user'
 import { getTwoFactorConfirmationByUserId } from '@/data/two-factor-confirmation'
+
+export type ExtendedUser = DefaultSession['user'] & {
+  role: UserRole;
+  isTwoFactorEnabled: boolean;
+};
 
 // Declare your framework library
 declare module "next-auth" {
@@ -28,9 +33,7 @@ declare module "next-auth" {
   * Returned by `useSession`, `auth`, contains information about the active session.
   */
   interface Session {
-    user: {
-      role: string
-    } & DefaultSession['user']
+    user: ExtendedUser
   }
 }
 
@@ -97,6 +100,9 @@ export const {
       if (token.role && session.user){
           session.user.role = token.role as UserRole ;
       }
+      if (session.user){
+        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
+    }
       return session
     },
     async jwt({ token }) {
@@ -110,6 +116,7 @@ export const {
         return token
       }
       token.role = existingUser.role
+      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled
       return token
     }
   },
