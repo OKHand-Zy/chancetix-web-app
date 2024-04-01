@@ -4,35 +4,15 @@ import * as React from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/Shadcn/button"
 
-import { getSession } from "next-auth/react"
-import { useEffect, useState } from 'react';
-import { signOutAccount } from "@/action/signOutAccount"
-
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { logout } from "@/action/logout"
 
 export const NavbarAccountButton = () => {
-  const [session, setSession] = useState(null);
-
-  useEffect(() => {
-    const fetchSession = async () => {
-      const sessionData = await getSession();
-      setSession(sessionData);
-    };
-
-    fetchSession();
-  }, []);
-  const handleSignOut = async () => {
-    try {
-      await signOutAccount();
-       // 登出成功後，重新設置 session 為 null
-      setSession(null);
-    } catch (error) {
-      console.error("Sign out failed:", error);
-    }
-  };
+  const session_user = useCurrentUser();
 
   return (
     <>
-      {!session ? (
+      {!session_user ? (
         <div className="flex gap-x-2">
           <Button asChild variant="ghost">
             <Link href="/auth/login">Login</Link>
@@ -43,8 +23,8 @@ export const NavbarAccountButton = () => {
         </div>
       ) : (
         <div className="flex gap-x-2">
-          <p>Hi~ {session.user.name}</p>
-          <Button onClick={handleSignOut} variant="ghost">
+          <p>Hi~ {session_user?.name}</p>
+          <Button onClick={() => logout()} variant="ghost">
             Logout
           </Button>
         </div>
