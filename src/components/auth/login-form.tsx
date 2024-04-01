@@ -49,12 +49,12 @@ export const LoginForm = () => {
     startTransition(() => {
       login(values).then((data) => {
         if(data?.error) {
-          form.reset();
+          from.reset();
           setError(data?.error);
         }
 
         if(data?.success) {
-          form.reset();
+          from.reset();
           setSuccess(data?.success);
         }
 
@@ -82,7 +82,7 @@ export const LoginForm = () => {
               name="code"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Two Factor Code</FormLabel>
+                  <FormLabel>Two Factor Code：</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
