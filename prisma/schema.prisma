@@ -45,39 +45,93 @@ model User {
   accounts      Account[]
   isTwoFactorEnabled Boolean @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
+  tickets     Ticket[]
 }
 
 model VerificationToken {
-  id String @id @default( cuid() )
-  email String
-  token String @unique
+  id      String    @id @default( cuid() )
+  email   String
+  token   String    @unique
   expires DateTime
   
   @@unique([email, token])
 }
 
 model PasswordResetToken {
-  id String @id @default(cuid())
-  email String
-  token String @unique
+  id      String    @id @default(cuid())
+  email   String
+  token   String    @unique
   expires DateTime
 
   @@unique([email, token])
 }
 
 model TwoFactorToken {
-  id String @id @default(cuid())
-  email String
-  token String @unique
+  id      String    @id @default(cuid())
+  email   String
+  token   String    @unique
   expires DateTime
 
   @@unique([email, token])
 }
 
 model TwoFactorConfirmation {
-  id String @id @default(cuid())
-  userId String
+  id      String    @id @default(cuid())
+  userId  String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId])
+}
+
+model Event {
+  id          String    @id @default(cuid())
+  name        String
+  date        DateTime
+  location    String
+  capacity    Int
+  tickets     Ticket[]  
+}
+
+model Ticket {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id]) 
+  userId    String
+  event     Event    @relation(fields: [eventId], references: [id]) 
+  eventId   String
+  price     Float
+  status    TicketStatus        
+}
+
+enum TicketStatus {
+  PURCHASED
+  USED
+  EXPIRED
+}
+
+// Pass 金流 發票 的問題
+
+// Tasks Test Data
+model Tasks {
+  id        String    @id  
+  title     String
+  status    TasksStatus
+  label     labelsStatus
+  priority  PrioritiesStatus
+}
+enum TasksStatus {
+  backlog
+  todo
+  in_progress
+  done
+  canceled
+}
+enum labelsStatus {
+  bug
+  feature
+  documentation
+}
+enum PrioritiesStatus {
+  low
+  medium
+  high
 }

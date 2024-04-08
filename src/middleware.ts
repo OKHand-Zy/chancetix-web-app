@@ -20,7 +20,7 @@ export default auth( (req) => {
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
   // 確認開頭是 api router
   if (isApiAuthRoute) {
-    return null;
+    return undefined;
   }
   // 確認是否前往 登入 router
   if (isAuthRoute){
@@ -28,14 +28,14 @@ export default auth( (req) => {
     if (isLoggedIn){
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl) )
     }
-    return null;
+    return undefined;
   }
   // 如果 沒登入 與 前往非公開路由 就導向 登入頁面
   if (!isLoggedIn && !isPublicRoute) {
     return Response.redirect(new URL("/auth/login", nextUrl) )
   }
 
-  return null;  
+  return undefined;  
 })
 
 export const config = {
