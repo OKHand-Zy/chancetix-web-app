@@ -1,5 +1,4 @@
-import { promises as fs } from "fs"
-import path from "path"
+import { db } from "@/lib/db"
 import { Metadata } from "next"
 import Image from "next/image"
 import { z } from "zod"
@@ -17,13 +16,11 @@ export const metadata: Metadata = {
 // Simulate a database read for tasks.
 async function getTasks() {
   // change this to read from your database
-  const data = await fs.readFile(
-    path.join(process.cwd(), "src/app/tasks/_data/tasks.json")
-  )
-
-  const tasks = JSON.parse(data.toString())
   
-  return z.array(taskSchema).parse(tasks)
+  // 使用 Prisma Client 從 Tasks 表中讀取所有任務
+  const tasks = await db.tasks.findMany();
+  // 使用 zod 進行驗證
+  return z.array(taskSchema).parse(tasks);
 }
 
 export default async function TaskPage() {
