@@ -99,7 +99,8 @@ model Ticket {
   event     Event    @relation(fields: [eventId], references: [id]) 
   eventId   String
   price     Float
-  status    TicketStatus        
+  status    TicketStatus 
+  transfer  Boolean   @default(false)        
 }
 
 enum TicketStatus {
@@ -108,7 +109,7 @@ enum TicketStatus {
   EXPIRED
 }
 
-// Pass 金流 發票 的問題
+// 先 Pass 金流 發票 的問題
 
 // Tasks Test Data
 model Tasks {
