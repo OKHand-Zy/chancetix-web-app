@@ -1,12 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
-import {ErrorBoundary} from 'react-error-boundary'
-import Error from './error'
+import ErrorBoundary from './error'
 
 export default function page() {
   return (
+    <ErrorBoundary>
     <div  className='h-full'>
-    <ErrorBoundary FallbackComponent={<Error/>}>
       
       <div>
         Activity
@@ -15,7 +14,7 @@ export default function page() {
           <Link href="/">back</Link>
       </div>
 
-    </ErrorBoundary>
     </div>
+    </ErrorBoundary>
   )
 }
