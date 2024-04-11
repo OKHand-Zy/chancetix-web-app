@@ -94,16 +94,24 @@ export const {
     },
     async session({ session, user, token }) {
         // 如果 token 中的 sub 與 session 中的 user.id 都存在的話，將 token.sub 值給予 seesion.user.id 以确保会话对象中的用户ID是正确的
-      if (token.sub && session.user){
+      if (token.sub && session.user)  {
           session.user.id = token.sub
       }
+      
       // 
-      if (token.role && session.user){
+      if (token.role && session.user) {
           session.user.role = token.role as UserRole ;
       }
-      if (session.user){
+      
+      if (session.user) {
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
-    }
+      }
+      
+      if (session.user) {
+        session.user.name = token.name
+        session.user.email = token.email
+      }
+
       return session
     },
     async jwt({ token }) {
@@ -116,6 +124,8 @@ export const {
       if (!existingUser) {
         return token
       }
+      token.name = existingUser.name
+      token.email = existingUser.email
       token.role = existingUser.role
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled
       return token
