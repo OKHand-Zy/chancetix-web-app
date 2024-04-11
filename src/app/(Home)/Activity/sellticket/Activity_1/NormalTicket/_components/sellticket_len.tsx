@@ -1,4 +1,4 @@
-'use clinet';
+"use client";
 
 import { Button } from "@/components/ui/Shadcn/button";
 import React, { useState } from 'react';
