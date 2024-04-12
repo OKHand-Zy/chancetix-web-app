@@ -39,6 +39,10 @@ export const RegisterSchema = z.object({
   }),
 });
 
+export const ticketSchema = z.object({
+  userId: z.string(),
+});
+
 export const taskSchema = z.object({
   id: z.string(),
   title: z.string(),
@@ -46,3 +50,4 @@ export const taskSchema = z.object({
   label: z.string(),
   priority: z.string(),
 });
+
