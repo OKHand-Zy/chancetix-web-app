@@ -7,10 +7,12 @@ import { UserRole } from '@prisma/client'
 
 import { getUserByEmail, getUserById } from '@/data/user'
 import { getTwoFactorConfirmationByUserId } from '@/data/two-factor-confirmation'
+import { getAccountByUserId } from '@/data/account'
 
 export type ExtendedUser = DefaultSession['user'] & {
   role: UserRole;
   isTwoFactorEnabled: boolean;
+  isOAuth: boolean;
 };
 
 // Declare your framework library
@@ -21,14 +23,14 @@ declare module "next-auth" {
    */
   interface User {
   }
-  
+
   /**
   * The shape of the account object returned in the OAuth providers' `account` callback,
   * Usually contains information about the provider being used, like OAuth tokens (`access_token`, etc).
   */
   interface Account {
   }
-  
+
   /**
   * Returned by `useSession`, `auth`, contains information about the active session.
   */
@@ -46,11 +48,12 @@ declare module "@auth/core/jwt" {
   }
 }
 
-export const { 
+export const {
     handlers: { GET, POST},
-    signIn, 
+    signIn,
     signOut,
-    auth, 
+    auth,
+    update,
 } = NextAuth({
   pages: {
     signIn: '/auth/login',
@@ -68,7 +71,7 @@ export const {
     async signIn({ user, account, profile, email, credentials }) {
       // Allow OAuth without email verification
       if (account?.provider !== "credentials") return true ;
-      
+
       // Prevent sing in without email verification
       if (user.id == undefined) return false ;
       const existingUser = await getUserById(user.id);
@@ -97,33 +100,40 @@ export const {
       if (token.sub && session.user)  {
           session.user.id = token.sub
       }
-      
-      // 
+
+      //
       if (token.role && session.user) {
           session.user.role = token.role as UserRole ;
       }
-      
+
       if (session.user) {
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
       }
-      
+
       if (session.user) {
         session.user.name = token.name
-        session.user.email = token.email
+        session.user.email = token.email as string
+        session.user.isOAuth = token.OAuth as boolean
       }
 
       return session
     },
     async jwt({ token }) {
-      // 
+      //
       if (!token.sub) {
         return token
       }
-      // 
+      //
       const existingUser = await getUserById(token.sub)
       if (!existingUser) {
         return token
       }
+
+      const existingAccount = await getAccountByUserId(
+        existingUser.id
+      )
+
+      token.OAuth = !!existingAccount
       token.name = existingUser.name
       token.email = existingUser.email
       token.role = existingUser.role
@@ -132,7 +142,7 @@ export const {
     }
   },
   adapter: PrismaAdapter(db),
-  session: { 
+  session: {
     // Choose how you want to save the user session.
     // The default is `"jwt"`, an encrypted JWT (JWE) stored in the session cookie.
     // If you use an `adapter` however, we default it to `"database"` instead.
@@ -140,7 +150,7 @@ export const {
     // When using `"database"`, the session cookie will only contain a `sessionToken` value,
     // which is used to look up the session in the database.
     strategy: 'jwt' ,
-    
+
     // Seconds - How long until an idle session expires and is no longer valid.
     maxAge: 30 * 24 * 60 * 60, // 30 days
 
