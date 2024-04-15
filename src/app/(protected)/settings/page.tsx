@@ -60,6 +60,7 @@ const SettingPage = () => {
 
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
     startTransition( () => {
+      // 把 values 帶進 action/setting 執行
       settings(values)
         .then((data) => {
           if (data.error) {

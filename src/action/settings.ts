@@ -65,13 +65,14 @@ export const settings = async(
     values.newPassword = undefined;
   }
 
+  // 更新 資料庫的 user 資訊
   const updatedUser = await db.user.update({
     where: { id: dbUser.id },
     data: {
       ...values,
     }
   });
-  /* // Update 會有問題
+  /* // 多餘的 這方法是示範更新 session 中的 user 資訊
   update({
     user: {
       name: updatedUser.name,
@@ -81,5 +82,5 @@ export const settings = async(
     }
   });
   */
-  return { success: "Settings updated!" };
+  return { success: "Settings Updated!" };
 }
