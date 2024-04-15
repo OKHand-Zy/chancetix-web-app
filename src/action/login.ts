@@ -28,7 +28,9 @@ export const login = async (
   }
 
   // Get user Data By Email
-  const { email, password, code } = validatedFields.data;
+  const { password, code } = validatedFields.data;
+  const { email: rawEmail } = validatedFields.data;
+  const email = rawEmail.toLocaleLowerCase();
   const existingUser = await getUserByEmail(email);
 
   if (!existingUser || !existingUser.email || !existingUser.password) {
