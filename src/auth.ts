@@ -53,7 +53,7 @@ export const {
     signIn,
     signOut,
     auth,
-    update,
+    //update,
 } = NextAuth({
   pages: {
     signIn: '/auth/login',

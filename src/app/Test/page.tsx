@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/Shadcn/button";
 
 import * as z from "zod";
 import { ticketSchema } from "@/schemas";
-import { findTicket } from "@/action/find-userTicket";
 import { findTransferTicket } from "@/action/find-transferTicket";
 import { useSession } from "next-auth/react";
 
@@ -21,7 +20,7 @@ const TestPage = () => {
   ) => {
     findTransferTicket(values).then((data) => {
       console.log(data)
-    })   
+    })
   }
 
   return (

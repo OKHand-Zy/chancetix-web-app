@@ -3,7 +3,7 @@ import React from 'react';
 
 type Props = {};
 
-function loginhomepage({}: Props) {
+function loginHomepage({}: Props) {
   return (
     <main className="flex h-full flex-col items-center justify-center bg-sky-500">
       <div className="space-y-6 text-center">
@@ -12,7 +12,7 @@ function loginhomepage({}: Props) {
         </h1>
         <p className="text-white text-lg">simple auth service</p>
         <div>
-          <LoginButton>
+          <LoginButton mode='modal' asChild>
             <button className="bg-green-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
               Sign in
             </button>
@@ -23,4 +23,4 @@ function loginhomepage({}: Props) {
   );
 }
 
-export default loginhomepage;
+export default loginHomepage;
