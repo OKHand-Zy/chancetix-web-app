@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Shadcn/button"
 
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { logout } from "@/action/logout"
+import LoginButton from '@/components/auth/login-button';
 
 export const NavbarAccountButton = () => {
   const session_user = useCurrentUser();
@@ -14,12 +15,17 @@ export const NavbarAccountButton = () => {
     <>
       {!session_user ? (
         <div className="flex gap-x-2">
-          <Button asChild variant="ghost">
-            <Link href="/auth/login">Login</Link>
-          </Button>
+          
+          <LoginButton mode='modal' asChild>
+            <Button variant="ghost">
+              Sign in
+            </Button>
+          </LoginButton>
+
           <Button asChild variant="ghost">
             <Link href="/auth/register">Register</Link>
           </Button>
+
         </div>
       ) : (
         <div className="flex gap-x-2">

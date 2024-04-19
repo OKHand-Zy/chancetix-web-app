@@ -60,8 +60,8 @@ export default function CarouselSlide() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious onClick={prevSlide} />
-        <CarouselNext onClick={nextSlide} />
+        <CarouselPrevious onClick={prevSlide} disabled={false}/>
+        <CarouselNext onClick={nextSlide} disabled={false}/>
       </Carousel>
 
       <div className="flex justify-center mt-4">
