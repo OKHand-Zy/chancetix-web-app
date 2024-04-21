@@ -1,15 +1,20 @@
 'use Client';
 import { FcGoogle } from 'react-icons/fc';
 import { FaLine } from 'react-icons/fa';
+
 import { Button } from '@/components/ui/Shadcn/button';
 
+import { useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 
 export const Social = () => {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl');
+
   const onClick = (provider: 'google' | 'line') => {
     signIn(provider, {
-      callbackUrl: DEFAULT_LOGIN_REDIRECT,
+      callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     });
   };
 
