@@ -6,11 +6,11 @@ import { signIn } from "@/auth"
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
 
-import { 
-  generateVerificationToken, 
-  generateTwoFactorToken 
+import {
+  generateVerificationToken,
+  generateTwoFactorToken
 } from "@/lib/tokens";
-import { 
+import {
   sendVerificationEmail,
   sendTwoFactorTokenEmail,
 } from "@/lib/mail";
@@ -20,6 +20,7 @@ import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation
 
 export const login = async (
   values: z.infer<typeof LoginSchema>,
+  callbackUrl?: string | null,
 ) => {
   const validatedFields = LoginSchema.safeParse(values);
 
@@ -60,11 +61,11 @@ export const login = async (
       if (hasExpired) {
         return { error: "Code has expired!" };
       }
-      
+
       await db.twoFactorToken.delete({
         where: { id: twoFactorToken.id },
       })
-      
+
       const existingConfirmation = await getTwoFactorConfirmationByUserId(existingUser.id);
 
       if (existingConfirmation) {
@@ -93,7 +94,7 @@ export const login = async (
     await signIn("credentials", {
       email,
       password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
+      redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     })
   } catch (error) {
     if (error instanceof AuthError) {

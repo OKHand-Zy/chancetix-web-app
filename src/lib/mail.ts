@@ -4,8 +4,10 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.REACT_APP_RESEND_API_KEY);
 
+const domain = process.env.NEXT_PUBLIC_APP_URL;
+
 export const sendTwoFactorTokenEmail = async (
-  email: string, 
+  email: string,
   token: string
 ) => {
   await resend.emails.send({
@@ -17,10 +19,10 @@ export const sendTwoFactorTokenEmail = async (
 }
 
 export const sendPasswordResetEmail = async (
-  email: string, 
+  email: string,
   token: string
 ) => {
-  const resetLink = `http://localhost:3000/auth/new-password?token=${token}`;
+  const resetLink = `${domain}/auth/new-password?token=${token}`;
 
   await resend.emails.send({
     from: "ChanceTixService@resend.dev",
@@ -31,10 +33,10 @@ export const sendPasswordResetEmail = async (
 };
 
 export const sendVerificationEmail = async (
-  email: string, 
+  email: string,
   token: string
 ) => {
-  const confirmLink = `http://localhost:3000/auth/new-verification?token=${token}`;
+  const confirmLink = `${domain}/auth/new-verification?token=${token}`;
 
   await resend.emails.send({
     from: "ChanceTixService@resend.dev",

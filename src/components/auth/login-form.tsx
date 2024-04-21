@@ -26,6 +26,7 @@ import { login } from '@/action/login';
 
 export const LoginForm = () => {
   const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl');
   const urlError =
     searchParams.get('error') === 'OAuthAccountNotLinked'
       ? 'Email already in use with diffrent provider'
@@ -47,21 +48,22 @@ export const LoginForm = () => {
     setError('');
     setSuccess('');
     startTransition(() => {
-      login(values).then((data) => {
-        if(data?.error) {
-          from.reset();
-          setError(data?.error);
-        }
+      login(values , callbackUrl)
+        .then((data) => {
+          if(data?.error) {
+            from.reset();
+            setError(data?.error);
+          }
 
-        if(data?.success) {
-          from.reset();
-          setSuccess(data?.success);
-        }
+          if(data?.success) {
+            from.reset();
+            setSuccess(data?.success);
+          }
 
-        if(data?.twoFactor){
-          setShowTwoFactor(true);
-        }
-      })
+          if(data?.twoFactor){
+            setShowTwoFactor(true);
+          }
+        })
         .catch(() => setError("Something went wrong"));
     });
   };

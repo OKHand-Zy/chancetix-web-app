@@ -32,7 +32,7 @@ export default auth( (req) => {
   console.log("ROUTE:",req.nextUrl.pathname)
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
-  
+
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname) || nextUrl.pathname.startsWith(activityInfoPath);;
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
@@ -52,10 +52,15 @@ export default auth( (req) => {
     }
     return undefined;
   }
-  
+
   // 如果 沒登入 與 前往非公開路由 就導向 登入頁面
   if (!isLoggedIn && !isPublicRoute) {
-    return Response.redirect(new URL("/auth/login", nextUrl) )
+    let callbackUrl = nextUrl.pathname
+    if(nextUrl.search) {
+      callbackUrl += nextUrl.search
+    }
+    const encodedCallbackUrl = encodeURIComponent(callbackUrl)
+    return Response.redirect(new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl) )
   }
 
   // 如果是 Activity_2 路由且時間未到，則導向 首頁
@@ -64,7 +69,7 @@ export default auth( (req) => {
     return Response.redirect(new URL("/", nextUrl) )
   }
 
-  return undefined;  
+  return undefined;
 })
 
 export const config = {
