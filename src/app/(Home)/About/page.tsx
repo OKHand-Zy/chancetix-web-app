@@ -11,6 +11,12 @@ import {
 import ErrorBoundary from './error';
 import Loading from './loading';
 
+import { Metadata } from "next"
+export const metadata: Metadata = {
+  title: "ChanceTix",
+  description: "About ChanceTix",
+}
+
 type Props = {};
 
 function aboutpage({}: Props) {
