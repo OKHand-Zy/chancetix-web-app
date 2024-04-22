@@ -24,7 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/Shadcn/select";
-import { Switch } from "@/components/ui/switch";
+import { Switch } from "@/components/ui/Shadcn/switch";
 import { Input } from "@/components/ui/Shadcn/input";
 import { FormError } from "@/components/Login/form-error";
 import { FormSuccess } from "@/components/Login/form-success";

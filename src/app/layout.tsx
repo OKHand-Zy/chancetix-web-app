@@ -12,7 +12,7 @@ const NotoSansTC = Noto_Sans_TC({
 
 export const metadata: Metadata = {
   title: 'ChanceTix',
-  description: 'About ChanceTix',
+  description: 'ChanceTix is a ticketing system.',
 };
 
 export default async function RootLayout({
