@@ -1,7 +1,7 @@
 "use client";
 import { Card, CardContent, CardHeader } from "@/components/ui/Shadcn/card";
 import { useEffect, useState } from "react";
-import { findAllTicketbyUserId } from "@/action/find-userTicket"; 
+import { findAllTicketbyUserId } from "@/action/find-userTicket";
 import { useSession } from "next-auth/react";
 
 import {
@@ -41,7 +41,7 @@ const TicketsPage = () => {
         })
     }
   }, [userId]);
-  
+
   return (
     <Card className="w-[600px]">
       <CardHeader>
@@ -65,7 +65,7 @@ const TicketsPage = () => {
         <TableBody>
           {Array.isArray(tickets) ? (
             tickets.map((ticket, index) => (
-              <TableRow key={index}>
+              <TableRow key={index} >
                 <TableCell>{ticket.eventname}</TableCell>
                 <TableCell>{ticket.id}</TableCell>
                 <TableCell>{ticket.price}</TableCell>
