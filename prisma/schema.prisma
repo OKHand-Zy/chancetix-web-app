@@ -89,6 +89,7 @@ model Event {
   date        DateTime
   location    String
   capacity    Int
+  image       String    @default("Null.png")
   tickets     Ticket[]  
 }
 

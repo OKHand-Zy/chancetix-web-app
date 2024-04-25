@@ -4,6 +4,7 @@ import '@/app/globals.css';
 import Header from '@/components/ui/home/Navbar';
 import Footer from '@/components/ui/home/Footer';
 
+
 interface WebLayoutProps {
   children: React.ReactNode;
 }
@@ -18,9 +19,14 @@ const WebLayout: FC<WebLayoutProps> = ({ children }) => {
     <html lang="en">
       <body className={NotoSansTC.className}>
         <Header />
-        <main className=" bg-gradient-to-r from-red-400 to-orange-400 flex-grow ">
+
+        <main className=" 
+          bg-orange-300 
+          flex-grow
+        ">
           {children}
         </main>
+
         <Footer />
       </body>
     </html>

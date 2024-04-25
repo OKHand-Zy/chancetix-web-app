@@ -10,6 +10,8 @@ import {
   CarouselPrevious,
 } from '@/components/ui/Shadcn/carousel';
 
+import Autoplay from "embla-carousel-autoplay"
+
 const images = [
   '/images/activity_img/Null.png',
   '/images/activity_img/Null.png',
@@ -33,9 +35,17 @@ export default function CarouselSlide() {
   };
 
   return (
-    <div className="w-full lg:max-w-5xl mx-auto max-w-full max-h-full">
-      <Carousel className="relative w-full max-w-full max-h-full">
-        <CarouselContent
+    <div className="w-full lg:max-w-5xl mx-auto max-w-full max-h-full p-5">
+      <Carousel 
+        className="relative w-full max-w-full max-h-full"
+        plugins={[
+          Autoplay({
+            delay: 2000,
+            stopOnMouseEnter: true,
+          }),
+        ]}
+      >
+        <CarouselContent 
           style={{
             transform: `translateX(-${activeIndex * 100}%)`,
             transition: 'transform 0.5s ease-in-out',
@@ -60,8 +70,16 @@ export default function CarouselSlide() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious onClick={prevSlide} disabled={false}/>
-        <CarouselNext onClick={nextSlide} disabled={false}/>
+        <CarouselPrevious 
+          variant='outline' 
+          onClick={prevSlide} 
+          disabled={false}
+        />
+        <CarouselNext 
+          variant='outline' 
+          onClick={nextSlide} 
+          disabled={false}
+        />
       </Carousel>
 
       <div className="flex justify-center mt-4">
@@ -70,7 +88,7 @@ export default function CarouselSlide() {
             key={index}
             onClick={() => setActiveIndex(index)}
             className={`w-4 h-4 mx-2 cursor-pointer rounded-full ${
-              index === activeIndex ? 'bg-indigo-500' : 'bg-gray-100'
+              index === activeIndex ? 'bg-slate-700' : 'bg-gray-100'
             }`}
           ></span>
         ))}
