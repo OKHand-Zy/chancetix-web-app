@@ -15,6 +15,8 @@ import {
   TableRow,
 } from "@/components/ui/Shadcn/table"
 
+import {TicketCard} from "@/app/(protected)/tickets/_components/ticket_card"
+
 type Ticket = {
   id: number;
   username: string;
@@ -50,37 +52,30 @@ const TicketsPage = () => {
         </p>
       </CardHeader>
       <CardContent className="space-y-4">
-      <Table>
-        <TableCaption>A list of your all tickets.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">Event:</TableHead>
-            <TableHead>ID:</TableHead>
-            <TableHead>Price:</TableHead>
-            <TableHead >Status:</TableHead>
-            <TableHead>Transfer:</TableHead>
-            <TableHead>User:</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {Array.isArray(tickets) ? (
-            tickets.map((ticket, index) => (
-              <TableRow key={index} >
-                <TableCell>{ticket.eventname}</TableCell>
-                <TableCell>{ticket.id}</TableCell>
-                <TableCell>{ticket.price}</TableCell>
-                <TableCell>{ticket.status}</TableCell>
-                <TableCell>{ticket.transfer ? 'Yes' : 'No'}</TableCell>
-                <TableCell>{ticket.username}</TableCell>
-              </TableRow>
+
+        {Array.isArray(tickets) ? (
+          tickets.map((ticket, index) => (
+              <div key={index} className="flex justify-center items-center mb-2">
+                <TicketCard 
+                  eventname={ticket.eventname} 
+                >
+                  <div className="grid grid-cols-2 text-left">
+                    <p>持有者: {ticket.username}</p>
+                    <p>是否轉贈: {ticket.transfer ? 'Yes' : 'No'}</p>
+                    <p>價錢: {ticket.price}</p>
+                    <p>狀態: {ticket.status}</p>
+                    
+                    
+                  </div>
+                </TicketCard>
+              </div>
             ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={6}>Error: {tickets.error}</TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+        ) : (
+          <div className="flex justify-center items-center mb-2">
+              <div className="text-center">Error: {tickets.error}</div>
+          </div>
+        )}
+
       </CardContent>
     </Card>
   );

@@ -26,15 +26,23 @@ const Header: FC<HeaderProps> = () => {
 
   return (
     <header>
-      <div className='bg-gray-500 h-16 px-4 flex justify-center border-double border border-gray-500 '>
+      <div className='
+        bg-slate-300
+        h-16 
+        px-4 
+        flex 
+        justify-center 
+        border-b-2
+        border-gray-700 
+      '>
         <div className='h-16 px-4 flex justify-between items-center w-full'>
           <div className='flex items-center'>
             <Link href="/">
               <Image
                 src="/images/chancetix.png"
                 alt="BS_Logo"
-                width={100}
-                height={100}
+                width={90}
+                height={90}
                 priority={true}
               />
             </Link>

@@ -23,7 +23,7 @@ function aboutpage({}: Props) {
   return (
     <ErrorBoundary>
       <Suspense fallback={<Loading />}>
-        <div className="p-20 flex flex-col items-center justify-center text-center ">
+        <div className="h-screen p-20 flex flex-col items-center justify-center text-center ">
           <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
             關於 ChanceTix
           </h1>
@@ -36,7 +36,7 @@ function aboutpage({}: Props) {
           <p>
             總的來說，我們的平台致力於為消費者打造一個公平、安全、便利的購票環境，並與廠商和歌手合作，建立起良好的合作關係，共同推動表演產業的發展。
           </p>
-          <h2 className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+          <h2 className="mt-10 scroll-m-20 border-b pb-2 p-10 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
             為什麼要選擇我們？
           </h2>
           <ul className="my-6 ml-6 list-disc [&>li]:mt-2 text-start">
@@ -59,7 +59,7 @@ function aboutpage({}: Props) {
             </li>
           </ul>
 
-          <Accordion type="multiple" className="w-8/12">
+          <Accordion type="multiple" className="w-8/12 p-10">
             <AccordionItem value="item-1">
               <AccordionTrigger>如何聯繫我們?</AccordionTrigger>
               <AccordionContent>ChanceTix.service@gmail.com</AccordionContent>
