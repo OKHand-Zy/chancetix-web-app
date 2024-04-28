@@ -33,6 +33,8 @@ export const RegisterForm = () => {
       email: '',
       password: '',
       name: '',
+      cellphone: '',
+      userId: '',
     },
   });
 
@@ -100,6 +102,38 @@ export const RegisterForm = () => {
                       disabled={isPending}
                       placeholder="******"
                       type="password"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={from.control}
+              name="cellphone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Cellphone：</FormLabel>
+                  <FormControl>
+                    <Input {...field} 
+                      disabled={isPending} 
+                      placeholder="09********" 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={from.control}
+              name="userId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>身份證：</FormLabel>
+                  <FormControl>
+                    <Input {...field} 
+                      disabled={isPending} 
+                      placeholder="A*********" 
                     />
                   </FormControl>
                   <FormMessage />

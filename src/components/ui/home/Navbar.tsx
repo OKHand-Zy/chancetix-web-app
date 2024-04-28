@@ -7,6 +7,7 @@ import { NavbarAccountButton } from '@/components/ui/home/NavbarAccountButton';
 import { NavigationButton } from '@/components/ui/home/NavbarButtom';
 import { NavbarSearch } from '@/components/ui/home/NavbarSearch';
 import { NavbarSidebar } from '@/components/ui/home/NavbarSidebar';
+
 interface HeaderProps {
     // define props here if needed
 }
@@ -27,13 +28,13 @@ const Header: FC<HeaderProps> = () => {
   return (
     <header>
       <div className='
-        bg-slate-300
+        bg-white
         h-16 
         px-4 
         flex 
         justify-center 
-        border-b-2
-        border-gray-700 
+        border-b
+        border-gray-300 
       '>
         <div className='h-16 px-4 flex justify-between items-center w-full'>
           <div className='flex items-center'>

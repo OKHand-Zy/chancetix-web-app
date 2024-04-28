@@ -35,7 +35,7 @@ const TicketsPage = () => {
     if (userId) {
       findAllTicketbyUserId({userId})
         .then(foundTickets => {
-          setTickets(foundTickets); // 現在這裡的資料可以是 Ticket[] 或 { error: string }
+          setTickets(foundTickets as Ticket[] || { error: "No have tickets" }); // 現在這裡的資料可以是 Ticket[] 或 { error: string }
         })
         .catch(error => {
           console.error("Failed to fetch tickets:", error);
@@ -64,8 +64,6 @@ const TicketsPage = () => {
                     <p>是否轉贈: {ticket.transfer ? 'Yes' : 'No'}</p>
                     <p>價錢: {ticket.price}</p>
                     <p>狀態: {ticket.status}</p>
-                    
-                    
                   </div>
                 </TicketCard>
               </div>
