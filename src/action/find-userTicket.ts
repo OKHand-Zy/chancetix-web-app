@@ -18,6 +18,11 @@ export const findAllTicketbyUserId = async (
   const { userId } = validatedFields.data;
   const existingUserTicket = await getTicketByUserId(userId);
 
+  // 如果沒有票，返回空的票數組
+  if (existingUserTicket.length === 0) {
+    return [];
+  }
+
    // 並行處理：同時獲取用戶名稱和事件資訊
   const [userName, eventInfo] = await Promise.all([
     getUserById(userId),

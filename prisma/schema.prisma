@@ -43,6 +43,8 @@ model User {
   password      String?
   role          UserRole   @default(USER)
   accounts      Account[]
+  cellphone     String?
+  userId        String?
   isTwoFactorEnabled Boolean @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
   tickets     Ticket[]
@@ -89,25 +91,46 @@ model Event {
   date        DateTime
   location    String
   capacity    Int
-  image       String    @default("Null.png")
+  image       String    @default("/images/activity_img/Null.png")
   tickets     Ticket[]  
+  @@unique([id, image])
 }
 
 model Ticket {
-  id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id]) 
-  userId    String
-  event     Event    @relation(fields: [eventId], references: [id]) 
-  eventId   String
-  price     Float
-  status    TicketStatus 
-  transfer  Boolean   @default(false)        
+  id            Int       @id @default(autoincrement())
+  ticketNumber  String?   @unique
+  serialNumber  Int?
+  tickettype    String?
+  ticketGroup   String
+  position      String?
+  price         Int?
+  customerName  String?
+  user          User      @relation(fields: [userId], references: [id]) 
+  userId        String
+  event         Event     @relation(fields: [eventId,eventImage], references: [id,image]) 
+  eventId       String
+  eventImage    String 
+  status        TicketStatus 
+  transfer      Boolean   @default(false) 
 }
 
 enum TicketStatus {
   PURCHASED
   USED
   EXPIRED
+}
+
+model SwitchTicket {
+  id            Int       @id @default(autoincrement())
+  ticketNumber  String?   @unique
+  serialNumber  Int?
+  tickettype    String?
+  ticketGroup   String
+  position      String?
+  price         Int?
+  userId        String?
+  userName      String?
+  eventName     String?
 }
 
 // 先 Pass 金流 發票 的問題

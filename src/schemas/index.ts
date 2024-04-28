@@ -62,6 +62,12 @@ export const RegisterSchema = z.object({
   password: z.string().min(6, {
     message: "Minimum 6 characters required."
   }),
+  cellphone: z.string().min(9, {
+    message: "09xxxxxxxx or 9xxxxxxxx"
+  }).max(10),
+  userId: z.string().length(10,{
+    message: "A*********" 
+  }),
 });
 
 export const ticketSchema = z.object({
@@ -76,3 +82,13 @@ export const taskSchema = z.object({
   priority: z.string(),
 });
 
+export const SwitchTixSchema = z.object({
+  userId: z.string(),
+  eventId: z.string(),
+  tickettype: z.string(),
+  ticketNumber: z.string(),
+  serialNumber: z.number(),
+  ticketGroup: z.string(),
+  position: z.string(),
+  price: z.number(),
+});

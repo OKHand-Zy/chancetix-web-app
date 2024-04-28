@@ -14,6 +14,12 @@ const NotoSansTC = Noto_Sans_TC({
   display: 'swap',
 });
 
+import { Metadata } from "next"
+export const metadata: Metadata = {
+  title: "ChanceTix",
+  description: "ChanceTix 提供一個公平抽選制度的售票平台，並提供原價讓票轉移的平台",
+}
+
 const WebLayout: FC<WebLayoutProps> = ({ children }) => {
   return (
     <html lang="en">
