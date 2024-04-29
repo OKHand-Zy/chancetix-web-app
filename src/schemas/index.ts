@@ -1,6 +1,7 @@
 import { UserRole } from '@prisma/client';
 import * as z from 'zod';
 
+// Account Schema
 export const SettingsSchema = z.object({
   name: z.optional(z.string()),
   isTwoFactorEnabled: z.optional(z.boolean()),
@@ -70,16 +71,22 @@ export const RegisterSchema = z.object({
   }),
 });
 
+//Event Schema
+export const EventSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  date: z.date(),
+  location: z.string(),
+  capacity: z.number(),
+  image: z.string(),
+  tickets: z.number(),
+})
+
+
+
+// Tickets Schema
 export const ticketSchema = z.object({
   userId: z.string(),
-});
-
-export const taskSchema = z.object({
-  id: z.string(),
-  title: z.string(),
-  status: z.string(),
-  label: z.string(),
-  priority: z.string(),
 });
 
 export const SwitchTixSchema = z.object({
@@ -92,3 +99,21 @@ export const SwitchTixSchema = z.object({
   position: z.string(),
   price: z.number(),
 });
+
+// sell ticket schema
+export const checkSellTicketSchema = z.object({
+  activityName: z.string(),
+  ticketType: z.string(),
+})
+
+
+// only for task page
+export const taskSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  status: z.string(),
+  label: z.string(),
+  priority: z.string(),
+});
+
+

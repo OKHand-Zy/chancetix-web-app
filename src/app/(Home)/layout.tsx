@@ -29,6 +29,7 @@ const WebLayout: FC<WebLayoutProps> = ({ children }) => {
         <main className=" 
           bg-orange-300 
           flex-grow
+          h-screen 
         ">
           {children}
         </main>
