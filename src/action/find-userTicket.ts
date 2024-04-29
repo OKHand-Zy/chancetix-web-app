@@ -3,7 +3,7 @@ import * as z from "zod";
 import { db } from "@/lib/db";
 import { ticketSchema } from "@/schemas";
 import { getTicketByUserId } from "@/data/ticket";
-import { getEventsInfo } from "@/data/event";
+import { getEventsById } from "@/data/event";
 import { getUserById } from "@/data/user"
 
 export const findAllTicketbyUserId = async (
@@ -26,7 +26,7 @@ export const findAllTicketbyUserId = async (
    // 並行處理：同時獲取用戶名稱和事件資訊
   const [userName, eventInfo] = await Promise.all([
     getUserById(userId),
-    Promise.all(existingUserTicket.map(ticket => getEventsInfo(ticket.eventId))),
+    Promise.all(existingUserTicket.map(ticket => getEventsById(ticket.eventId))),
   ]);
   
   const TicketData = existingUserTicket.map((ticket, index) => ({

@@ -98,8 +98,8 @@ model Event {
 
 model Ticket {
   id            Int       @id @default(autoincrement())
-  ticketNumber  String?   @unique
-  serialNumber  Int?
+  ticketNumber  Int?
+  serialNumber  String?   @unique      
   tickettype    String?
   ticketGroup   String
   position      String?
@@ -122,15 +122,15 @@ enum TicketStatus {
 
 model SwitchTicket {
   id            Int       @id @default(autoincrement())
+  userId        String?
+  userName      String?
+  eventName     String?
   ticketNumber  String?   @unique
-  serialNumber  Int?
+  serialNumber  Int?      @unique
   tickettype    String?
   ticketGroup   String
   position      String?
   price         Int?
-  userId        String?
-  userName      String?
-  eventName     String?
 }
 
 // 先 Pass 金流 發票 的問題

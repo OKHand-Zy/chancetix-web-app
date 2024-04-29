@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 
-import Link from 'next/link';
 import { Button } from '@/components/ui/Shadcn/button';
 import {
   Card,
@@ -14,52 +13,64 @@ import {
 
 import SellTicketLen from "./sellticket_len";
 
+import { checkSellTickets } from '@/action/sellticket/check-tickets';
+
 export const SellFrom = () => {
-  const [vip1Count, setVip1Count] = useState<number>(0);
-  const [vip2Count, setVip2Count] = useState<number>(0);
+  const [N1Count, setN1Count] = useState<number>(0);
+  const [N2Count, setN2Count] = useState<number>(0);
   const [totalCount, setTotalCount] = useState<number>(0);
   
   useEffect(() => {
-    setTotalCount(vip1Count + vip2Count);
-  }, [vip1Count, vip2Count]);
+    setTotalCount(N1Count + N2Count);
+  }, [N1Count, N2Count]);
 
-  const handleShowTotalCount = () => {
-    // 處理顯示總數量的邏輯 , 後來改成查詢資料庫確認有之後再觸發購買,沒有回傳 alert 沒有庫存
-    alert(`VIP-1: ${vip1Count}, VIP-2: ${vip2Count}, Total: ${totalCount}`);
+  const handleShowTotalCount = async () => {
+      const activityName = ""
+      const ticketType = "一般票" 
+      const result = await checkSellTickets({ activityName, ticketType });
+      if (typeof result === 'number') {
+        // 如果 result 是數字，並且大於 vip1Count，則顯示 alert
+        if (result > N1Count) {
+          alert(result);
+        }
+      } else if (typeof result === 'object' && result.error) {
+        // 如果 result 是一個含有 error 字段的對象，則顯示錯誤訊息
+        alert(result.error);
+      }
   };
 
   return (
-    <div className="bg-white w-8/12 p-10 rounded-xl flex justify-center">
-      <Card className="w-8/12">
-        <CardHeader className="text-center">
-          <CardTitle className="text-4xl">404</CardTitle>
-          <CardDescription>
-            The page you’re looking for doesn’t exist.
-          </CardDescription>
-        </CardHeader>
-        <CardFooter className="flex justify-center flex-col">
+    <div className='w-screen h-screen flex items-center justify-center'>
+    <Card className="w-8/12">
+      <CardHeader className="text-center">
+        <CardTitle className="text-4xl">ABC-VIP</CardTitle>
+        <CardDescription>
+          Descrip the page Sell from.
+        </CardDescription>
+      </CardHeader>
+      <CardFooter className="flex justify-center flex-col">
+        <SellTicketLen
+            label="Normal-1"
+            onCountChange={(newCount) => {
+              setN1Count(newCount);
+              console.log("Normal-1 : " + newCount);
+            }}
+          />
           <SellTicketLen
-              label="VIP-1"
-              onCountChange={(newCount) => {
-                setVip1Count(newCount);
-                console.log("VIP-1 : " + newCount);
-              }}
-            />
-            <SellTicketLen
-              label="VIP-2"
-              onCountChange={(newCount) => {
-                setVip2Count(newCount);
-                console.log("VIP-2 : " + newCount);
-              }}
-            />
-            
-        </CardFooter>
-        <div className='flex justify-center'>
-          <Button onClick={handleShowTotalCount}>
-              Show Total Count
-          </Button>
-        </div>
-      </Card>
+            label="Normal-2"
+            onCountChange={(newCount) => {
+              setN2Count(newCount);
+              console.log("Normal-2 : " + newCount);
+            }}
+          />
+          
+      </CardFooter>
+      <div className='flex justify-center p-4'>
+        <Button onClick={handleShowTotalCount}>
+            Show Total Count
+        </Button>
+      </div>
+    </Card>
     </div>
   )
 }
