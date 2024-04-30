@@ -121,12 +121,12 @@ enum TicketStatus {
 }
 
 model SwitchTicket {
-  id            Int       @id @default(autoincrement())
+  id            Int        @id @default(autoincrement())
   userId        String?
   userName      String?
   eventName     String?
-  ticketNumber  String?   @unique
-  serialNumber  Int?      @unique
+  ticketNumber  Int?      
+  serialNumber  String?    @unique 
   tickettype    String?
   ticketGroup   String
   position      String?
