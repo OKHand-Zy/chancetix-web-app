@@ -15,7 +15,13 @@ import SellTicketLen from "./sellticket_len";
 
 import { checkSellTickets } from '@/action/sellticket/check-tickets';
 
-export const SellFrom = () => {
+interface SellFromProps {
+  activityName: string;
+  ticketType: string;
+  ticketGroup: string;
+}
+
+export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ticketGroup }) => {
   const [N1Count, setN1Count] = useState<number>(0);
   const [N2Count, setN2Count] = useState<number>(0);
   const [totalCount, setTotalCount] = useState<number>(0);
@@ -25,25 +31,24 @@ export const SellFrom = () => {
   }, [N1Count, N2Count]);
 
   const handleShowTotalCount = async () => {
-      const activityName = ""
-      const ticketType = "一般票" 
-      const result = await checkSellTickets({ activityName, ticketType });
-      if (typeof result === 'number') {
-        // 如果 result 是數字，並且大於 vip1Count，則顯示 alert
-        if (result > N1Count) {
-          alert(result);
-        }
-      } else if (typeof result === 'object' && result.error) {
-        // 如果 result 是一個含有 error 字段的對象，則顯示錯誤訊息
-        alert(result.error);
+    if (totalCount <= 0) {
+      return; // 直接返回，不進行任何操作
+    }
+    const result = await checkSellTickets({ activityName, ticketType , ticketGroup });
+    if (typeof result === 'number') {
+      if (result > N1Count) {
+        alert(result);
       }
+    } else if (typeof result === 'object' && result.error) {
+      alert(result.error);
+    }
   };
 
   return (
     <div className='w-screen h-screen flex items-center justify-center'>
     <Card className="w-8/12">
       <CardHeader className="text-center">
-        <CardTitle className="text-4xl">ABC-VIP</CardTitle>
+        <CardTitle className="text-4xl">ABC-Normal</CardTitle>
         <CardDescription>
           Descrip the page Sell from.
         </CardDescription>

@@ -22,7 +22,8 @@ export const checkSellTickets = async (
   const existingEventCategory = existingEventInfo?.capacity
   const existingEventId = existingEventInfo?.id
   const existingTicketType = validatedFields.data.ticketType
-  const existingTicketCount = await getTicketCountForEvent(existingEventId,existingTicketType);
+  const existingTicketGroup = validatedFields.data.ticketGroup
+  const existingTicketCount = await getTicketCountForEvent(existingEventId,existingTicketType,existingTicketGroup);
   const remainderTicketCount = existingEventCategory-existingTicketCount
     
   if ( remainderTicketCount > 0) {

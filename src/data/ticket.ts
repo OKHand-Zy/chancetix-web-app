@@ -33,20 +33,39 @@ export const getTansferTicketByUserId = async (userId: string) => {
 
 export const getTicketCountForEvent = async(
   eventId: string,
-  ticketType: string
+  ticketType: string,
+  ticketGroup: string
 ) => {
   // 查詢特定事件並包含其所有票數
-  const eventData = await db.event.findUnique({
-    where: {
-      id: eventId,
-    },
-    include: {
-      tickets: {
-        where: {
-          tickettype: ticketType, 
-        },
-      }
-    },
-  });
-  return eventData?.tickets.length || 0;
+  if (ticketGroup === "" ) {
+    const eventData = await db.event.findUnique({
+      where: {
+        id: eventId,
+      },
+      include: {
+        tickets: {
+          where: {
+            tickettype: ticketType, 
+          },
+        }
+      },
+    });
+    return eventData?.tickets.length || 0;
+  } else {
+    const eventData = await db.event.findUnique({
+      where: {
+        id: eventId,
+      },
+      include: {
+        tickets: {
+          where: {
+            tickettype: ticketType, 
+            ticketGroup: ticketGroup
+          },
+        }
+      },
+    });
+    return eventData?.tickets.length || 0;
+  }
+  
 }

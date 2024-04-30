@@ -104,6 +104,7 @@ export const SwitchTixSchema = z.object({
 export const checkSellTicketSchema = z.object({
   activityName: z.string(),
   ticketType: z.string(),
+  ticketGroup: z.string(),
 })
 
 
