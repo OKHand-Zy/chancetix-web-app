@@ -11,9 +11,10 @@ import {
   CardTitle,
 } from "@/components/ui/Shadcn/card"
 
+import { SellFromNavbar } from './sell-from-Navbar';
 import SellTicketLen from "./sellticket_len";
 
-import { checkSellTickets } from '@/action/sellticket/check-tickets';
+import { checkSellTickets } from '@/action/snap-up-ticket/check-tickets';
 
 interface SellFromProps {
   activityName: string;
@@ -21,7 +22,7 @@ interface SellFromProps {
   ticketGroup: string;
 }
 
-export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ticketGroup }) => {
+export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ticketGroup}) => {
   const [N1Count, setN1Count] = useState<number>(0);
   const [N2Count, setN2Count] = useState<number>(0);
   const [totalCount, setTotalCount] = useState<number>(0);
@@ -47,12 +48,11 @@ export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ti
   return (
     <div className='w-screen h-screen flex items-center justify-center'>
     <Card className="w-8/12">
+      
       <CardHeader className="text-center">
-        <CardTitle className="text-4xl">ABC-Normal</CardTitle>
-        <CardDescription>
-          Descrip the page Sell from.
-        </CardDescription>
+        <SellFromNavbar title="ABC-Normal" description="Hello" /> 
       </CardHeader>
+
       <CardFooter className="flex justify-center flex-col">
         <SellTicketLen
             label="Normal-1"

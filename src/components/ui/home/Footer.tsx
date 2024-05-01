@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
   return (
     <footer>
       <div className='
-        bg-slate-300
+        bg-slate-400
         h-40 
         px-4 
         justify-center 
