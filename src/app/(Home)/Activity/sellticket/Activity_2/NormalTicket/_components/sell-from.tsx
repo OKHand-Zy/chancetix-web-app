@@ -21,10 +21,9 @@ interface SellFromProps {
   activityName: string;
   ticketType: string;
   ticketGroup: string;
-  ticketCount: number;
 }
 
-export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ticketGroup}) => {
+export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ticketGroup }) => {
   const [N1Count, setN1Count] = useState<number>(0);
   const [N2Count, setN2Count] = useState<number>(0);
   const [totalCount, setTotalCount] = useState<number>(0);
@@ -38,7 +37,7 @@ export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ti
     const userId = session_user?.id
     const ticketCount = totalCount
     if (userId) {
-      const result = await SubscribeTickets({userId , activityName, ticketType , ticketGroup,ticketCount});
+      const result = await SubscribeTickets({userId , activityName, ticketType , ticketGroup, ticketCount});
       console.log(result)
     }
   };
