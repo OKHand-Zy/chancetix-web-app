@@ -37,7 +37,7 @@ export default auth( (req) => {
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname) || nextUrl.pathname.startsWith(activityInfoPath);;
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
   // 指定時間開放路徑
-  const isActivity2Route = nextUrl.pathname === "/Activity/info/Activity_2";
+  const isActivity2Route = nextUrl.pathname === "/Activity/info/Activity_3";
 
   // 確認開頭是 api router
   if (isApiAuthRoute) {
@@ -63,7 +63,7 @@ export default auth( (req) => {
     return Response.redirect(new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl) )
   }
 
-  // 如果是 Activity_2 路由且時間未到，則導向 首頁
+  // 如果是 Activity_3 路由且時間未到，則導向 首頁
   if (isActivity2Route && !isAccessTime()) {
     // 直接返回 首頁
     return Response.redirect(new URL("/", nextUrl) )

@@ -8,19 +8,20 @@ import {
 import { Button } from "@/components/ui/Shadcn/button";
 
 import * as z from "zod";
-import { ticketSchema } from "@/schemas";
-import { findTransferTicket } from "@/action/find-transferTicket";
+
 import { useSession } from "next-auth/react";
+
+
 
 const TestPage = () => {
   const session = useSession();
 
-  const onClick = (
-    values: z.infer<typeof ticketSchema>
-  ) => {
-    findTransferTicket(values).then((data) => {
-      console.log(data)
-    })
+  const onClick = () => {
+    const systemTime = new Date()
+    const taipeiTime = new Date(systemTime.toLocaleString("en-US", { timeZone: "Asia/Taipei" }));
+    const prismaTime = taipeiTime.toISOString();
+
+    console.log(prismaTime);
   }
 
   return (
@@ -32,10 +33,7 @@ const TestPage = () => {
       </CardHeader>
       <CardContent className="flex justify-center">
         <Button onClick={() => {
-          const userId = session.data?.user?.id;
-          if (userId) {
-            onClick({ userId });
-          }
+          onClick()
         }}>
           Test Button
         </Button>

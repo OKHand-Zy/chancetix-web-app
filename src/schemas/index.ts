@@ -100,11 +100,20 @@ export const SwitchTixSchema = z.object({
   price: z.number(),
 });
 
-// sell ticket schema
+// snap-up ticket
 export const checkSellTicketSchema = z.object({
   activityName: z.string(),
   ticketType: z.string(),
   ticketGroup: z.string(),
+})
+
+// lottery ticket
+export const checkSubscribeSchema = z.object({
+  userId: z.string(),
+  activityName: z.string(),
+  ticketType: z.string(),
+  ticketGroup: z.string(),
+  ticketCount: z.number(),
 })
 
 

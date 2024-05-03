@@ -120,6 +120,21 @@ enum TicketStatus {
   EXPIRED
 }
 
+model SubscribeTicket {
+  id            String       @id @default(cuid())
+  userId        String?
+  eventId       String?
+  tickettype    String?
+  ticketGroup   String
+  ticketCount   Int?
+}
+
+model PaymentOrder {
+  id            String       @id @default(cuid())
+  userId        String?
+  eventId       String?
+}
+
 model SwitchTicket {
   id            Int        @id @default(autoincrement())
   userId        String?

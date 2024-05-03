@@ -31,6 +31,7 @@ export const getTansferTicketByUserId = async (userId: string) => {
   return ticket;
 }
 
+// snap up ticket function
 export const getTicketCountForEvent = async(
   eventId: string,
   ticketType: string,
@@ -68,4 +69,21 @@ export const getTicketCountForEvent = async(
     return eventData?.tickets.length || 0;
   }
   
+}
+
+// lottery ticket function
+export const UserSubscribeForEvent = async(
+  userId: string,
+  eventId: string,
+) => {
+  const checkSubResult = await db.subscribeTicket.findMany({
+    where: {
+      userId: userId,
+      eventId: eventId
+    }
+  })
+  if (Array.isArray(checkSubResult) && checkSubResult.length === 0) {
+    return true
+  }
+  return false
 }
