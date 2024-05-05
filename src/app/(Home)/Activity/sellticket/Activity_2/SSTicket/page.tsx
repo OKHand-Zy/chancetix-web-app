@@ -1,10 +1,10 @@
 
-function Activity_1_SS() {
+function Activity_2_SS() {
     return (
         <div>
-            Activity_1_SS
+            Activity_2_SS
         </div>
     );
 }
 
-export default Activity_1_SS
+export default Activity_2_SS

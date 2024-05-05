@@ -1,4 +1,5 @@
 import CarouselSlide from '@/components/home/carouselslide';
+import NewCarouselSlide from '@/components/home/NewCarouselide/carouselslide';
 import ProductCard from '@/components/home/productcards';
 import React from 'react';
 
@@ -8,7 +9,7 @@ const Home: React.FC = () => {
   return (
     <>
       <div className="h-full flex flex-col p-8">
-        <CarouselSlide />
+        <NewCarouselSlide />
         <Card>
           <ProductCard />
         </Card>

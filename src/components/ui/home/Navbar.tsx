@@ -29,7 +29,7 @@ const Header: FC<HeaderProps> = () => {
     <header>
       <div className='
         bg-white
-        h-16 
+        h-20 
         px-4 
         flex 
         justify-center 

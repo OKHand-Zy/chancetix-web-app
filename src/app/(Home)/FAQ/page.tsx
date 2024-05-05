@@ -24,17 +24,17 @@ export default function page() {
                 常見問題
               </h1>
               <Accordion type="multiple" className="w-8/12 p-10">
-                <AccordionItem value="item-1" className='bg-gray-300'>
+                <AccordionItem value="Quiz1">
                   <AccordionTrigger>如何聯繫我們?</AccordionTrigger>
                   <AccordionContent>ChanceTix.service@gmail.com</AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="item-2" className='bg-gray-300'>
+                <AccordionItem value="Quiz2">
                   <AccordionTrigger>服務何時上線?</AccordionTrigger>
                   <AccordionContent>預計2024年6月底上線</AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="item-3" className='bg-gray-300'>
+                <AccordionItem value="Quiz3">
                   <AccordionTrigger>製作人?</AccordionTrigger>
                   <AccordionContent>OKH@nd.ZY</AccordionContent>
                 </AccordionItem>
