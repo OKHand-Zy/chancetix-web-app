@@ -170,7 +170,10 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
             ))}
           </div>
         <div className="embla__buttons">
-          <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
+          <NextButton 
+            onClick={onNextButtonClick} 
+            disabled={nextBtnDisabled} 
+          />
         </div>
       </div>
 
