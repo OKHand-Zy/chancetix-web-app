@@ -14,7 +14,8 @@ import {
 import { SellFromNavbar } from './sell-from-Navbar';
 import SellTicketLen from "./sellticket_len";
 
-import { checkSellTickets } from '@/action/snap-up-ticket/check-tickets';
+import { SubscribeTickets } from '@/action/lottery-ticket/subscribe';
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 interface SellFromProps {
   activityName: string;
@@ -22,26 +23,22 @@ interface SellFromProps {
   ticketGroup: string;
 }
 
-export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ticketGroup}) => {
+export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ticketGroup }) => {
   const [N1Count, setN1Count] = useState<number>(0);
   const [N2Count, setN2Count] = useState<number>(0);
   const [totalCount, setTotalCount] = useState<number>(0);
-  
+  const session_user = useCurrentUser();
+
   useEffect(() => {
     setTotalCount(N1Count + N2Count);
   }, [N1Count, N2Count]);
 
   const handleShowTotalCount = async () => {
-    if (totalCount <= 0) {
-      return; // 直接返回，不進行任何操作
-    }
-    const result = await checkSellTickets({ activityName, ticketType , ticketGroup });
-    if (typeof result === 'number') {
-      if (result > N1Count) {
-        alert(result);
-      }
-    } else if (typeof result === 'object' && result.error) {
-      alert(result.error);
+    const userId = session_user?.id
+    const ticketCount = totalCount
+    if (userId) {
+      const result = await SubscribeTickets({userId , activityName, ticketType , ticketGroup, ticketCount});
+      console.log(result)
     }
   };
 
@@ -50,7 +47,7 @@ export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ti
     <Card className="w-8/12">
       
       <CardHeader className="text-center">
-        <SellFromNavbar title="ABC-Normal" description="Snap-Up Mode Ticket" /> 
+        <SellFromNavbar title="ABC-Normal" description="Hello" /> 
       </CardHeader>
 
       <CardFooter className="flex justify-center flex-col">

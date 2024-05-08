@@ -17,8 +17,8 @@ import {
 
 function Activity_1() {
   return (
-    <div className="flex items-center justify-center p-8">
-      <Card className="w-8/12 h-full p-4">
+    <div className="h-screen flex items-center justify-center p-8">
+      <Card className="w-8/12 p-4">
         <CardHeader>
           <CardTitle>Create project</CardTitle>
           <CardDescription>Deploy your new project in one-click.</CardDescription>

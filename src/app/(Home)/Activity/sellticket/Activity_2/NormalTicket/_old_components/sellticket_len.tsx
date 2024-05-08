@@ -7,17 +7,19 @@ interface SellTicketLenProps {
   label?: string;
   initialCount?: number;
   onCountChange?: (count: number) => void;
+  totalCount?: number;
 }
 
 const SellTicketLen: React.FC<SellTicketLenProps> = ({ 
   label = 'Ticket_Name', 
   initialCount = 0, 
-  onCountChange 
+  onCountChange,
+  totalCount = 0,
 }) => {
   const [count, setCount] = useState<number>(initialCount);
 
   const increment = () => {
-    if (count < 4){
+    if (count < 4 && totalCount < 4 ) {
       const newCount = count + 1;
       setCount(newCount);
       if (onCountChange) {

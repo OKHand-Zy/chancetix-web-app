@@ -6,13 +6,14 @@ import { Button } from '@/components/ui/Shadcn/button';
 import {
   Card,
   CardDescription,
+  CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/Shadcn/card"
 
 import { SellFromNavbar } from './sell-from-Navbar';
-import SellTicketLen from "./sellticket_len";
+import ChooseTicketLen from "./chooseticket_len";
 
 import { SubscribeTickets } from '@/action/lottery-ticket/subscribe';
 import { useCurrentUser } from "@/hooks/use-current-user";
@@ -20,60 +21,47 @@ import { useCurrentUser } from "@/hooks/use-current-user";
 interface SellFromProps {
   activityName: string;
   ticketType: string;
-  ticketGroup: string;
+  NavBarTitle : string;
+  NavBarDescription : string;
+  volunteerList : { label: string, value: string }[];
 }
 
-export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ticketGroup }) => {
-  const [N1Count, setN1Count] = useState<number>(0);
-  const [N2Count, setN2Count] = useState<number>(0);
-  const [totalCount, setTotalCount] = useState<number>(0);
+export const SellFrom: React.FC<SellFromProps> = ({ 
+  activityName,
+  ticketType,
+  NavBarTitle, 
+  NavBarDescription, 
+  volunteerList 
+}) => {
   const session_user = useCurrentUser();
-
-  useEffect(() => {
-    setTotalCount(N1Count + N2Count);
-  }, [N1Count, N2Count]);
-
-  const handleShowTotalCount = async () => {
-    const userId = session_user?.id
-    const ticketCount = totalCount
-    if (userId) {
-      const result = await SubscribeTickets({userId , activityName, ticketType , ticketGroup, ticketCount});
-      console.log(result)
-    }
-  };
 
   return (
     <div className='w-screen h-screen flex items-center justify-center'>
     <Card className="w-8/12">
       
       <CardHeader className="text-center">
-        <SellFromNavbar title="ABC-Normal" description="Hello" /> 
+        <SellFromNavbar 
+          title={NavBarTitle} 
+          description={NavBarDescription} 
+        /> 
       </CardHeader>
 
-      <CardFooter className="flex justify-center flex-col">
-        <SellTicketLen
-            label="Normal-1"
-            onCountChange={(newCount) => {
-              setN1Count(newCount);
-              console.log("Normal-1 : " + newCount);
-            }}
-          />
-          <SellTicketLen
-            label="Normal-2"
-            onCountChange={(newCount) => {
-              setN2Count(newCount);
-              console.log("Normal-2 : " + newCount);
-            }}
-          />
-          
-      </CardFooter>
-      <div className='flex justify-center p-4'>
-        <Button onClick={handleShowTotalCount}>
-            Show Total Count
+      <CardContent className="flex justify-center items-center flex-col gap-y-4">
+        <ChooseTicketLen 
+          fromName = "First Volunteer"
+          volunteerList={volunteerList} 
+        />
+        <ChooseTicketLen 
+          fromName = "Second Volunteer"
+          volunteerList={volunteerList} 
+        />
+      </CardContent>
+      <CardFooter className='lex justify-center items-center'>
+        <Button>
+          Submit
         </Button>
-      </div>
+      </CardFooter>
     </Card>
     </div>
   )
-}
-
+};
