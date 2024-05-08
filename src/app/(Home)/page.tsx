@@ -8,7 +8,7 @@ import { Card } from '@/components/ui/Shadcn/card';
 const Home: React.FC = () => {
   return (
     <>
-      <div className="h-full flex flex-col p-8">
+      <div className="w-auto h-auto flex flex-col p-8">
         <NewCarouselSlide />
         <Card>
           <ProductCard />

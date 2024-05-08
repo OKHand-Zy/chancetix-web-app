@@ -1,9 +1,9 @@
 .embla {
-    max-width: 48rem;
+    max-width: 100%;
     margin: auto;
     --slide-height: 19rem;
     --slide-spacing: 1rem;
-    --slide-size: 70%;
+    --slide-size: 45%;
   }
   .embla__viewport {
     overflow: hidden;
@@ -31,11 +31,15 @@
     align-items: center;
     justify-content: space-between;
     gap: 1.2rem;
-    margin-top: 1.8rem;
+    margin-top: 0.35rem;
   }
   .embla__buttons {
     gap: 0.6rem;
     align-items: center;
+  }
+  .embla__buttons:hover {
+    background-color: #d1d5dbb0;
+    border-radius: 100%;
   }
   .embla__button {
     -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
