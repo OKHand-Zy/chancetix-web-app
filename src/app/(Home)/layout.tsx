@@ -25,7 +25,6 @@ const WebLayout: FC<WebLayoutProps> = ({ children }) => {
     <html lang="en">
       <body className={NotoSansTC.className}>
         <Header />
-
         <main className=" 
           bg-orange-300 
           flex-grow
