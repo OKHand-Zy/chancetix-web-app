@@ -33,18 +33,28 @@ import {
   PopoverTrigger,
 } from "@/components/ui/Shadcn/popover"
 
-import { toast } from "@/components/ui/Shadcn/use-toast"
+import NumberButton from './count-button';
 
-interface ChooseTicketLenProps {
-  fromName: string;
+interface VComboboxProps {
+  fromLabel: string;
+  formDescrip: string;
   volunteerList : { label: string, value: string }[];
+  onValueChange: (CVolunteer: string) => void;
 }
 
-const ChooseTicketLen: React.FC<ChooseTicketLenProps> = ({ 
+const VoluteerCombobox: React.FC<VComboboxProps> = ({ 
+  fromLabel,
+  formDescrip,
   volunteerList,
-  fromName
+  onValueChange,
 }) => {
-  
+  const [selectedValue, setSelectedValue] = useState<string>(''); // 新增的状态
+
+  const handleSelect = (value: string) => {
+    setSelectedValue(value);
+    onValueChange(value); // 当用户选择时，调用 onValueChange 回调函数
+  };
+
   const FormSchema = z.object({
     language: z.string({
       required_error: "Please select a volunteer.",
@@ -55,9 +65,15 @@ const ChooseTicketLen: React.FC<ChooseTicketLenProps> = ({
     resolver: zodResolver(FormSchema),
   })
 
-  const onSubmit = () => {
-    console.log("submitted")
-  }
+  const onCheck = () => {
+    if (selectedValue.trim() === '') {
+      form.handleSubmit(onSubmit)();
+    }
+  };
+
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(data)
+  } // 需要調整目前不會觸發 form error 顯示 FormDescription
 
   return (
     <Form {...form}>
@@ -67,7 +83,7 @@ const ChooseTicketLen: React.FC<ChooseTicketLenProps> = ({
           name="language"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>{fromName}</FormLabel>
+              <FormLabel>{fromLabel}</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -103,6 +119,7 @@ const ChooseTicketLen: React.FC<ChooseTicketLenProps> = ({
                           key={language.value}
                           onSelect={() => {
                             form.setValue("language", language.value)
+                            handleSelect(language.value)
                           }}
                         >
                           {language.label}
@@ -121,14 +138,17 @@ const ChooseTicketLen: React.FC<ChooseTicketLenProps> = ({
                   </Command>
                 </PopoverContent>
               </Popover>
-
+              <FormDescription>
+                {formDescrip}
+              </FormDescription>  
               <FormMessage />
             </FormItem>
           )}
         />
+        
       </form>
     </Form>
   );
 };
 
-export default ChooseTicketLen;
+export default VoluteerCombobox;
