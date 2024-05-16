@@ -34,25 +34,32 @@ import {
 } from "@/components/ui/Shadcn/popover"
 
 import NumberButton from './count-button';
+import LTicketFromStore from '@/store/LTicketFromStore'
+
 
 interface VComboboxProps {
   fromLabel: string;
   formDescrip: string;
   volunteerList : { label: string, value: string }[];
-  onValueChange: (CVolunteer: string) => void;
+  VType: string;
 }
 
 const VoluteerCombobox: React.FC<VComboboxProps> = ({ 
   fromLabel,
   formDescrip,
   volunteerList,
-  onValueChange,
+  VType,
 }) => {
   const [selectedValue, setSelectedValue] = useState<string>(''); // 新增的状态
 
+  function updateVolunteerInfo(VValue: string) {
+    LTicketFromStore.getState().UpdateVolunteer(VType, VValue);
+  }
+
+
   const handleSelect = (value: string) => {
     setSelectedValue(value);
-    onValueChange(value); // 当用户选择时，调用 onValueChange 回调函数
+    updateVolunteerInfo(value); // 当用户选择时，调用 onValueChange 回调函数
   };
 
   const FormSchema = z.object({
