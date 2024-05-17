@@ -34,29 +34,36 @@ import {
 } from "@/components/ui/Shadcn/popover"
 
 import NumberButton from './count-button';
+import LTicketFromStore from '@/store/LTicketFromStore'
+
 
 interface VComboboxProps {
   fromLabel: string;
   formDescrip: string;
   volunteerList : { label: string, value: string }[];
-  onValueChange: (CVolunteer: string) => void;
+  VType: string;
 }
 
 const VoluteerCombobox: React.FC<VComboboxProps> = ({ 
   fromLabel,
   formDescrip,
   volunteerList,
-  onValueChange,
+  VType,
 }) => {
   const [selectedValue, setSelectedValue] = useState<string>(''); // 新增的状态
 
+  function updateVolunteerInfo(VValue: string) {
+    LTicketFromStore.getState().UpdateVolunteer(VType, VValue);
+  }
+
+
   const handleSelect = (value: string) => {
     setSelectedValue(value);
-    onValueChange(value); // 当用户选择时，调用 onValueChange 回调函数
+    updateVolunteerInfo(value); // 当用户选择时，调用 onValueChange 回调函数
   };
 
   const FormSchema = z.object({
-    language: z.string({
+    volunteer: z.string({
       required_error: "Please select a volunteer.",
     }),
   })
@@ -80,7 +87,7 @@ const VoluteerCombobox: React.FC<VComboboxProps> = ({
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
-          name="language"
+          name="volunteer"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>{fromLabel}</FormLabel>
@@ -97,7 +104,7 @@ const VoluteerCombobox: React.FC<VComboboxProps> = ({
                     >
                       {field.value
                         ? volunteerList.find(
-                            (language) => language.value === field.value
+                            (volunteer) => volunteer.value === field.value
                           )?.label
                         : "Select Volunteer"}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -113,20 +120,20 @@ const VoluteerCombobox: React.FC<VComboboxProps> = ({
                     <CommandEmpty>No found.</CommandEmpty>
                     <CommandList>
                     <CommandGroup>
-                      {volunteerList.map((language) => (
+                      {volunteerList.map((volunteer) => (
                         <CommandItem
-                          value={language.label}
-                          key={language.value}
+                          value={volunteer.label}
+                          key={volunteer.value}
                           onSelect={() => {
-                            form.setValue("language", language.value)
-                            handleSelect(language.value)
+                            form.setValue("volunteer", volunteer.value)
+                            handleSelect(volunteer.value)
                           }}
                         >
-                          {language.label}
+                          {volunteer.label}
                           <CheckIcon
                             className={cn(
                               "ml-auto h-4 w-4",
-                              language.value === field.value
+                              volunteer.value === field.value
                                 ? "opacity-100"
                                 : "opacity-0"
                             )}
