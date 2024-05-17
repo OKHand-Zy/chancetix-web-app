@@ -1,0 +1,8 @@
+{
+  "regions": ["hkg1"],
+  "git": {
+    "deploymentEnabled": {
+      "develop": false  
+    }
+  }
+}

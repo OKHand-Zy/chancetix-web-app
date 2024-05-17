@@ -15,9 +15,7 @@ interface TicketState {
   addSVTCount: () => void
   decFVTCount: () => void
   decSVTCount: () => void
-  restTicket: () => void
 }
-
 
 const LTicketFromStore = create<TicketState>()(
   persist(
@@ -61,9 +59,6 @@ const LTicketFromStore = create<TicketState>()(
         if (get().SVCount > 0) {
           set({SVCount: get().SVCount - 1 });
         }
-      },
-      restTicket: () => {
-        
       }
     }),
     {
