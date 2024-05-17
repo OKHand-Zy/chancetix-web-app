@@ -73,7 +73,7 @@ const CountButton: React.FC<CButtonProps> = ({
       )
     }
     if (VType === "SV") {
-      const decTicket = LTicketFromStore((state) => state.decFVTCount);
+      const decTicket = LTicketFromStore((state) => state.decSVTCount);
       const count = LTicketFromStore((state) => state.SVCount);
       return(
         <Button 
