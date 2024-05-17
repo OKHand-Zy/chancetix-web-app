@@ -46,65 +46,25 @@ export const SellFrom: React.FC<SellFromProps> = ({
   ticketType,
   NavBarTitle = activityName+"-"+ticketType,
   NavBarDescription, 
-  volunteerList 
+  volunteerList
 }) => {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
   };
-
-  function AlertDTitle () {
-    const FVolunteer = LTicketFromStore((state) => state.FVolunteer)
-    const FVCount = LTicketFromStore((state) => state.FVCount)
-    const SVolunteer = LTicketFromStore((state) => state.SVolunteer)
-    const SVCount = LTicketFromStore((state) => state.SVCount)
-    if ( FVolunteer === "" || SVolunteer === "" ||
-        FVCount <= 0 || SVCount <= 0) 
-      {
-        return (
-          <AlertDialogTitle>
-            Confirm your selection of volunteers
-          </AlertDialogTitle>
-        )
-      } else {
-        return (
-          <AlertDialogTitle>
-            Confirm your selection of volunteers
-          </AlertDialogTitle>
-        )
-      }
-  }
-
-  function AlertMessage() {
-    const FVolunteer = LTicketFromStore((state) => state.FVolunteer)
-    const FVCount = LTicketFromStore((state) => state.FVCount)
-    const SVolunteer = LTicketFromStore((state) => state.SVolunteer)
-    const SVCount = LTicketFromStore((state) => state.SVCount)
-    if (FVolunteer == "" || SVolunteer == "" )
-    <div className='flex flex-col gap-y-2'>
-      {(LTicketFromStore((state) => state.FVolunteer) === "" || LTicketFromStore((state) => state.SVolunteer) === "") 
-        ? <p className='text-red-500'>Select both Volunteers.</p> 
-        : (LTicketFromStore((state) => state.FVCount) <= 0 || LTicketFromStore((state) => state.SVCount) <= 0)
-        ? <p className='text-red-500'>Check both TicketCount must &gt; 0</p> 
-        : <>
-          <p>
-            First  Volunteer: {getFromInfo().FVolunteer} 
-            TicketCount: {getFromInfo().FVCount}
-          </p>  
-          <p>
-            Second Volunteer: {getFromInfo().SVolunteer}
-            TicketCount: {getFromInfo().SVCount}
-          </p> 
-          </>
-      }
-    </div>
-  }
+  // zustand 訂閱值 保持在最新的狀態
+  const { FVolunteer, SVolunteer, FVCount, SVCount } = LTicketFromStore((state) => ({
+    FVolunteer: state.FVolunteer,
+    FVCount: state.FVCount,
+    SVolunteer: state.SVolunteer,
+    SVCount: state.SVCount,
+  }));
 
   function updateStoreInfo() {
-    LTicketFromStore.getState().UpdateACName(activityName);
-    LTicketFromStore.getState().UpdateTicketType(ticketType);
+    const LTFstore = LTicketFromStore.getState();
+    LTFstore.UpdateACName(activityName);
+    LTFstore.UpdateTicketType(ticketType);
   }
 
   useEffect(() => {
@@ -155,16 +115,38 @@ export const SellFrom: React.FC<SellFromProps> = ({
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDTitle />
-                <AlertMessage />
+                <AlertDialogTitle>
+                  {(FVolunteer === "" || SVolunteer === "" ||
+                    FVCount <= 0 || SVCount <= 0) 
+                    ? "Please Check Volunteers & TicketCount " 
+                    : "Confirm your selection of volunteers"
+                  }
+                </AlertDialogTitle>
+                <div className='flex flex-col gap-y-2'>
+                  {(FVolunteer === "" || SVolunteer === "") 
+                    ? <p className='text-red-500'>Select both Volunteers.</p> 
+                    : (FVCount <= 0 || SVCount <= 0)
+                    ? <p className='text-red-500'>Check both TicketCount must &gt; 0</p> 
+                    : <>
+                      <p>
+                        First  Volunteer: {FVolunteer} 
+                        TicketCount: {FVCount}
+                      </p>  
+                      <p>
+                        Second Volunteer: {SVolunteer}
+                        TicketCount: {SVCount}
+                      </p> 
+                      </>
+                  }
+                </div>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel onClick={handleCloseDialog}>
                   Cancel
                 </AlertDialogCancel>
 
-                {(getFromInfo().FVolunteer === "" || getFromInfo().SVolunteer === "" ||
-                  getFromInfo().FVCount <= 0 || getFromInfo().SVCount <= 0) 
+                {(FVolunteer === "" || SVolunteer === "" ||
+                  FVCount <= 0 || SVCount <= 0) 
                   ? <></>
                   : <Button asChild>
                       <Link href={'/subscrbe-from'}>Continue</Link>
