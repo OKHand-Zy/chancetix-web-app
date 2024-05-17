@@ -2,54 +2,98 @@
 
 import { Button } from "@/components/ui/Shadcn/button";
 import { table } from "console";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import LTicketFromStore from '@/store/LTicketFromStore'
+
 
 interface CButtonProps {
-  initialCount?: number;
-  onCountChange?: (value: number) => void;
-  totalCount?: number;
-  status?: boolean;
+  VType: string,
 }
 
 const CountButton: React.FC<CButtonProps> = ({ 
-  initialCount = 0, 
-  onCountChange ,
-  totalCount = 0,
-  status,
+  VType,
 }) => {
-  const [count, setCount] = useState<number>(initialCount);
-
-  const increment = () => {
-    if (count < 4 && totalCount < 4 && status === true) {
-      const newCount = count + 1;
-      setCount(newCount);
-      if (onCountChange) {
-        onCountChange(newCount);
-      }
+  function TicketCount() {
+    if (VType === "FV") {
+      const count = LTicketFromStore((state) => state.FVCount)
+      return(
+        <p>{count}</p>
+      )
+    } 
+    if (VType === "SV") {
+      const count = LTicketFromStore((state) => state.SVCount)
+      return(
+        <p>{count}</p>
+      )
     }
-  };
+  }
 
-  const decrement = () => {
-    if (count > 0 && status === true) {
-      const newCount = count - 1;
-      setCount(newCount);
-      if (onCountChange) {
-        onCountChange(newCount);
-      }
+  function IncrementButton() { 
+    if (VType === "FV") {
+      const addTicket = LTicketFromStore((state) => state.addFVTCount);
+      const count = LTicketFromStore((state) => state.FVCount);
+      return(
+        <Button 
+          variant="outline" 
+          onClick={addTicket}
+          disabled={count >= 4}
+        >
+          +
+        </Button>
+      )
     }
-  };
+    if (VType === "SV") {
+      const addTicket = LTicketFromStore((state) => state.addSVTCount);
+      const count = LTicketFromStore((state) => state.SVCount);
+      return(
+        <Button 
+          variant="outline" 
+          onClick={addTicket}
+          disabled={count >= 4}
+        >
+          +
+        </Button>
+      )
+    }
+  }
+
+  function DecrementButton() {
+    if (VType === "FV") {
+      const decTicket = LTicketFromStore((state) => state.decFVTCount);
+      const count = LTicketFromStore((state) => state.FVCount);
+      return(
+        <Button 
+          variant="outline" 
+          onClick={decTicket}
+          disabled={count == 0}
+        >
+          -
+        </Button>
+      )
+    }
+    if (VType === "SV") {
+      const decTicket = LTicketFromStore((state) => state.decSVTCount);
+      const count = LTicketFromStore((state) => state.SVCount);
+      return(
+        <Button 
+          variant="outline" 
+          onClick={decTicket}
+          disabled={count == 0}
+        >
+          -
+        </Button>
+      )
+    }
+  }
 
   return (
   <>
     <div className="flex grid-rows-2 justify-between gap-12 p-2">
       <div className="flex justify-between gap-4">
-        <Button variant="outline" onClick={increment} disabled={count >= 4 || status === false}>
-          +
-        </Button>
-        <p>{count}</p>
-        <Button variant="outline" onClick={decrement} disabled={status === false}>
-          -
-        </Button>
+        <IncrementButton />
+        <TicketCount />
+        <DecrementButton />
       </div>
     </div>
   </>
