@@ -129,11 +129,11 @@ export const SellFrom: React.FC<SellFromProps> = ({
                     ? <p className='text-red-500'>Check both TicketCount must &gt; 0</p> 
                     : <>
                       <p>
-                        First  Volunteer: {FVolunteer} 
+                        First  Volunteer: {FVolunteer} <br />
                         TicketCount: {FVCount}
                       </p>  
                       <p>
-                        Second Volunteer: {SVolunteer}
+                        Second Volunteer: {SVolunteer} <br />
                         TicketCount: {SVCount}
                       </p> 
                       </>
