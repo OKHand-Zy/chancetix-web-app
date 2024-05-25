@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "postbuild": "next-sitemap --config next-sitemap.config.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -71,6 +70,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@million/lint": "^1.0.0-rc.9",
     "@types/bcrypt": "^5.0.2",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "20.11.10",
