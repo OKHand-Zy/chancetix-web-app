@@ -70,6 +70,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@million/lint": "^1.0.0-rc.9",
     "@types/bcrypt": "^5.0.2",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "20.11.10",
@@ -80,6 +81,7 @@
     "cz-git": "^1.8.0",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
+    "next-sitemap": "^4.2.3",
     "postcss": "^8",
     "prettier": "^3.2.5",
     "prisma": "^5.10.2",
