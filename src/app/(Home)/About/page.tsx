@@ -23,7 +23,7 @@ function aboutpage({}: Props) {
   return (
     <ErrorBoundary>
       <Suspense fallback={<Loading />}>
-        <div className="h-screen p-20 flex flex-col items-center justify-center text-center ">
+        <div className="p-20 flex flex-col items-center justify-center text-center ">
           <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
             關於 ChanceTix
           </h1>
