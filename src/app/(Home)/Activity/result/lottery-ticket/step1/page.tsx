@@ -1,22 +1,62 @@
 "use client";
-import { Card, CardContent, CardHeader } from "@/components/ui/Shadcn/card";
-import { useEffect, useState } from "react";
-import { findAllTicketbyUserId } from "@/action/find-userTicket";
-import { useSession } from "next-auth/react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/Shadcn/card";
+import { useRouter } from 'next/navigation';
+
+import { Button } from "@/components/ui/Shadcn/button";
+import Link from "next/link";
+
+import LTicketFromStore from '@/store/LTicketFromStore'
 
 
 function TicketUserStep1Page() {
+  // zustand 訂閱值 保持在最新的狀態
+  const { FVolunteer, SVolunteer, FVCount, SVCount, ACName } = LTicketFromStore((state) => ({
+    ACName: state.activityName,
+    FVolunteer: state.FVolunteer,
+    FVCount: state.FVCount,
+    SVolunteer: state.SVolunteer,
+    SVCount: state.SVCount,
+  }));
+
+  const router = useRouter();
+  const handleBackClick = () => { 
+    router.push(`/activity/info/${ACName}`);
+    LTicketFromStore.persist.clearStorage()
+  };
+
   return (
-    <Card className="w-[600px]">
-      <CardHeader>
-        <p className="text-2xl font-semibold text-center">
-          🎫 Tickets
-        </p>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div>Step1</div>
-      </CardContent>
-    </Card>
+      <Card className="w-full text-center">
+        
+        <CardHeader>
+          <CardTitle className="text-2xl font-semibold">
+            🎫 Tickets Info
+          </CardTitle>
+          <CardDescription className=""> 
+            Checking you choose tickets
+          </CardDescription>
+        </CardHeader>
+        
+        <CardContent className="space-y-4">
+          <h1> Volunteer 1：{FVolunteer} </h1>
+          <h1> Ticket Count：{FVCount} </h1>
+          <hr/>
+          <h1>Volunteer 2：{SVolunteer} </h1>
+          <h1>Ticket Count：{SVCount}</h1> 
+        </CardContent>
+
+        <CardFooter className="flex justify-center space-x-24">
+          
+          <Button variant="default" onClick={handleBackClick}>
+            Back
+          </Button>
+
+          <Button variant="default" asChild>
+            <Link href="/Activity/result/lottery-ticket/step2">Next</Link>
+          </Button>
+
+        </CardFooter>
+
+      </Card>
   );
 }
 

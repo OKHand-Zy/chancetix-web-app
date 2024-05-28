@@ -8,9 +8,8 @@ import { FaArrowRight } from "react-icons/fa";
 export const Navbar = () => {
   const pathname = usePathname();
   return (
-    <nav className="bg-secondary flex justify-center items-center p-4 rounded-xl w-[600px] shadow-sm">
-      <div className="bg-white p-4 rounded-xl shadow-sm flex gap-x-4 rounded-xl">
-        
+      <div className="w-full bg-white p-4 rounded-xl shadow-sm flex gap-x-4
+                      flex justify-center items-center">
         <div 
           className={pathname.endsWith("/step1") 
             ? "text-black" 
@@ -48,8 +47,7 @@ export const Navbar = () => {
           <p>Step3.</p>
           <p> Complete! </p>
         </div>
-        
       </div>
-    </nav>
+
   );
 }
