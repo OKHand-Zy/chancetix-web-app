@@ -14,7 +14,7 @@ function TicketUserStep3Page() {
         </p>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div>Step3</div>
+        <div>Good Luck!</div>
       </CardContent>
     </Card>
   );

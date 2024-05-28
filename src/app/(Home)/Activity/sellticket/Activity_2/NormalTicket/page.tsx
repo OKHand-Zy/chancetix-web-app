@@ -11,7 +11,7 @@ function Activity_2_Normal() {
   return (
     <div className="flex justify-center">
       <SellFrom 
-        activityName="ABC" 
+        activityName="Activity_2" 
         ticketType="Normal"
         NavBarDescription = "Lottery Mode Ticket" 
         volunteerList = {volunteerList}

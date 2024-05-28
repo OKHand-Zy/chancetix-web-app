@@ -20,8 +20,9 @@ function TicketUserStep1Page() {
 
   const router = useRouter();
   const handleBackClick = () => { 
-    router.push(`/activity/info/${ACName}`);
+    LTicketFromStore.getState().resetTicketData()
     LTicketFromStore.persist.clearStorage()
+    router.push(`/Activity/info/${ACName}`);
   };
 
   return (

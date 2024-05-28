@@ -15,6 +15,7 @@ interface TicketState {
   addSVTCount: () => void
   decFVTCount: () => void
   decSVTCount: () => void
+  resetTicketData: () => void 
 }
 
 const LTicketFromStore = create<TicketState>()(
@@ -59,6 +60,15 @@ const LTicketFromStore = create<TicketState>()(
         if (get().SVCount > 0) {
           set({SVCount: get().SVCount - 1 });
         }
+      },
+      resetTicketData: () => {
+        set({
+          activityName: "", 
+          ticketType: "", 
+          FVolunteer: "", 
+          FVCount: 0, 
+          SVolunteer: "", 
+          SVCount: 0 })
       }
     }),
     {
