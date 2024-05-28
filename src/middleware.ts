@@ -53,7 +53,7 @@ export default auth( (req) => {
     return undefined;
   }
 
-  // 如果 沒登入 與 前往非公開路由 就導向 登入頁面
+  // 如果 是否有登入 與 前往是否為公開路由 就導向 登入頁面
   if (!isLoggedIn && !isPublicRoute) {
     let callbackUrl = nextUrl.pathname
     if(nextUrl.search) {
