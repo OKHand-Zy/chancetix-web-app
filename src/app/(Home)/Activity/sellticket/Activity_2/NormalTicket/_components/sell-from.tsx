@@ -28,7 +28,6 @@ import { SellFromNavbar } from './sell-from-Navbar';
 import VoluteerCombobox from './voluteer-combobox';
 import CountButton from './count-button';
 
-import { SubscribeTickets } from '@/action/lottery-ticket/subscribe';
 import { useCurrentUser } from "@/hooks/use-current-user";
 
 import LTicketFromStore from '@/store/LTicketFromStore'

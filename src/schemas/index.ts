@@ -66,7 +66,7 @@ export const RegisterSchema = z.object({
   cellphone: z.string().min(9, {
     message: "09xxxxxxxx or 9xxxxxxxx"
   }).max(10),
-  userId: z.string().length(10,{
+  identity: z.string().length(10,{
     message: "A*********" 
   }),
 });
@@ -108,6 +108,21 @@ export const checkSellTicketSchema = z.object({
 })
 
 // lottery ticket
+export const LTixSchema = z.object({
+  activityName: z.string(),
+  volunteer1: z.string(),
+  v1tickets: z.number(),
+  volunteer2: z.string(),
+  v2tickets: z.number(),
+});
+export const LTixUserSchema = z.object({
+  userName: z.string(),
+  cellphone: z.number(),
+  identity: z.string(),
+  lTickeid: z.string(),
+});
+
+// old_function
 export const checkSubscribeSchema = z.object({
   userId: z.string(),
   activityName: z.string(),
@@ -115,6 +130,7 @@ export const checkSubscribeSchema = z.object({
   ticketGroup: z.string(),
   ticketCount: z.number(),
 })
+
 
 
 // only for task page

@@ -21,7 +21,9 @@ export const getTicketByeventId = async (eventId: string) => {
   return ticket;
 }
 
-export const getTansferTicketByUserId = async (userId: string) => {
+export const getTansferTicketByUserId = async (
+  userId: string
+) => {
   const ticket = await db.ticket.findMany({
     where: {
       userId,
@@ -86,4 +88,19 @@ export const UserSubscribeForEvent = async(
     return true
   }
   return false
+}
+
+export const LTixUpdateSerNumber = async (
+  activityName: string
+) => {
+  const lastSerialNumberData = await db.lTicket.findMany({
+    where: {
+      activityName: activityName
+    },
+    orderBy: {
+      acSerNumber: 'asc',
+    },
+    take: -1,
+  })
+  return lastSerialNumberData
 }
