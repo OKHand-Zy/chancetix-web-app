@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/Shadcn/input";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
 
+import {ResultDataCheck} from '@/action/lottery-ticket/result-check'
+
 import LTicketFromStore from '@/store/LTicketFromStore'
 function TicketUserStep2Page() {
   const router = useRouter();
@@ -22,6 +24,18 @@ function TicketUserStep2Page() {
     LTicketFromStore.persist.clearStorage()
     router.push(`/Activity/info/${ACName}`);
   };
+
+  const handleCreateTicket = async () => {
+      const result = await ResultDataCheck({
+        activityName: ACName,
+        volunteer1: FVolunteer,
+        v1tickets: FVCount,
+        volunteer2: SVolunteer,
+        v2tickets: SVCount
+      });
+      
+  };
+
   return (
     <Card className="w-full text-center">
         
@@ -35,25 +49,41 @@ function TicketUserStep2Page() {
     </CardHeader>
     
     <CardContent className="space-y-4">
+      
       <p>Volunteer 1：{FVolunteer}</p>
       {Array.from({ length: FVCount }).map((_, index) => (
         <div key={index} className="flex flex-row items-center justify-around gap-x-4">
+          
           <p>Name：</p>
           <Input type="Name" placeholder="Name" />
-          <p>Pass：</p>
-          <Input type="Password" placeholder="Password" />
+          
+          <p>Cellphone：</p>
+          <Input maxLength={10} placeholder="Cellphone" />
+          
+          <p>Identity：</p>
+          <Input maxLength={10} placeholder="Identity" />
+        
         </div>
       ))}
+      
       <hr/>
+      
       <p>Volunteer 2：{SVolunteer}</p>
       {Array.from({ length: SVCount }).map((_, index) => (
         <div key={index} className="flex flex-row items-center justify-around gap-x-4">
+          
           <p>Name：</p>
           <Input type="Name" placeholder="Name" />
-          <p>Pass：</p>
-          <Input type="Password" placeholder="Password" />
+          
+          <p>Cellphone：</p>
+          <Input maxLength={10} placeholder="Cellphone" />
+          
+          <p>Identity：</p>
+          <Input maxLength={10} placeholder="Identity" />
+        
         </div>
       ))}
+      
     </CardContent>
 
     <CardFooter className="flex justify-center space-x-24">
@@ -62,16 +92,16 @@ function TicketUserStep2Page() {
         Cancle
       </Button>
 
-      <Button variant="default" asChild>
-        <Link href="/Activity/result/lottery-ticket/step3">
+      <Button variant="default" asChild onClick={handleCreateTicket}>
+        <Link href="">
           Next
         </Link>
       </Button>
 
     </CardFooter>
 
-  </Card>
-);
+    </Card>
+  );
 }
 
 export default TicketUserStep2Page;

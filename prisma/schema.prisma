@@ -44,7 +44,7 @@ model User {
   role          UserRole   @default(USER)
   accounts      Account[]
   cellphone     String?
-  userId        String?
+  identity      String?
   isTwoFactorEnabled Boolean @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
   tickets     Ticket[]
@@ -112,6 +112,29 @@ model Ticket {
   eventImage    String 
   status        TicketStatus 
   transfer      Boolean   @default(false) 
+}
+
+model LTicket {
+  id            Int        @id @default(autoincrement())    
+  activityName  String?
+  actype        String    
+  acSerNumber   String?    @unique
+  volunteer1    String?
+  v1tickets     Int?
+  volunteer2    String?
+  v2tickets     Int?
+  users         LTicketUser[]
+}
+
+model LTicketUser {
+  id            Int        @id @default(autoincrement())
+  lticket       LTicket     @relation(fields: [lTickeNumber], references: [acSerNumber]) 
+  lTickeNumber  String
+  userName      String?
+  cellphone     Int?
+  identity      String?
+  
+  @@unique([cellphone, identity])
 }
 
 enum TicketStatus {
