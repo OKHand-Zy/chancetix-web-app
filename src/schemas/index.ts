@@ -110,18 +110,20 @@ export const checkSellTicketSchema = z.object({
 // lottery ticket
 export const LTixSchema = z.object({
   activityName: z.string(),
-  volunteer1: z.string(),
-  v1tickets: z.number(),
-  volunteer2: z.string(),
-  v2tickets: z.number(),
+  actype: z.string(),
+  volunteerF: z.string(),
+  vFCounts: z.number(),
+  volunteerS: z.string(),
+  vSCounts: z.number(),
 });
-export const LTixUserSchema = z.object({
-  userName: z.string(),
-  cellphone: z.number(),
-  identity: z.string(),
-  lTickeid: z.string(),
-});
-
+export const LTixUserSchema = z.array(
+  z.object({
+    volunteerType: z.string(),
+    customerName: z.string(),
+    customerCellphone: z.string(),
+    customerIdentity: z.string(),
+  })
+);
 // old_function
 export const checkSubscribeSchema = z.object({
   userId: z.string(),
