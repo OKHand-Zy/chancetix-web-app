@@ -5,19 +5,26 @@ import { db } from "@/lib/db";
 import { LTixSchema, LTixUserSchema } from "@/schemas";
 import {LTixUpdateSerNumber} from "@/data/ticket";
 
+
+
 export const ResultDataCheck = async (
   TicketData: z.infer<typeof LTixSchema>,
-  //UserData: z.infer<typeof LTixUserSchema>,
+  UserData: z.infer<typeof LTixUserSchema>,
 ) => {
+  console.log(TicketData, UserData)
   // 確認 票卷 跟 使用者 資料符合規範
   const LTixData = LTixSchema.safeParse(TicketData);
   if (!LTixData.success) {
-      return { error: "Invalid fields!" };
+    //console.log(LTixData.error)
+    console.log("LTixData Invalid fields!")
+    return { error: "Invalid fields!" };
   }
-  //const LTixUserData = LTixUserSchema.safeParse(UserData);
-  //if (!LTixUserData.success) {
-  //    return { error: "Invalid fields!" };
-  //}
+
+  const LTixUsersData = LTixUserSchema.safeParse(UserData);
+  if (!LTixUsersData.success) {
+    console.log("LTixUsers Invalid fields!")
+    return { error: "Invalid fields!" };
+  }
 
   // 建立 票卷資料
   const acName = LTixData.data.activityName
@@ -34,16 +41,30 @@ export const ResultDataCheck = async (
         newSerialNumber = `${acName}-${newNumber}`;
       }
     }
+
     await db.lTicket.create({
       data: {
         activityName: LTixData.data.activityName,
         acSerNumber: newSerialNumber,
-        volunteer1: LTixData.data.volunteer1,
-        v1tickets: LTixData.data.v1tickets,
-        volunteer2: LTixData.data.volunteer2,
-        v2tickets: LTixData.data.v2tickets,
+        actype: LTixData.data.actype || "",
+        volunteerF: LTixData.data.volunteerF,
+        vFCounts: LTixData.data.vFCounts,
+        volunteerS: LTixData.data.volunteerS,
+        vSCounts: LTixData.data.vSCounts,
+        users: {
+          create: LTixUsersData.data.map(user => ({
+            volunteerType: user.volunteerType,
+            customerName: user.customerName,
+            customerCellphone: user.customerCellphone,
+            customerIdentity: user.customerIdentity
+          }))
+        }
       },
     })
+
+    console.log("Create OK")
   }
+
+
 
 }
