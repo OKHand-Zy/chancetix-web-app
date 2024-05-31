@@ -11,11 +11,10 @@ export const ResultDataCheck = async (
   TicketData: z.infer<typeof LTixSchema>,
   UserData: z.infer<typeof LTixUserSchema>,
 ) => {
-  console.log(TicketData, UserData)
+
   // 確認 票卷 跟 使用者 資料符合規範
   const LTixData = LTixSchema.safeParse(TicketData);
   if (!LTixData.success) {
-    //console.log(LTixData.error)
     console.log("LTixData Invalid fields!")
     return { error: "Invalid fields!" };
   }
@@ -25,6 +24,8 @@ export const ResultDataCheck = async (
     console.log("LTixUsers Invalid fields!")
     return { error: "Invalid fields!" };
   }
+
+  // Future: Check 身份證 與 手機 與 資料是否有重複登記 
 
   // 建立 票卷資料
   const acName = LTixData.data.activityName
