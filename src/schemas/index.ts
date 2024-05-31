@@ -119,9 +119,9 @@ export const LTixSchema = z.object({
 export const LTixUserSchema = z.array(
   z.object({
     volunteerType: z.string(),
-    customerName: z.string(),
-    customerCellphone: z.string(),
-    customerIdentity: z.string(),
+    customerName: z.string().min(1, {message: "Name is required."}),
+    customerCellphone: z.string().min(9, {message: "09xxxxxxxx or 9xxxxxxxx"}).max(10),
+    customerIdentity: z.string().length(10, {message: "A*********"}),
   })
 );
 // old_function
