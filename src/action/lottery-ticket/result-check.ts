@@ -26,6 +26,31 @@ export const ResultDataCheck = async (
   }
 
   // Future: Check 身份證 與 手機 與 資料是否有重複登記 
+  try {
+    const results = await Promise.all(
+      LTixUsersData.data.map(async (user) => {
+        const checkResult = await db.lTicketUser.findMany({
+          where: {
+            lticket: {
+              activityName: LTixData.data.activityName,
+            },
+            customerCellphone: user.customerCellphone,
+            customerIdentity: user.customerIdentity,
+          },
+        });
+        if (checkResult.length > 0) {
+          return { error: "Duplicate data found!" };
+        }
+      })
+    );
+    if (results.length > 0) {
+      console.log("Errors found:", results);
+    } else {
+      console.log("No duplicate data found.");
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
 
   // 建立 票卷資料
   const acName = LTixData.data.activityName
