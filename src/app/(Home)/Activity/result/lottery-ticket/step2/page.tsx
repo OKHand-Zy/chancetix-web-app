@@ -22,6 +22,8 @@ import { useRouter } from 'next/navigation';
 import LTicketFromStore from '@/store/LTicketFromStore'
 import { z } from 'zod';
 import { zodResolver } from "@hookform/resolvers/zod"
+import { LTixUserSchema } from "@/schemas";
+import { ResultDataCheck } from "@/action/lottery-ticket/result-check";
 
 // 定義志工數據的類型
 interface VolunteerData {
@@ -37,22 +39,16 @@ interface FormData {
   volunteers2: VolunteerData[];
 }
 
-const VolunteerSchema = z.object({
-  VType: z.string(),
-  name: z.string().min(1, { message: "Name is required" }),
-  cellphone: z.string().length(10, { message: "Cellphone must be 10 digits" }),
-  identity: z.string().length(10, { message: "Identity must be 10 digits" }),
-});
-
 const FormSchema = z.object({
-  volunteers1: z.array(VolunteerSchema),
-  volunteers2: z.array(VolunteerSchema),
+  volunteers1: z.array(LTixUserSchema),
+  volunteers2: z.array(LTixUserSchema),
 });
 
 function TicketUserStep2Page() {
   const router = useRouter();
-  const { FVolunteer, SVolunteer, FVCount, SVCount, ACName } = LTicketFromStore((state) => ({
+  const { FVolunteer, SVolunteer, FVCount, SVCount, ACName, ticketType } = LTicketFromStore((state) => ({
     ACName: state.activityName,
+    ticketType: state.ticketType,
     FVolunteer: state.FVolunteer,
     FVCount: state.FVCount,
     SVolunteer: state.SVolunteer,
@@ -96,16 +92,16 @@ function TicketUserStep2Page() {
       })),
     ];
 
-    console.log(allUserData);
-    // const result = await ResultDataCheck({
-    //   activityName: ACName,
-    //   actype: ticketType,
-    //   volunteerF: FVolunteer,
-    //   vFCounts: FVCount,
-    //   volunteerS: SVolunteer,
-    //   vSCounts: SVCount
-    // }, allUserData);
-    // reset();
+    const result = await ResultDataCheck({
+      activityName: ACName,
+      actype: ticketType,
+      volunteerF: FVolunteer,
+      vFCounts: FVCount,
+      volunteerS: SVolunteer,
+      vSCounts: SVCount
+    }, allUserData);
+    
+     // reset();
     // router.push(`/next/path`);
   };
 
@@ -131,12 +127,15 @@ function TicketUserStep2Page() {
           <CardContent className="space-y-4">
             <p>Volunteer 1：{FVolunteer}</p>
             {volunteers1Fields.map((field, index) => (
-              <div key={field.id} className="flex flex-row items-center justify-around gap-x-4">    
+              <div key={field.id} className="flex flex-row items-center justify-around gap-x-4"> 
+                <p>
+                  Ticket{index+1}.：
+                </p>   
                 <FormField
                   control={control}
                   name={`volunteers1.${index}.name`}
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-around gap-x-2">
+                    <FormItem className="flex flex-col">
                       <FormLabel>Name：</FormLabel>
                       <FormControl>
                         <Input
@@ -153,7 +152,7 @@ function TicketUserStep2Page() {
                   control={control}
                   name={`volunteers1.${index}.identity`}
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-around gap-x-2">
+                    <FormItem className="flex flex-col">
                       <FormLabel>Identity：</FormLabel>
                       <FormControl>
                         <Input
@@ -170,7 +169,7 @@ function TicketUserStep2Page() {
                   control={control}
                   name={`volunteers1.${index}.cellphone`}
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-around gap-x-2">
+                    <FormItem className="flex flex-col">
                       <FormLabel>Cellphone：</FormLabel>
                       <FormControl>
                         <Input
@@ -190,6 +189,9 @@ function TicketUserStep2Page() {
             <p>Volunteer 2：{SVolunteer}</p>
             {volunteers2Fields.map((field, index) => (
               <div key={field.id} className="flex flex-row items-center justify-around gap-x-4">
+                <p>
+                  Ticket{index+1}.：
+                </p>
                 <FormField
                   control={control}
                   name={`volunteers2.${index}.name`}
@@ -246,7 +248,7 @@ function TicketUserStep2Page() {
           </CardContent>
           
           <CardFooter className="flex justify-center space-x-24">
-            <Button variant="default" onClick={handleBackClick}>
+            <Button type="button" variant="default" onClick={handleBackClick}>
               Cancel
             </Button>
             <Button variant="default" type="submit">

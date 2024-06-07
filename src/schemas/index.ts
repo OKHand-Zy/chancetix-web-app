@@ -120,7 +120,7 @@ export const LTixUserSchema = z.array(
   z.object({
     volunteerType: z.string(),
     customerName: z.string().min(1, {message: "Name is required."}),
-    customerCellphone: z.string().min(9, {message: "09xxxxxxxx or 9xxxxxxxx"}).max(10),
+    customerCellphone: z.string().min(9, {message: "09xxxxxxxx or 9xxxxxxxx"}).max(10, {message: "09xxxxxxxx or 9xxxxxxxx"}),
     customerIdentity: z.string().length(10, {message: "A*********"}),
   })
 );
