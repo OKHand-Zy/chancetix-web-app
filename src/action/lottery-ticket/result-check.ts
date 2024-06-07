@@ -68,27 +68,31 @@ export const ResultDataCheck = async (
       }
     }
 
-    await db.lTicket.create({
-      data: {
-        activityName: LTixData.data.activityName,
-        acSerNumber: newSerialNumber,
-        actype: LTixData.data.actype || "",
-        volunteerF: LTixData.data.volunteerF,
-        vFCounts: LTixData.data.vFCounts,
-        volunteerS: LTixData.data.volunteerS,
-        vSCounts: LTixData.data.vSCounts,
-        users: {
-          create: LTixUsersData.data.map(user => ({
-            volunteerType: user.volunteerType,
-            customerName: user.customerName,
-            customerCellphone: user.customerCellphone,
-            customerIdentity: user.customerIdentity
-          }))
-        }
-      },
-    })
+    try { 
+      await db.lTicket.create({
+        data: {
+          activityName: LTixData.data.activityName,
+          acSerNumber: newSerialNumber,
+          actype: LTixData.data.actype || "",
+          volunteerF: LTixData.data.volunteerF,
+          vFCounts: LTixData.data.vFCounts,
+          volunteerS: LTixData.data.volunteerS,
+          vSCounts: LTixData.data.vSCounts,
+          users: {
+            create: LTixUsersData.data.map(user => ({
+              volunteerType: user.volunteerType,
+              customerName: user.customerName,
+              customerCellphone: user.customerCellphone,
+              customerIdentity: user.customerIdentity
+            }))
+          }
+        },
+      })
+      return { success: "Create success!" };
+    } catch (error) {
+      return { error: "Create error!" };
+    }
 
-    console.log("Create OK")
   }
 
 

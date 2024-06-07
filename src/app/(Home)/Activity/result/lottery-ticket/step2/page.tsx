@@ -108,9 +108,14 @@ function TicketUserStep2Page() {
       volunteerS: SVolunteer,
       vSCounts: SVCount
     }, allUserData);
+
+    if (result?.success === 'Create success!') {
+      router.push(`/Activity/result/lottery-ticket/step3`);
+    }
+    if (result?.error === 'Create error!') {
+      alert('DB have same data');
+    }
     
-     // reset();
-    // router.push(`/next/path`);
   };
 
   const handleBackClick = () => { 
