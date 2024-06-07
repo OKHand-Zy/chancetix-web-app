@@ -1,4 +1,5 @@
 import { UserRole } from '@prisma/client';
+import { Princess_Sofia } from 'next/font/google';
 import * as z from 'zod';
 
 // Account Schema
@@ -90,11 +91,10 @@ export const ticketSchema = z.object({
 });
 
 export const SwitchTixSchema = z.object({
-  userId: z.string(),
-  eventId: z.string(),
-  tickettype: z.string(),
-  ticketNumber: z.string(),
-  serialNumber: z.number(),
+  id: z.string(),
+  activityName: z.string(),
+  serialNumber: z.string(),
+  ticketType: z.string(),
   ticketGroup: z.string(),
   position: z.string(),
   price: z.number(),
