@@ -1,45 +1,64 @@
-"use client";
-import { useTransition, useState } from 'react';
+"use client"
+
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+
+import { Button } from "@/components/ui/Shadcn/button"
 import {
-  Card,
-  CardHeader,
-  CardContent,
-} from "@/components/ui/Shadcn/card";
-import { Button } from "@/components/ui/Shadcn/button";
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/Shadcn/form"
+import { Input } from "@/components/ui/Shadcn/input"
 
-import * as z from "zod";
+const formSchema = z.object({
+  username: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+})
 
-import { useSession } from "next-auth/react";
 
-
-
-const TestPage = () => {
-  const session = useSession();
-
-  const onClick = () => {
-    const systemTime = new Date()
-    const taipeiTime = new Date(systemTime.toLocaleString("en-US", { timeZone: "Asia/Taipei" }));
-    const prismaTime = taipeiTime.toISOString();
-
-    console.log(prismaTime);
+export function ProfileForm() {
+  // 1. Define your form.
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+    },
+  })
+  // 2. Define a submit handler.
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values)
   }
 
   return (
-    <Card className="w-[600px]">
-      <CardHeader>
-        <p className="text-2xl font-semibold text-center">
-          ⚙️Test
-        </p>
-      </CardHeader>
-      <CardContent className="flex justify-center">
-        <Button onClick={() => {
-          onClick()
-        }}>
-          Test Button
-        </Button>
-      </CardContent>
-    </Card>
-  );
-};
-
-export default TestPage;
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
+  )
+}

@@ -1,159 +1,261 @@
 "use client";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/Shadcn/card";
+import { 
+  Card, 
+  CardContent, 
+  CardHeader, 
+  CardTitle, 
+  CardDescription, 
+  CardFooter 
+} from "@/components/ui/Shadcn/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/Shadcn/form"
+import { useForm, useFieldArray, FormProvider, SubmitHandler } from "react-hook-form"
 import { Button } from "@/components/ui/Shadcn/button";
 import { Input } from "@/components/ui/Shadcn/input";
-import Link from "next/link";
 import { useRouter } from 'next/navigation';
-import { useState } from "react";
-import {ResultDataCheck} from '@/action/lottery-ticket/result-check'
-
 import LTicketFromStore from '@/store/LTicketFromStore'
+import { z } from 'zod';
+import { zodResolver } from "@hookform/resolvers/zod"
+
+// 定義志工數據的類型
+interface VolunteerData {
+  VType: string;
+  name: string;
+  cellphone: string;
+  identity: string;
+}
+
+// 定義表單數據的類型
+interface FormData {
+  volunteers1: VolunteerData[];
+  volunteers2: VolunteerData[];
+}
+
+const VolunteerSchema = z.object({
+  VType: z.string(),
+  name: z.string().min(1, { message: "Name is required" }),
+  cellphone: z.string().length(10, { message: "Cellphone must be 10 digits" }),
+  identity: z.string().length(10, { message: "Identity must be 10 digits" }),
+});
+
+const FormSchema = z.object({
+  volunteers1: z.array(VolunteerSchema),
+  volunteers2: z.array(VolunteerSchema),
+});
 
 function TicketUserStep2Page() {
   const router = useRouter();
-  
-  const { FVolunteer, SVolunteer, FVCount, SVCount, ACName, ticketType } = LTicketFromStore((state) => ({
+  const { FVolunteer, SVolunteer, FVCount, SVCount, ACName } = LTicketFromStore((state) => ({
     ACName: state.activityName,
-    ticketType: state.ticketType,
     FVolunteer: state.FVolunteer,
     FVCount: state.FVCount,
     SVolunteer: state.SVolunteer,
     SVCount: state.SVCount,
   }));
-  
-  const [volunteer1Data, setVolunteer1Data] = useState(Array(FVCount).fill({ 
-    VType: '', name: '', cellphone: '', identity: '' 
-  }));
-  
-  const [volunteer2Data, setVolunteer2Data] = useState(Array(SVCount).fill({ 
-    VType: '', name: '', cellphone: '', identity: '' 
-  }));
 
-  const handleInputChange = (volunteerIndex: number, field: string, value: string, Volunteer: number) => {
-    if (Volunteer === 1) {
-      const updatedData = [...volunteer1Data];
-      updatedData[volunteerIndex][field] = value;
-      updatedData[volunteerIndex]['VType'] = FVolunteer;
-      setVolunteer1Data(updatedData);
-    } 
-    if (Volunteer === 2) {
-      const updatedData = [...volunteer2Data];
-      updatedData[volunteerIndex][field] = value;
-      updatedData[volunteerIndex]['VType'] = SVolunteer;
-      setVolunteer2Data(updatedData);
+  const defaultVolunteer: VolunteerData = { VType: '', name: '', cellphone: '', identity: '' };
+
+  const methods = useForm<FormData>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      volunteers1: Array(FVCount).fill({ ...defaultVolunteer, VType: FVolunteer }),
+      volunteers2: Array(SVCount).fill({ ...defaultVolunteer, VType: SVolunteer }),
     }
+  });
+
+  const { handleSubmit, control, reset } = methods;
+  const { fields: volunteers1Fields } = useFieldArray({
+    control,
+    name: "volunteers1"
+  });
+
+  const { fields: volunteers2Fields } = useFieldArray({
+    control,
+    name: "volunteers2"
+  });
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    const allUserData = [
+      ...data.volunteers1.map(volunteer => ({
+        volunteerType: volunteer.VType,
+        customerName: volunteer.name,
+        customerCellphone: volunteer.cellphone,
+        customerIdentity: volunteer.identity,
+      })),
+      ...data.volunteers2.map(volunteer => ({
+        volunteerType: volunteer.VType,
+        customerName: volunteer.name,
+        customerCellphone: volunteer.cellphone,
+        customerIdentity: volunteer.identity,
+      })),
+    ];
+
+    console.log(allUserData);
+    // const result = await ResultDataCheck({
+    //   activityName: ACName,
+    //   actype: ticketType,
+    //   volunteerF: FVolunteer,
+    //   vFCounts: FVCount,
+    //   volunteerS: SVolunteer,
+    //   vSCounts: SVCount
+    // }, allUserData);
+    // reset();
+    // router.push(`/next/path`);
   };
 
   const handleBackClick = () => { 
-    LTicketFromStore.getState().resetTicketData()
-    LTicketFromStore.persist.clearStorage()
+    LTicketFromStore.getState().resetTicketData();
+    LTicketFromStore.persist.clearStorage();
     router.push(`/Activity/info/${ACName}`);
   };
 
-  const handleCreateTicket = async () => {
-    const allUserData = [...volunteer1Data.map(volunteer => ({
-      volunteerType: volunteer.VType,
-      customerName: volunteer.name,
-      customerCellphone: volunteer.cellphone,
-      customerIdentity: volunteer.identity,
-    })), ...volunteer2Data.map(volunteer => ({
-      volunteerType: volunteer.VType,
-      customerName: volunteer.name,
-      customerCellphone: volunteer.cellphone,
-      customerIdentity: volunteer.identity,
-    }))];
-    const result = await ResultDataCheck({
-      activityName: ACName,
-      actype: ticketType,
-      volunteerF: FVolunteer,
-      vFCounts: FVCount,
-      volunteerS: SVolunteer,
-      vSCounts: SVCount
-    },allUserData)
-  };
-  
   return (
-    <Card className="w-full text-center">
-        
-    <CardHeader>
-      <CardTitle className="text-2xl font-semibold">
-        🎫 Tickets User Info
-      </CardTitle>
-      <CardDescription className=""> 
-        Input your User Info
-      </CardDescription>
-    </CardHeader>
-    
-    <CardContent className="space-y-4">
-      
-      <p>Volunteer 1：{FVolunteer}</p>
-      {Array.from({ length: FVCount }).map((_, index) => (
-        <div key={index} className="flex flex-row items-center justify-around gap-x-4">
-          
-          <p>Name：</p>
-          <Input 
-            type="Name" placeholder="Name" 
-            value={volunteer1Data[index].name} 
-            onChange={(e) => handleInputChange(index, 'name', e.target.value, 1)}/>
-          
-          <p>Cellphone：</p>
-          <Input 
-            maxLength={10} placeholder="Cellphone" 
-            value={volunteer1Data[index].cellphone} 
-            onChange={(e) => handleInputChange(index, 'cellphone', e.target.value, 1)}/>
-          
-          <p>Identity：</p>
-          <Input 
-            maxLength={10} placeholder="Identity" 
-            value={volunteer1Data[index].identity} 
-            onChange={(e) => handleInputChange(index, 'identity', e.target.value, 1)}/>
-        </div>
-      ))}
-      
-      <hr/>
-      
-      <p>Volunteer 2：{SVolunteer}</p>
-      {Array.from({ length: SVCount }).map((_, index) => (
-        <div key={index} className="flex flex-row items-center justify-around gap-x-4">
-          
-          <p>Name：</p>
-          <Input 
-            type="Name" placeholder="Name" 
-            value={volunteer2Data[index].name} 
-            onChange={(e) => handleInputChange(index, 'name', e.target.value, 2)}/>
-          
-          <p>Cellphone：</p>
-          <Input 
-            maxLength={10} placeholder="Cellphone" 
-            value={volunteer2Data[index].cellphone} 
-            onChange={(e) => handleInputChange(index, 'cellphone', e.target.value, 2)}/>
-          
-          <p>Identity：</p>
-          <Input 
-            maxLength={10} placeholder="Identity" 
-            value={volunteer2Data[index].identity} 
-            onChange={(e) => handleInputChange(index, 'identity', e.target.value, 2)}/>
+    <FormProvider {...methods}>
+      <Card className="w-full text-center">
+        <CardHeader>
+          <CardTitle className="text-2xl font-semibold">
+            🎫 Tickets User Info
+          </CardTitle>
+          <CardDescription className=""> 
+            Input your User Info
+          </CardDescription>
+        </CardHeader>
 
-        </div>
-      ))}
-      
-    </CardContent>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <CardContent className="space-y-4">
+            <p>Volunteer 1：{FVolunteer}</p>
+            {volunteers1Fields.map((field, index) => (
+              <div key={field.id} className="flex flex-row items-center justify-around gap-x-4">    
+                <FormField
+                  control={control}
+                  name={`volunteers1.${index}.name`}
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-center justify-around gap-x-2">
+                      <FormLabel>Name：</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Name"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <FormField
+                  control={control}
+                  name={`volunteers1.${index}.identity`}
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-center justify-around gap-x-2">
+                      <FormLabel>Identity：</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="AXXXXXXXXX"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-    <CardFooter className="flex justify-center space-x-24">
-      
-      <Button variant="default" onClick={handleBackClick}>
-        Cancle
-      </Button>
+                <FormField
+                  control={control}
+                  name={`volunteers1.${index}.cellphone`}
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-center justify-around gap-x-2">
+                      <FormLabel>Cellphone：</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="09XXXXXXXX"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            ))}
 
-      <Button variant="default" asChild onClick={handleCreateTicket}>
-        <Link href="">
-          Next
-        </Link>
-      </Button>
+            <hr/>
 
-    </CardFooter>
+            <p>Volunteer 2：{SVolunteer}</p>
+            {volunteers2Fields.map((field, index) => (
+              <div key={field.id} className="flex flex-row items-center justify-around gap-x-4">
+                <FormField
+                  control={control}
+                  name={`volunteers2.${index}.name`}
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>Name：</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Name"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-    </Card>
+                <FormField
+                  control={control}
+                  name={`volunteers2.${index}.identity`}
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>Identity：</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="AXXXXXXXXX"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={control}
+                  name={`volunteers2.${index}.cellphone`}
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>Cellphone：</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="09XXXXXXXX"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+              </div>
+            ))}
+          </CardContent>
+          
+          <CardFooter className="flex justify-center space-x-24">
+            <Button variant="default" onClick={handleBackClick}>
+              Cancel
+            </Button>
+            <Button variant="default" type="submit">
+              Next
+            </Button>
+          </CardFooter>
+        </form>
+      </Card>
+    </FormProvider>
   );
 }
 
