@@ -16,13 +16,15 @@ import {
   FormMessage,
 } from "@/components/ui/Shadcn/form"
 import { useForm, useFieldArray, FormProvider, SubmitHandler } from "react-hook-form"
+
 import { Button } from "@/components/ui/Shadcn/button";
 import { Input } from "@/components/ui/Shadcn/input";
 import { useRouter } from 'next/navigation';
-import LTicketFromStore from '@/store/LTicketFromStore'
+
 import { z } from 'zod';
 import { zodResolver } from "@hookform/resolvers/zod"
-import { LTixUserSchema } from "@/schemas";
+
+import LTicketFromStore from '@/store/LTicketFromStore'
 import { ResultDataCheck } from "@/action/lottery-ticket/result-check";
 
 // 定義志工數據的類型
@@ -38,10 +40,16 @@ interface FormData {
   volunteers1: VolunteerData[];
   volunteers2: VolunteerData[];
 }
+const VolunteerSchema = z.object({
+  VType: z.string(),
+  name: z.string().min(1, { message: "Name is required" }),
+  cellphone: z.string().length(10, { message: "Cellphone must be 10 digits" }),
+  identity: z.string().length(10, { message: "Identity must be 10 digits" }),
+});
 
 const FormSchema = z.object({
-  volunteers1: z.array(LTixUserSchema),
-  volunteers2: z.array(LTixUserSchema),
+  volunteers1: z.array(VolunteerSchema),
+  volunteers2: z.array(VolunteerSchema),
 });
 
 function TicketUserStep2Page() {
