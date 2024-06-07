@@ -34,7 +34,7 @@ export const RegisterForm = () => {
       password: '',
       name: '',
       cellphone: '',
-      userId: '',
+      identity: '',
     },
   });
 
@@ -126,7 +126,7 @@ export const RegisterForm = () => {
             />
             <FormField
               control={from.control}
-              name="userId"
+              name="identity"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>身份證：</FormLabel>

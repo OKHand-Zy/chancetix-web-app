@@ -64,7 +64,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   };
 
   // 把拿進來的資料定義成 email password name 
-  const { password, name, userId , cellphone } = validatedFields.data;
+  const { password, name, identity , cellphone } = validatedFields.data;
   const { email: rawEmail } = validatedFields.data;
   const email = rawEmail.toLocaleLowerCase();
   
@@ -78,7 +78,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   }
 
   // 驗證 新式居留證 與 身份證 格式
-  const user_Id = userId.toUpperCase()
+  const user_Id = identity.toUpperCase()
   if (!isValidTaiwanID(user_Id)) {
     return { error: "身分證或居留證格式有錯!" };
   }
@@ -90,7 +90,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
       name,
       email,
       password: hashedPassword,
-      userId: hashedUserId,
+      identity: hashedUserId,
       cellphone: cellphone
     },
   });

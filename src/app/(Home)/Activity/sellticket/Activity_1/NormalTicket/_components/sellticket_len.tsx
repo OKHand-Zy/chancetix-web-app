@@ -40,9 +40,9 @@ const SellTicketLen: React.FC<SellTicketLenProps> = ({
 
   return (
   <>
-    <div className="flex grid-rows-2 justify-between gap-12 p-2 border-b-4 border-slate-300	">
+    <div className="flex grid-rows-2 justify-around gap-12 p-2 border-b-4 border-slate-300	">
       <p>{label}</p>
-      <div className="flex justify-between gap-4">
+      <div className="flex justify-around gap-4">
         <Button variant="outline" onClick={increment}>
           +
         </Button>

@@ -28,7 +28,6 @@ import { SellFromNavbar } from './sell-from-Navbar';
 import VoluteerCombobox from './voluteer-combobox';
 import CountButton from './count-button';
 
-import { SubscribeTickets } from '@/action/lottery-ticket/subscribe';
 import { useCurrentUser } from "@/hooks/use-current-user";
 
 import LTicketFromStore from '@/store/LTicketFromStore'
@@ -67,7 +66,12 @@ export const SellFrom: React.FC<SellFromProps> = ({
     LTFstore.UpdateTicketType(ticketType);
   }
 
+  function initStore() {
+    LTicketFromStore.getState().resetTicketData();
+  }
+
   useEffect(() => {
+    initStore()
     updateStoreInfo()
   }, []);
 
@@ -86,7 +90,7 @@ export const SellFrom: React.FC<SellFromProps> = ({
           <div className='w-1/2 flex justify-between items-center'>
             <VoluteerCombobox 
               fromLabel = "First Volunteer："
-              formDescrip = "Please select your first volunteer"
+              formDescrip = "Select your first volunteer"
               volunteerList={volunteerList} 
               VType="FV"
             />
@@ -98,7 +102,7 @@ export const SellFrom: React.FC<SellFromProps> = ({
           <div className='w-1/2 flex justify-between items-center'>
             <VoluteerCombobox 
               fromLabel = "Second Volunteer："
-              formDescrip = "Please select your second volunteer"
+              formDescrip = "Select your second volunteer"
               volunteerList={volunteerList} 
               VType="SV"
             />
@@ -149,7 +153,7 @@ export const SellFrom: React.FC<SellFromProps> = ({
                   FVCount <= 0 || SVCount <= 0) 
                   ? <></>
                   : <Button asChild>
-                      <Link href={'/subscrbe-from'}>Continue</Link>
+                      <Link href={'/Activity/result/lottery-ticket/step1'}>Continue</Link>
                     </Button>
                 }  
 

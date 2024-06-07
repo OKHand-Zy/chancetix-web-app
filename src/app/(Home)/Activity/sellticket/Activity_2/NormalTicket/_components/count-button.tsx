@@ -89,8 +89,8 @@ const CountButton: React.FC<CButtonProps> = ({
 
   return (
   <>
-    <div className="flex grid-rows-2 justify-between gap-12 p-2">
-      <div className="flex justify-between gap-4">
+    <div className="flex grid-rows-2 justify-around gap-12 p-2">
+      <div className="flex justify-around gap-4">
         <IncrementButton />
         <TicketCount />
         <DecrementButton />
