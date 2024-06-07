@@ -44,7 +44,7 @@ model User {
   role          UserRole   @default(USER)
   accounts      Account[]
   cellphone     String?
-  userId        String?
+  identity      String?
   isTwoFactorEnabled Boolean @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
   tickets     Ticket[]
@@ -114,6 +114,30 @@ model Ticket {
   transfer      Boolean   @default(false) 
 }
 
+model LTicket {
+  id            Int        @id @default(autoincrement())    
+  activityName  String?
+  actype        String    
+  acSerNumber   String?    @unique
+  volunteerF    String?
+  vFCounts      Int?
+  volunteerS    String?
+  vSCounts      Int?
+  users         LTicketUser[]
+}
+
+model LTicketUser {
+  id                Int        @id @default(autoincrement())
+  lticket           LTicket     @relation(fields: [tickeSerNumber], references: [acSerNumber]) 
+  tickeSerNumber    String
+  volunteerType     String?
+  customerName      String?
+  customerCellphone String?
+  customerIdentity  String?
+  
+  @@unique([customerCellphone, customerIdentity])
+}
+
 enum TicketStatus {
   PURCHASED
   USED
@@ -137,11 +161,8 @@ model PaymentOrder {
 
 model SwitchTicket {
   id            Int        @id @default(autoincrement())
-  userId        String?
-  userName      String?
   eventName     String?
-  ticketNumber  Int?      
-  serialNumber  String?    @unique 
+  serialNumber  String?    @unique       
   tickettype    String?
   ticketGroup   String
   position      String?

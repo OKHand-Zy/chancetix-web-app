@@ -1,4 +1,5 @@
 import { UserRole } from '@prisma/client';
+import { Princess_Sofia } from 'next/font/google';
 import * as z from 'zod';
 
 // Account Schema
@@ -66,7 +67,7 @@ export const RegisterSchema = z.object({
   cellphone: z.string().min(9, {
     message: "09xxxxxxxx or 9xxxxxxxx"
   }).max(10),
-  userId: z.string().length(10,{
+  identity: z.string().length(10,{
     message: "A*********" 
   }),
 });
@@ -90,11 +91,10 @@ export const ticketSchema = z.object({
 });
 
 export const SwitchTixSchema = z.object({
-  userId: z.string(),
-  eventId: z.string(),
-  tickettype: z.string(),
-  ticketNumber: z.string(),
-  serialNumber: z.number(),
+  id: z.string(),
+  activityName: z.string(),
+  serialNumber: z.string(),
+  ticketType: z.string(),
   ticketGroup: z.string(),
   position: z.string(),
   price: z.number(),
@@ -108,6 +108,23 @@ export const checkSellTicketSchema = z.object({
 })
 
 // lottery ticket
+export const LTixSchema = z.object({
+  activityName: z.string(),
+  actype: z.string(),
+  volunteerF: z.string(),
+  vFCounts: z.number(),
+  volunteerS: z.string(),
+  vSCounts: z.number(),
+});
+export const LTixUserSchema = z.array(
+  z.object({
+    volunteerType: z.string(),
+    customerName: z.string().min(1, {message: "Name is required."}),
+    customerCellphone: z.string().min(9, {message: "09xxxxxxxx or 9xxxxxxxx"}).max(10, {message: "09xxxxxxxx or 9xxxxxxxx"}),
+    customerIdentity: z.string().length(10, {message: "A*********"}),
+  })
+);
+// old_function
 export const checkSubscribeSchema = z.object({
   userId: z.string(),
   activityName: z.string(),
@@ -115,6 +132,7 @@ export const checkSubscribeSchema = z.object({
   ticketGroup: z.string(),
   ticketCount: z.number(),
 })
+
 
 
 // only for task page
