@@ -1,11 +1,11 @@
 "use client";
-import { Card, CardContent, CardHeader } from "@/components/ui/Shadcn/card";
-import { useEffect, useState } from "react";
-import { findAllTicketbyUserId } from "@/action/find-userTicket";
-import { useSession } from "next-auth/react";
 
+import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/Shadcn/card";
+import {Button} from "@/components/ui/Shadcn/button";
+import Link from "next/link";
 
 function TicketUserStep3Page() {
+  
   return (
     <Card className="w-[600px]">
       <CardHeader>
@@ -14,8 +14,19 @@ function TicketUserStep3Page() {
         </p>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div>Good Luck!</div>
+        <div className="text-center">Good Luck!</div>
       </CardContent>
+      <CardFooter>
+        <Button
+          className="flex items-center justify-center w-full" 
+          variant="default" 
+          asChild
+        >
+          <Link href="/">
+            Back Home
+          </Link>
+        </Button>
+      </CardFooter>
     </Card>
   );
 }
