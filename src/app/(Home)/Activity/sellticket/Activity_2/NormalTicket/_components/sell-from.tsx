@@ -66,7 +66,12 @@ export const SellFrom: React.FC<SellFromProps> = ({
     LTFstore.UpdateTicketType(ticketType);
   }
 
+  function initStore() {
+    LTicketFromStore.getState().resetTicketData();
+  }
+
   useEffect(() => {
+    initStore()
     updateStoreInfo()
   }, []);
 
