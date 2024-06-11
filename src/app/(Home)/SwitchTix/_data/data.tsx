@@ -9,63 +9,44 @@ import {
   StopwatchIcon,
 } from "@radix-ui/react-icons"
 
-export const labels = [
+export const EventTypes = [
   {
-    value: "bug",
-    label: "Bug",
+    value: ["ABC","CBA"],
+    label: "JP",
   },
   {
-    value: "feature",
-    label: "Feature",
-  },
-  {
-    value: "documentation",
-    label: "Documentation",
-  },
+    value: ["DFG","FGD"],
+    label: "KR",
+  }
 ]
 
-export const statuses = [
+export const TixTypes = [
   {
-    value: "backlog",
-    label: "Backlog",
-    icon: QuestionMarkCircledIcon,
-  },
-  {
-    value: "todo",
-    label: "Todo",
+    value: "normal",
+    label: "Normal",
     icon: CircleIcon,
   },
   {
-    value: "in_progress",
-    label: "In Progress",
-    icon: StopwatchIcon,
+    value: "vip",
+    label: "VIP",
+    icon: CircleIcon,
   },
   {
-    value: "done",
-    label: "Done",
-    icon: CheckCircledIcon,
-  },
-  {
-    value: "canceled",
-    label: "Canceled",
-    icon: CrossCircledIcon,
-  },
+    value: "fc",
+    label: "FanClub",
+    icon: CircleIcon,
+  }
 ]
 
-export const priorities = [
+export const TixGroups = [
   {
-    label: "Low",
-    value: "low",
-    icon: ArrowDownIcon,
-  },
-  {
-    label: "Medium",
-    value: "medium",
-    icon: ArrowRightIcon,
-  },
-  {
-    label: "High",
-    value: "high",
+    value: "standard",
+    label: "Standard",
     icon: ArrowUpIcon,
+  },
+  {
+    value: "seat",
+    label: "Seat",
+    icon: ArrowDownIcon,
   },
 ]

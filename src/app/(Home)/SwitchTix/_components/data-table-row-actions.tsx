@@ -18,8 +18,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/Shadcn/dropdown-menu"
 
-import { labels } from "../_data/data"
-import { taskSchema } from "../_data/schema"
+import { EventTypes } from "../_data/data"
+import { SwitchTixSchema } from "../_data/schema"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -28,7 +28,7 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const task = taskSchema.parse(row.original)
+  const tickets = SwitchTixSchema.parse(row.original)
 {/* ... 的選項功能*/}
   return (
     <DropdownMenu>
@@ -49,9 +49,9 @@ export function DataTableRowActions<TData>({
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={task.label}>
-              {labels.map((label) => (
-                <DropdownMenuRadioItem key={label.value} value={label.value}>
+            <DropdownMenuRadioGroup value={tickets.eventName}>
+              {EventTypes.map((label) => (
+                <DropdownMenuRadioItem key={label.label} value={label.label}>
                   {label.label}
                 </DropdownMenuRadioItem>
               ))}

@@ -91,8 +91,8 @@ export const ticketSchema = z.object({
 });
 
 export const SwitchTixSchema = z.object({
-  id: z.string(),
-  activityName: z.string(),
+  id: z.number(),
+  eventName: z.string(),
   serialNumber: z.string(),
   ticketType: z.string(),
   ticketGroup: z.string(),

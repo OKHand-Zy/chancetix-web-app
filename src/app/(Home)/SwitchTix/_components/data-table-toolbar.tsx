@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/Shadcn/button"
 import { Input } from "@/components/ui/Shadcn/input"
 import { DataTableViewOptions } from "./data-table-view-options"
 
-import { priorities, statuses } from "../_data/data"
+import { TixTypes, TixGroups } from "../_data/data"
 import { DataTableFacetedFilter } from "./data-table-faceted-filter"
 
 interface DataTableToolbarProps<TData> {
@@ -22,28 +22,32 @@ export function DataTableToolbar<TData>({
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
+        
         <Input
-          placeholder="Filter tasks..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+          placeholder="Search EventName..."
+          value={(table.getColumn("eventName")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
+            table.getColumn("eventName")?.setFilterValue(event.target.value)
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        {table.getColumn("status") && (
+
+        {table.getColumn("ticketType") && (
           <DataTableFacetedFilter
-            column={table.getColumn("status")}
-            title="Status"
-            options={statuses}
+            column={table.getColumn("ticketType")}
+            title="TicketType"
+            options={TixTypes}
           />
         )}
-        {table.getColumn("priority") && (
+
+        {table.getColumn("ticketGroup") && (
           <DataTableFacetedFilter
-            column={table.getColumn("priority")}
-            title="Priority"
-            options={priorities}
+            column={table.getColumn("ticketGroup")}
+            title="TicketGroup"
+            options={TixGroups}
           />
         )}
+
         {isFiltered && (
           <Button
             variant="ghost"
@@ -54,6 +58,7 @@ export function DataTableToolbar<TData>({
             <Cross2Icon className="ml-2 h-4 w-4" />
           </Button>
         )}
+
       </div>
       <DataTableViewOptions table={table} />
     </div>

@@ -6,7 +6,8 @@ import { z } from "zod"
 import { columns } from "./_components/columns"
 import { DataTable } from "./_components/data-table"
 import { UserNav } from "./_components/user-nav"
-import { taskSchema } from "./_data/schema"
+
+import {SwitchTixSchema} from "./_data/schema"
 
 import { 
   Card,
@@ -20,35 +21,29 @@ export const metadata: Metadata = {
 }
 
 // Simulate a database read for tasks.
-async function getTasks() {
-  // change this to read from your database
-  
-  // 使用 Prisma Client 從 Tasks 表中讀取所有任務
-  const tasks = await db.tasks.findMany();
-  // 使用 zod 進行驗證
-  return z.array(taskSchema).parse(tasks);
+// change this to read from your database
+async function getTickets() {
+  const tickets = await db.switchTicket.findMany();
+  return z.array(SwitchTixSchema).parse(tickets);
 }
 
 export default async function SwitchTix() {
-  const tasks = await getTasks()
-  console.log(tasks)
+  const SwitchTickets = await getTickets()
+  //console.log(tickets)
   return (
     <div className="h-screen flex items-center justify-center ">
       <Card className="flex-1 flex-col space-y-8 p-8 md:flex"> 
         <div className="flex items-center justify-between space-y-2">
           <div>
             <h2 className="text-2xl font-bold tracking-tight">
-              Welcome back!
+              Welcome SwitchTix!
             </h2>
             <p className="text-muted-foreground">
               Here&apos;s a list of your tasks for this month!
             </p>
           </div>
-          <div className="flex items-center space-x-2">
-            <UserNav />
-          </div>
         </div>
-        <DataTable data={tasks} columns={columns} />
+        <DataTable data={SwitchTickets} columns={columns} />
       </Card>
     </div>
   )

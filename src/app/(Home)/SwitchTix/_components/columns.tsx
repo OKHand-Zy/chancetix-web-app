@@ -1,14 +1,15 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-
 import { Badge } from "@/components/ui/Shadcn/badge"
 import { Checkbox } from "@/components/ui/Shadcn/checkbox"
 
-import { labels, priorities, statuses } from "../_data/data"
-import { Task } from "../_data/schema"
+import { EventTypes, TixTypes } from "../_data/data"
+import {TicketsColumnSchema} from "../_data/schema"
+
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
+
 // 它定義了一個用於數據表格（DataTable）的列（column）配置。
 // 這個配置包含了
 // 列的鍵（id(accessorKey)）
@@ -16,7 +17,7 @@ import { DataTableRowActions } from "./data-table-row-actions"
 // 單元格（cell）的渲染方式 
 // 篩選函數（filterFn）
 // 每一條資料都由以下資料組合成一行
-export const columns: ColumnDef<Task>[] = [
+export const columns: ColumnDef<TicketsColumnSchema>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -42,52 +43,52 @@ export const columns: ColumnDef<Task>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "id",
+    accessorKey: "serialNumber",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Task" />
+      <DataTableColumnHeader column={column} title="SerialNumber" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
+    cell: ({ row }) => <div className="w-[80px]">{row.getValue("serialNumber")}</div>,
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: "title",
+    accessorKey: "eventName",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Title" />
+      <DataTableColumnHeader column={column} title="EventName" />
     ),
     cell: ({ row }) => {
-      const label = labels.find((label) => label.value === row.original.label)
+      const EventType = EventTypes.find((label) => label.value.includes(row.original.eventName) )
 
       return (
         <div className="flex space-x-2">
-          {label && <Badge>{label.label}</Badge>}
+          {EventType && <Badge>{EventType.label}</Badge>}
           <span className="max-w-[500px] truncate font-medium">
-            {row.getValue("title")}
+            {row.getValue("eventName")}
           </span>
         </div>
       )
     },
   },
   {
-    accessorKey: "status",
+    accessorKey: "ticketType",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Status" />
+      <DataTableColumnHeader column={column} title="TicketType" />
     ),
     cell: ({ row }) => {
-      const status = statuses.find(
-        (status) => status.value === row.getValue("status")
+      const TixType = TixTypes.find(
+        (TixType) => TixType.value === row.getValue("ticketType")
       )
 
-      if (!status) {
+      if (!TixType) {
         return null
       }
 
       return (
         <div className="flex w-[100px] items-center">
-          {status.icon && (
-            <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+          {TixType.icon && (
+            <TixType.icon className="mr-2 h-4 w-4 text-muted-foreground" />
           )}
-          <span>{status.label}</span>
+          <span>{TixType.label}</span>
         </div>
       )
     },
@@ -96,25 +97,14 @@ export const columns: ColumnDef<Task>[] = [
     },
   },
   {
-    accessorKey: "priority",
+    accessorKey: "ticketGroup",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Priority" />
+      <DataTableColumnHeader column={column} title="TicketGroup" />
     ),
     cell: ({ row }) => {
-      const priority = priorities.find(
-        (priority) => priority.value === row.getValue("priority")
-      )
-
-      if (!priority) {
-        return null
-      }
-
       return (
         <div className="flex items-center">
-          {priority.icon && (
-            <priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-          )}
-          <span>{priority.label}</span>
+          <span>{row.getValue("ticketGroup")}</span>
         </div>
       )
     },
@@ -122,8 +112,42 @@ export const columns: ColumnDef<Task>[] = [
       return value.includes(row.getValue(id))
     },
   },
+  {
+    accessorKey: "position",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Position" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex items-center">
+          <span>{row.getValue("position")}</span>
+        </div>
+      )
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
+  },
+  {
+    accessorKey: "price",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Price" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex items-center">
+          <span>{row.getValue("price")}</span>
+        </div>
+      )
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
+  },
+  /* 每條的 option 選項
   {
     id: "actions",
     cell: ({ row }) => <DataTableRowActions row={row} />,
   },
+  */
 ]
