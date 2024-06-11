@@ -97,7 +97,7 @@ model Event {
 }
 
 model Ticket {
-  id            Int       @id @default(autoincrement())
+  id            String       @id @default(cuid())
   ticketNumber  Int?
   serialNumber  String?   @unique      
   tickettype    String?
@@ -163,7 +163,7 @@ model SwitchTicket {
   id            Int        @id @default(autoincrement())
   eventName     String?
   serialNumber  String?    @unique       
-  tickettype    String?
+  ticketType    String?
   ticketGroup   String
   position      String?
   price         Int?
