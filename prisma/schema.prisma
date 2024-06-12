@@ -99,7 +99,7 @@ model Event {
 model Ticket {
   id            String       @id @default(cuid())
   ticketNumber  Int?
-  serialNumber  String?   @unique      
+  serialNumber  String?      @unique      
   tickettype    String?
   ticketGroup   String
   position      String?

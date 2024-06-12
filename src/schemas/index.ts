@@ -86,9 +86,19 @@ export const EventSchema = z.object({
 
 
 // Tickets Schema
-export const ticketSchema = z.object({
+export const userIdSchema = z.object({
   userId: z.string(),
 });
+
+export const TarnsferTixSchema = z.object({
+  userId: z.string(),
+  ticketSN: z.string(),
+});
+
+export const changeTicket = z.object({
+  userId: z.string(),
+  ticketSN: z.string(),
+})
 
 export const SwitchTixSchema = z.object({
   id: z.number(),
@@ -124,6 +134,7 @@ export const LTixUserSchema = z.array(
     customerIdentity: z.string().length(10, {message: "A*********"}),
   })
 );
+
 // old_function
 export const checkSubscribeSchema = z.object({
   userId: z.string(),
