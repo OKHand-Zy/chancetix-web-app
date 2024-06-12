@@ -45,6 +45,7 @@
     "clsx": "^2.1.0",
     "cmdk": "^1.0.0",
     "commitlint": "^18.4.4",
+    "cookie-cutter": "^0.2.0",
     "embla-carousel-autoplay": "^8.0.2",
     "embla-carousel-react": "^8.0.0",
     "icons-react": "^3.7.1",

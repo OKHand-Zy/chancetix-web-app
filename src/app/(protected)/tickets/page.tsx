@@ -17,6 +17,7 @@ import {
 
 import {TicketCard} from "@/app/(protected)/tickets/_components/ticket_card"
 
+
 type Ticket = {
   id: number;
   username: string;
@@ -56,16 +57,7 @@ const TicketsPage = () => {
         {Array.isArray(tickets) ? (
           tickets.map((ticket, index) => (
               <div key={index} className="flex justify-center items-center mb-2">
-                <TicketCard 
-                  eventname={ticket.eventname} 
-                >
-                  <div className="grid grid-cols-2 text-left">
-                    <p>持有者: {ticket.username}</p>
-                    <p>是否轉贈: {ticket.transfer ? 'Yes' : 'No'}</p>
-                    <p>價錢: {ticket.price}</p>
-                    <p>狀態: {ticket.status}</p>
-                  </div>
-                </TicketCard>
+                <TicketCard ticket={ticket} />
               </div>
             ))
         ) : (

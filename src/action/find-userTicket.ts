@@ -1,15 +1,15 @@
 "use server";
 import * as z from "zod";
 import { db } from "@/lib/db";
-import { ticketSchema } from "@/schemas";
+import { userIdSchema } from "@/schemas";
 import { getTicketByUserId } from "@/data/ticket";
 import { getEventsById } from "@/data/event";
 import { getUserById } from "@/data/user"
 
 export const findAllTicketbyUserId = async (
-  values: z.infer<typeof ticketSchema>,
+  values: z.infer<typeof userIdSchema>,
 ) => {
-  const validatedFields = ticketSchema.safeParse(values);
+  const validatedFields = userIdSchema.safeParse(values);
 
   if (!validatedFields.success) {
     return { error: "Invalid fields!" };
@@ -30,7 +30,7 @@ export const findAllTicketbyUserId = async (
   ]);
   
   const TicketData = existingUserTicket.map((ticket, index) => ({
-    id: ticket.id,
+    serialNumber: ticket.serialNumber,
     username: userName?.name || 'unknown', // 假設你想要使用 userId 作為 username
     eventname: eventInfo[index]?.name || 'unknown', // 使用獲取到的事件名稱
     price: ticket.price,
