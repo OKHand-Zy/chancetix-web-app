@@ -2,6 +2,7 @@
 import React, { useState, ReactNode } from "react";
 import { useCookies } from 'next-client-cookies';
 import { useSession } from "next-auth/react"
+import { useRouter } from 'next/navigation'
 
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { Row } from "@tanstack/react-table"
@@ -37,7 +38,8 @@ import {change2SwitchTicket} from "@/action/profile-ticket/ticket2switch"
 interface TicketDataProps {
   ticketData: {
     serialNumber: string;
-    username: string;
+    userName: string;
+    userEmail: string;
     eventname: string;
     price: number;
     status: string;
@@ -54,6 +56,7 @@ type DialogConfig = {
 export const TicketCardOptions = ({ ticketData }: TicketDataProps) => {
   const session = useSession()
   const cookies = useCookies()
+  const router = useRouter()
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogConfig, setDialogConfig] = useState<DialogConfig | null>(null);
   
@@ -71,17 +74,19 @@ export const TicketCardOptions = ({ ticketData }: TicketDataProps) => {
     setIsDialogOpen(false);
   };
 
+  const handleTransferTicket = () => {
+    cookies.set('ticketSN', ticketData.serialNumber)
+    cookies.set('userEmail', ticketData.userEmail)
+    cookies.set('userName', ticketData.userName)
+    router.push('/transfer');
+  };
+
   const transferDialogConfig: DialogConfig = {
     title: "Transfer",
     content: <p>Do you want to transfer this ticket?</p>,
-    onContinue: () => {
-      // action to transfer to other account
-      console.log("Continue with Transfer");
-      // action/profile-ticket/transfer2other.ts
-      cookies.set('myCookieName', 'some-value')
-      console.log(cookies.get('myCookieName'))
-    },
+    onContinue: handleTransferTicket,
   };
+
   const handleSellTicket = async () => {
     const userId = session.data?.user?.id;
     const ticketSN = ticketData.serialNumber;

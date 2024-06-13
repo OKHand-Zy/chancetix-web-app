@@ -91,8 +91,10 @@ export const userIdSchema = z.object({
 });
 
 export const TarnsferTixSchema = z.object({
-  userId: z.string(),
+  holderName: z.string(),
+  holderEmail: z.string(),
   ticketSN: z.string(),
+  transferEmail: z.string(),
 });
 
 export const changeTicket = z.object({

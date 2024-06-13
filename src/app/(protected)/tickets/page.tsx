@@ -20,7 +20,8 @@ import {TicketCard} from "@/app/(protected)/tickets/_components/ticket_card"
 
 type Ticket = {
   serialNumber: string;
-  username: string;
+  userName: string;
+  userEmail: string;
   eventname: string;
   price: number;
   status: string; // 假設 TicketStatus 是你定義的一個類型
