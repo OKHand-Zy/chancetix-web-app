@@ -12,7 +12,8 @@ import {TicketCardOptions} from "@/app/(protected)/tickets/_components/data-tabl
 interface TicketCardProps {
   ticket: {
     serialNumber: string,
-    username: string,
+    userName: string,
+    userEmail: string,
     eventname: string,
     price: number,
     status: string,
@@ -31,7 +32,7 @@ export const TicketCard = ({
       <CardContent className="flex justify-between items-center">
         <div className="flex-1 flex justify-center">
           <div className="grid grid-cols-2 items-center">
-            <p>持有者: {ticket.username}</p>
+            <p>持有者: {ticket.userName}</p>
             <p>是否轉贈: {ticket.transfer ? 'Yes' : 'No'}</p>
             <p>價錢: {ticket.price}</p>
             <p>狀態: {ticket.status}</p>

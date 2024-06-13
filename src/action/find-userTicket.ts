@@ -29,10 +29,15 @@ export const findAllTicketbyUserId = async (
     Promise.all(existingUserTicket.map(ticket => getEventsById(ticket.eventId))),
   ]);
   
+  if (!userName || !eventInfo) {
+    return { error: "Invalid fields!" };
+  }
+
   const TicketData = existingUserTicket.map((ticket, index) => ({
     serialNumber: ticket.serialNumber,
-    username: userName?.name || 'unknown', // 假設你想要使用 userId 作為 username
-    eventname: eventInfo[index]?.name || 'unknown', // 使用獲取到的事件名稱
+    userName: userName.name,
+    userEmail: userName.email, 
+    eventname: eventInfo[index]?.name, // 使用獲取到的事件名稱
     price: ticket.price,
     status: ticket.status,
     transfer: ticket.transfer,

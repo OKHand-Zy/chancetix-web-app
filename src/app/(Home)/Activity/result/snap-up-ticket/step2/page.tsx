@@ -1,9 +1,5 @@
 "use client";
 import { Card, CardContent, CardHeader } from "@/components/ui/Shadcn/card";
-import { useEffect, useState } from "react";
-import { findAllTicketbyUserId } from "@/action/find-userTicket";
-import { useSession } from "next-auth/react";
-
 
 function TicketUserStep2Page() {
   return (
