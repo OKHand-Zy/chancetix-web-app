@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, ReactNode } from "react";
-import cookieCutter from 'cookie-cutter'
+import { useCookies } from 'next-client-cookies';
 import { useSession } from "next-auth/react"
 
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
@@ -53,6 +53,7 @@ type DialogConfig = {
 
 export const TicketCardOptions = ({ ticketData }: TicketDataProps) => {
   const session = useSession()
+  const cookies = useCookies()
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogConfig, setDialogConfig] = useState<DialogConfig | null>(null);
   
@@ -77,8 +78,8 @@ export const TicketCardOptions = ({ ticketData }: TicketDataProps) => {
       // action to transfer to other account
       console.log("Continue with Transfer");
       // action/profile-ticket/transfer2other.ts
-      cookieCutter.set('myCookieName', 'some-value')
-      console.log(cookieCutter.get('myCookieName'))
+      cookies.set('myCookieName', 'some-value')
+      console.log(cookies.get('myCookieName'))
     },
   };
   const handleSellTicket = async () => {
