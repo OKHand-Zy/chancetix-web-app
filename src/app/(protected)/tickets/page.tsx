@@ -19,7 +19,7 @@ import {TicketCard} from "@/app/(protected)/tickets/_components/ticket_card"
 
 
 type Ticket = {
-  id: number;
+  serialNumber: string;
   username: string;
   eventname: string;
   price: number;

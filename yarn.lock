@@ -2583,11 +2583,6 @@ convert-source-map@^2.0.0:
   resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-2.0.0.tgz#4b560f649fc4e918dd0ab75cf4961e8bc882d82a"
   integrity sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==
 
-cookie-cutter@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/cookie-cutter/-/cookie-cutter-0.2.0.tgz#5988f598b68c060a00ec8524ad6e6aa193e72244"
-  integrity sha512-eVyP5liHjDMCmGlp2OD+qoin5TJlwUBRjBKN8R2yJ3ePf8xqUtqmRP6e36ipe0nBm2lTiertH6iHPOptNQzAEw==
-
 cookie@0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.6.0.tgz#2798b04b071b0ecbff0dbb62a505a8efa4e19051"
@@ -4784,6 +4779,13 @@ next-auth@^5.0.0-beta.15:
   integrity sha512-UQggNq8CDu3/w8CYkihKLLnRPNXel98K0j7mtjj9a6XTNYo4Hni8xg/2h1YhElW6vXE8mgtvmH11rU8NKw86jQ==
   dependencies:
     "@auth/core" "0.28.0"
+
+next-client-cookies@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/next-client-cookies/-/next-client-cookies-1.1.1.tgz#7e5e4d4c3a8dc0a5ffaf97e310d9ab84c21d4e52"
+  integrity sha512-7/wiTI5RPJcP7c1zh5a9XNkvChihtattUG9dHMvfijtvzgEQXotr6E3AHYD1aXyVqGiZA95y/cWlcEI5EJ31tw==
+  dependencies:
+    js-cookie "^3.0.5"
 
 next-sitemap@^4.2.3:
   version "4.2.3"
