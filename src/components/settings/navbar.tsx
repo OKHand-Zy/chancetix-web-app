@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/Shadcn/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export const Navbar = () => {
+export const Topbar = () => {
   const pathname = usePathname();
 
   return (
