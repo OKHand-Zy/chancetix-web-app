@@ -1,13 +1,25 @@
 "use client";
 
 import { useCookies } from 'next-client-cookies';
-
+import { useState } from 'react';
+import Link from "next/link";
 import { 
   Card, 
   CardHeader,
   CardContent, 
   CardFooter,
 } from "@/components/ui/Shadcn/card";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/Shadcn/alert-dialog"
 import {
   Form,
   FormControl,
@@ -42,6 +54,9 @@ const TransferPage = () => {
       message: "TicketSN must be at least 2 characters.",
     }),
     TransferEmail: z.string().min(2, {
+      message: "TransferEmail must be at least 2 characters.",
+    }),
+    TransferName: z.string().min(2, {
       message: "TransferName must be at least 2 characters.",
     }),
   })
@@ -52,23 +67,39 @@ const TransferPage = () => {
       HolderEmail: userEmail,
       TicketSN: ticketSN,
       TransferEmail: "",
+      TransferName: "",
     },
   })
 
-  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    // action transfer ticket
-    await transferTicket({
-      holderName: userName,
-      holderEmail: data.HolderEmail,
-      ticketSN: data.TicketSN,
-      transferEmail: data.TransferEmail,
-    })
-    console.log(data)
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState("");
 
-    cookies.remove('userName')
-    cookies.remove('userEmail')
-    cookies.remove('ticketSN')
-  }
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    try {
+      // action transfer ticket
+      const response = await transferTicket({
+        holderName: userName,
+        holderEmail: data.HolderEmail,
+        ticketSN: data.TicketSN,
+        transferEmail: data.TransferEmail,
+        transferName: data.TransferName,
+      });
+
+      if (response.success) {
+        setDialogMessage('Transfer ticket success!');
+      } else {
+        setDialogMessage('Transfer ticket failed!');
+      }
+      setIsDialogOpen(true);
+
+      cookies.remove('userName');
+      cookies.remove('userEmail');
+      cookies.remove('ticketSN');
+    } catch (error) {
+      setDialogMessage('An error occurred during the transfer!');
+      setIsDialogOpen(true);
+    }
+  };
 
   return (
     <Card className="w-[600px]">
@@ -120,10 +151,42 @@ const TransferPage = () => {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="TransferName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>轉移後票卷使用者名:</FormLabel>
+                  <FormControl>
+                    <Input type="text" placeholder="Transfer Customer Name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <Button type="submit" className='flex w-full justify-center'>Transfer</Button>
           </form>
         </Form>
       </CardContent>
+      
+      <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <AlertDialogContent>
+          
+          <AlertDialogHeader>
+            <AlertDialogTitle>Transfer Status.</AlertDialogTitle>
+            <AlertDialogDescription>
+              {dialogMessage}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <AlertDialogFooter>
+            <AlertDialogAction asChild className='w-full'>
+              <Link href="/tickets">OK</Link>
+            </AlertDialogAction>
+          </AlertDialogFooter>
+
+        </AlertDialogContent>
+      </AlertDialog>
 
     </Card>
   )
