@@ -95,6 +95,7 @@ export const TarnsferTixSchema = z.object({
   holderEmail: z.string(),
   ticketSN: z.string(),
   transferEmail: z.string(),
+  transferName: z.string(),
 });
 
 export const changeTicket = z.object({

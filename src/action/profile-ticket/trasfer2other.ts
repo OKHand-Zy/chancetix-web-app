@@ -36,21 +36,26 @@ export const transferTicket = async (
     return { error: "Invalid fields!" };
   }
   
-  await db.ticket.update({
-    where: {
-      serialNumber: validatedFields.data.ticketSN,
-    },
-    data: {
-      user: {
-        connect: {
-          id: TransferUserData.id,
+  try {
+    await db.ticket.update({
+      where: {
+        serialNumber: validatedFields.data.ticketSN,
+      },
+      data: {
+        customerName: validatedFields.data.transferName,
+        user: {
+          connect: {
+            id: TransferUserData.id,
+          },
         },
       },
-    },
-  }) 
-
-  return { success: "Transfer ticket success!" };
-
+    })  
+    return { success: "Transfer ticket success!" };
+  } 
+  catch (error) {
+    return { error: "Transfer ticket error!" };
+  }
+  
   
   
 }
