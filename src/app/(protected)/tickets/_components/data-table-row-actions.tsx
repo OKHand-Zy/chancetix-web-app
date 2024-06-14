@@ -37,13 +37,16 @@ import {change2SwitchTicket} from "@/action/profile-ticket/ticket2switch"
 
 interface TicketDataProps {
   ticketData: {
-    serialNumber: string;
-    userName: string;
-    userEmail: string;
-    eventname: string;
-    price: number;
-    status: string;
-    transfer: boolean;
+    serialNumber: string,
+    userName: string,
+    userEmail: string,
+    eventname: string,
+    ticketType: string,
+    ticketGroup: string,
+    position: string,
+    price: number,
+    status: string,
+    transfer: boolean,
   };
 }
 
