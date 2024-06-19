@@ -52,6 +52,22 @@ export const getTicketCountForEvent = async(
     return eventData?.tickets.length || 0;
 }
 
+export const getPendingTicketCountForEvent = async(
+  eventId: string,
+  ticketType: string,
+  ticketGroup: string
+) => {
+  // 查詢特定事件並包含其所有票數
+  const count = await db.pendingTicket.count({
+    where: {
+      eventId: eventId,
+      ticketType: ticketType,
+      ticketGroup: ticketGroup,
+    },
+  });
+  return count;
+}
+
 // lottery ticket function
 export const UserSubscribeForEvent = async(
   userId: string,

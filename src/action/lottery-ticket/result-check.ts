@@ -43,11 +43,6 @@ export const ResultDataCheck = async (
         }
       })
     );
-    if (results.length > 0) {
-      console.log("Errors found:", results);
-    } else {
-      console.log("No duplicate data found.");
-    }
   } catch (error) {
     console.error("An error occurred:", error);
   }
