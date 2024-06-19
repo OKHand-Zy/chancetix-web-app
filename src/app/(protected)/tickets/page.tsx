@@ -28,7 +28,6 @@ type Ticket = {
   position: string,
   price: number;
   status: string; // 假設 TicketStatus 是你定義的一個類型
-  transfer: boolean;
 };
 
 const TicketsPage = () => {
