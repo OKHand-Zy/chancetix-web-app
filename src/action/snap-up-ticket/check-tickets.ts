@@ -3,7 +3,7 @@ import * as z from "zod";
 import { db } from "@/lib/db";
 
 import { checkSellTicketSchema } from "@/schemas";
-import { getTicketCountForEvent } from "@/data/ticket";
+import { getTicketCountForEvent, getPendingTicketCountForEvent } from "@/data/ticket";
 import { getEventsByName } from "@/data/event";
 
 export const checkSellTickets = async (
@@ -24,8 +24,9 @@ export const checkSellTickets = async (
   const existingTicketType = validatedFields.data.ticketType
   const existingTicketGroup = validatedFields.data.ticketGroup
   const existingTicketCount = await getTicketCountForEvent(existingEventId,existingTicketType,existingTicketGroup);
-  const remainderTicketCount = existingEventCategory-existingTicketCount
-    
+  const existingPendingTicketCount = await getPendingTicketCountForEvent(existingEventId,existingTicketType,existingTicketGroup)
+  const remainderTicketCount = existingEventCategory-existingTicketCount-existingPendingTicketCount 
+  console.log(existingEventCategory,existingTicketCount,existingPendingTicketCount,remainderTicketCount)
   if ( remainderTicketCount > 0) {
     return remainderTicketCount
   } else {
