@@ -7,11 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "commit": "git-cz"
   },
   "config": {
     "commitizen": {
-      "path": "node_modules/cz-git"
+      "path": "node_modules/cz-conventional-changelog"
     }
   },
   "dependencies": {
