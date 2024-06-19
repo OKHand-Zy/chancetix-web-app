@@ -20,7 +20,6 @@ interface TicketCardProps {
     position: string,
     price: number,
     status: string,
-    transfer: boolean,
   }
 }
 
@@ -42,7 +41,6 @@ export const TicketCard = ({
             <p>座位種類：{ticket.ticketGroup}</p>
             <p>座位區域：{ticket.position}</p>
             <p>價錢: {ticket.price}</p>
-            <p>是否轉贈: {ticket.transfer ? 'Yes' : 'No'}</p>
             <p>狀態: {ticket.status}</p>
           </div>
         </div>

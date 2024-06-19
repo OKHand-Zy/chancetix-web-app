@@ -38,12 +38,11 @@ export const findAllTicketbyUserId = async (
     userName: userName.name,
     userEmail: userName.email, 
     eventname: eventInfo[index]?.name, // 使用獲取到的事件名稱
-    ticketType: ticket.tickettype,
+    ticketType: ticket.ticketType,
     ticketGroup: ticket.ticketGroup,
     position: ticket.position,
     price: ticket.price,
     status: ticket.status,
-    transfer: ticket.transfer,
   }));
   
   return TicketData

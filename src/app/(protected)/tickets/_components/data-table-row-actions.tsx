@@ -46,7 +46,6 @@ interface TicketDataProps {
     position: string,
     price: number,
     status: string,
-    transfer: boolean,
   };
 }
 

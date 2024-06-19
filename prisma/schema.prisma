@@ -1,7 +1,7 @@
 // prisma/schema.prisma
 datasource db {
-  provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
   // uncomment next line if you use Prisma <5.10
   // directUrl = env("DATABASE_URL_UNPOOLED")
 }
@@ -11,18 +11,18 @@ generator client {
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -35,107 +35,110 @@ enum UserRole {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  password      String?
-  role          UserRole   @default(USER)
-  accounts      Account[]
-  cellphone     String?
-  identity      String?
-  isTwoFactorEnabled Boolean @default(false)
+  id                    String                 @id @default(cuid())
+  name                  String?
+  email                 String?                @unique
+  emailVerified         DateTime?
+  image                 String?
+  password              String?
+  role                  UserRole               @default(USER)
+  accounts              Account[]
+  cellphone             String?
+  identity              String?
+  isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
-  tickets     Ticket[]
+  tickets               Ticket[]
+  PendingTicket         PendingTicket[]
 }
 
 model VerificationToken {
-  id      String    @id @default( cuid() )
+  id      String   @id @default(cuid())
   email   String
-  token   String    @unique
+  token   String   @unique
   expires DateTime
-  
+
   @@unique([email, token])
 }
 
 model PasswordResetToken {
-  id      String    @id @default(cuid())
+  id      String   @id @default(cuid())
   email   String
-  token   String    @unique
+  token   String   @unique
   expires DateTime
 
   @@unique([email, token])
 }
 
 model TwoFactorToken {
-  id      String    @id @default(cuid())
+  id      String   @id @default(cuid())
   email   String
-  token   String    @unique
+  token   String   @unique
   expires DateTime
 
   @@unique([email, token])
 }
 
 model TwoFactorConfirmation {
-  id      String    @id @default(cuid())
-  userId  String
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId])
 }
 
 model Event {
-  id          String    @id @default(cuid())
-  name        String
-  date        DateTime
-  location    String
-  capacity    Int
-  image       String    @default("/images/activity_img/Null.png")
-  tickets     Ticket[]  
-  @@unique([id, image])
+  id            String          @id @default(cuid())
+  name          String
+  date          DateTime
+  location      String
+  capacity      Int
+  image         String          @default("/images/activity_img/Null.png")
+  tickets       Ticket[]
+  TicketType    TicketTypes[]
+  PendingTicket PendingTicket[]
+}
+
+model TicketTypes {
+  event         Event          @relation(fields: [eventId], references: [id])
+  eventId       String         @id
+  typeName      String
+  TicketGroup   TicketGroups[]
+}
+
+model TicketGroups {
+  TicketType    TicketTypes @relation(fields: [eventId], references: [eventId])
+  eventId       String      @id
+  groupName     String
+}
+
+model PendingTicket {
+  id           String   @id @default(cuid())
+  user         User?    @relation(fields: [userId], references: [id])
+  userId       String?
+  Event        Event?   @relation(fields: [eventId], references: [id])
+  eventId      String?
+  serialNumber String?  @unique
+  ticketType   String?  @default("normal")
+  ticketGroup  String?  @default("standard")
+  position     String?  @default("free")
+  customerName String?  @default("unknown")
+  price        Int?
+  expires      DateTime
 }
 
 model Ticket {
-  id            String       @id @default(cuid())
-  ticketNumber  Int?
-  serialNumber  String?      @unique      
-  tickettype    String?
-  ticketGroup   String
-  position      String?
-  price         Int?
-  customerName  String?
-  user          User      @relation(fields: [userId], references: [id]) 
-  userId        String
-  event         Event     @relation(fields: [eventId,eventImage], references: [id,image]) 
-  eventId       String
-  eventImage    String 
-  status        TicketStatus 
-  transfer      Boolean   @default(false) 
-}
-
-model LTicket {
-  id            Int        @id @default(autoincrement())    
-  activityName  String?
-  actype        String    
-  acSerNumber   String?    @unique
-  volunteerF    String?
-  vFCounts      Int?
-  volunteerS    String?
-  vSCounts      Int?
-  users         LTicketUser[]
-}
-
-model LTicketUser {
-  id                Int        @id @default(autoincrement())
-  lticket           LTicket     @relation(fields: [tickeSerNumber], references: [acSerNumber]) 
-  tickeSerNumber    String
-  volunteerType     String?
-  customerName      String?
-  customerCellphone String?
-  customerIdentity  String?
-  
-  @@unique([customerCellphone, customerIdentity])
+  id           String       @id @default(cuid())
+  serialNumber String?      @unique
+  ticketType   String?      @default("normal")
+  ticketGroup  String?      @default("standard")
+  position     String?      @default("free")
+  price        Int?
+  customerName String?
+  user         User         @relation(fields: [userId], references: [id])
+  userId       String
+  event        Event        @relation(fields: [eventId], references: [id])
+  eventId      String
+  status       TicketStatus @default(PURCHASED)
 }
 
 enum TicketStatus {
@@ -144,41 +147,66 @@ enum TicketStatus {
   EXPIRED
 }
 
+model LTicket {
+  id           Int           @id @default(autoincrement())
+  activityName String?
+  actype       String
+  acSerNumber  String?       @unique
+  volunteerF   String?
+  vFCounts     Int?
+  volunteerS   String?
+  vSCounts     Int?
+  users        LTicketUser[]
+}
+
+model LTicketUser {
+  id                Int     @id @default(autoincrement())
+  lticket           LTicket @relation(fields: [tickeSerNumber], references: [acSerNumber])
+  tickeSerNumber    String
+  volunteerType     String?
+  customerName      String?
+  customerCellphone String?
+  customerIdentity  String?
+
+  @@unique([customerCellphone, customerIdentity])
+}
+
 model SubscribeTicket {
-  id            String       @id @default(cuid())
-  userId        String?
-  eventId       String?
-  tickettype    String?
-  ticketGroup   String
-  ticketCount   Int?
+  id          String  @id @default(cuid())
+  userId      String?
+  eventId     String?
+  tickettype  String?
+  ticketGroup String
+  ticketCount Int?
 }
 
 model PaymentOrder {
-  id            String       @id @default(cuid())
-  userId        String?
-  eventId       String?
+  id      String  @id @default(cuid())
+  userId  String?
+  eventId String?
 }
 
 model SwitchTicket {
-  id            Int        @id @default(autoincrement())
-  eventName     String?
-  serialNumber  String?    @unique       
-  ticketType    String?
-  ticketGroup   String
-  position      String?
-  price         Int?
+  id           Int     @id @default(autoincrement())
+  eventName    String?
+  serialNumber String? @unique
+  ticketType   String?
+  ticketGroup  String?
+  position     String?
+  price        Int?
 }
 
 // 先 Pass 金流 發票 的問題
 
 // Tasks Test Data
 model Tasks {
-  id        String    @id  
-  title     String
-  status    TasksStatus
-  label     labelsStatus
-  priority  PrioritiesStatus
+  id       String           @id
+  title    String
+  status   TasksStatus
+  label    labelsStatus
+  priority PrioritiesStatus
 }
+
 enum TasksStatus {
   backlog
   todo
@@ -186,11 +214,13 @@ enum TasksStatus {
   done
   canceled
 }
+
 enum labelsStatus {
   bug
   feature
   documentation
 }
+
 enum PrioritiesStatus {
   low
   medium

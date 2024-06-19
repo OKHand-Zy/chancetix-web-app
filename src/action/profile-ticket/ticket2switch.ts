@@ -33,7 +33,7 @@ export const change2SwitchTicket = async (
     data: {
       eventName: eventData.name,
       serialNumber: existingTicket[0].serialNumber,
-      ticketType: existingTicket[0].tickettype,
+      ticketType: existingTicket[0].ticketType,
       ticketGroup: existingTicket[0].ticketGroup,
       position: existingTicket[0].position,
       price: existingTicket[0].price,
