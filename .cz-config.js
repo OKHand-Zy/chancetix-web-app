@@ -2,64 +2,64 @@
 module.exports = {
   types: [
     {
-      value: 'WIP',
-      name : '💪  WIP: 暫存工作。'
+      value: 'WIP💪',
+      name : '💪  WIP: 暫存工作'
     },
     {
-      value: 'Feat',
-      name : '✨  Feat: 新增功能。'
+      value: 'Feat✨',
+      name : '✨  Feat: 新增功能'
     },
     {
-      value: 'Fix',
-      name : '🐞  Fix: 修復 bug。'
+      value: 'Fix🐞',
+      name : '🐞  Fix: 修復 bug'
     },
     {
-      value: 'Docs',
-      name : '📚  Docs: 修改文件。'
+      value: 'Docs📚',
+      name : '📚  Docs: 修改文件'
     },
     {
-      value: 'Style',
-      name : '💅  Style: 修改程式碼的風格，不會對產品有任何的功能變動 (空白鍵、格式化、分號...等)。'
+      value: 'Style💅',
+      name : '💅  Style: 修改程式碼的風格，不會對產品有任何的功能變動 (空白鍵、格式化、分號...等)'
     },
     {
-      value: 'Refactor',
-      name : '🛠  Refactor: 重構、優化程式碼，不是新功能或是修復 bug。'
+      value: 'Refactor🛠',
+      name : '🛠  Refactor: 重構、優化程式碼，不是新功能或是修復 bug'
     },
     { 
-      value: 'Perf', 
+      value: 'Perf🐎', 
       name: '🐎  Perf: 提升性能' 
     },
     {
-      value: 'Test',
-      name : '🏁  Test: 新增或修改現有的測試'
+      value: 'Test🏁',
+      name : '🏁  Test: 新增或修改測試項目'
     },
     {
-      value: 'Revert',
-      name : '⏪  Revert: 撤銷、復原一次 git commit。'
+      value: 'Revert⏪',
+      name : '⏪  Revert: git 撤銷、復原 等等... 操作'
     },
     {
-      value: 'Chore',
-      name : '🗯  Chore: 修改建置流程、包管理、構建過程或輔助工具的變動。不包含修改測試檔、src 裡的檔案。'
+      value: 'Chore🗯',
+      name : '🗯  Chore: 修改建置流程、包管理、構建過程或輔助工具的變動(不包含修改測試檔、src 裡的檔案)'
     },
     { 
-      value: 'Merge', 
+      value: 'Merge⌛', 
       name: '⌛  Merge: 合併分支' 
     },
     { 
-      value: 'Build', 
-      name: '📦  Build: 模組打包' 
+      value: 'Build📦', 
+      name: '📦  Build: 修改專案建構系统(例如 glup，webpack，rollup 的配置等)' 
     },
     { 
-      value: 'CI', 
-      name: '🔧  CI: 持續集成' 
+      value: 'CI🔧', 
+      name: '🔧  CI: 修改專案集成流程(例如 Travis，Jenkins，GitLab CI，Circle等)' 
     },
     { 
-      value: 'Release', 
+      value: 'Release🚀', 
       name: '🚀  Release: 發布新版本' 
     },
     { 
-      value: 'Other', 
-      name: '🌈  Other: 其它改動，例如:建構流程, 套件管理' 
+      value: 'Other🌈', 
+      name: '🌈  Other: 其它改動' 
     },
     
   ],
