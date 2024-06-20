@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
 
-First, run the development server:
+## Getting Started Local Development
+1. setting .env.local
+    ```bash
+    # You must create custom environment variables beginning with REACT_APP_
+    NEXT_PUBLIC_APP_URL="http://localhost:3000"
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+    # NextAuth : 用於 JWT JWE 加密
+    # Linux openssl rand -base64 32 自動產生
+    NEXTAUTH_SECRET="..."
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    # 第三方驗證
+    # Google Oauth2 Api : 需要自己去 GCP 上申請一個 Web Api 來用
+    REACT_APP_GOOGLE_CLIENT_ID="..."
+    REACT_APP_GOOGLE_CLIENT_SECRET="..."
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+    # Line Oauth2
+    REACT_APP_LINE_ID="..."
+    REACT_APP_LINE_SECRET="..."
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+    # Resend 寄送驗證信系統
+    # Resend API Key
+    REACT_APP_RESEND_API_KEY="..."
 
-## Learn More
+    # Neon DB Cloud DB 系統
+    # Cloud DB
+    DATABASE_URL="..."
 
-To learn more about Next.js, take a look at the following resources:
+    # 如果要用本地資料庫
+    # Local DB
+    #DATABASE_URL="mysql://user:password@localhost:3306/mydb"
+    ```
+2. run the development server:
+    ```bash
+    npm run dev
+    # or
+    yarn dev
+    # or
+    pnpm dev
+    # or
+    bun dev
+    ```
+3. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 主要技術列表
+- 語言：Typescript
+- 網頁框架：React 18
+- 全端框架：Next.js 14 (App Router)
+- CSS：TailwindCSS
+- UI：shadcn
+- Auth：Next-auth@^5.0.0-beta.15
+- ORM：Prisma
+- State Maneger：zustand
+- Deployment：Vercel
+- DNS：Cloudflare
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
