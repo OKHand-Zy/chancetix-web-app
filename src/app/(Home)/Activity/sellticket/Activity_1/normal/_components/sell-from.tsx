@@ -10,6 +10,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/Shadcn/card"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/Shadcn/alert-dialog"
 
 import { SellFromNavbar } from './sell-from-Navbar';
 import SellTicketLen from "./sellticket_len";
@@ -23,10 +34,14 @@ interface SellFromProps {
 }
 
 export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ticketGroup}) => {
+
   const [N1Count, setN1Count] = useState<number>(0);
   const [N2Count, setN2Count] = useState<number>(0);
   const [totalCount, setTotalCount] = useState<number>(0);
-  
+
+  const [dialogStatus, setDialogStatus] = useState<boolean>(false);
+  const [dialogMessage, setDialogMessage] = useState<string>("");
+
   useEffect(() => {
     setTotalCount(N1Count + N2Count);
   }, [N1Count, N2Count]);
@@ -36,13 +51,18 @@ export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ti
       return; // 直接返回，不進行任何操作
     }
     const result = await checkSellTickets({ activityName, ticketType , ticketGroup });
-    if (typeof result === 'number') {
-      if (result > N1Count) {
-        alert(result);
-      }
-    } else if (typeof result === 'object' && result.error) {
-      alert(result.error);
+    if (result?.status === "sell") {
+      setDialogMessage(`Ticket Count: ${result.ticketCount}`);
+    } else if (result?.status === "Pending") {
+      setDialogMessage(`Ticket Count: ${result.TicketCount}`);
+    } else if (result?.status === "sellOut") {
+      setDialogMessage(`Ticket Count: ${result.TicketCount}`);
     }
+    setDialogStatus(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogStatus(false);
   };
 
   return (
@@ -77,6 +97,24 @@ export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ti
             Show Total Count
         </Button>
       </div>
+
+      <AlertDialog open={dialogStatus} onOpenChange={setDialogStatus}>
+          <AlertDialogTrigger asChild>
+            <Button className="hidden">Open Dialog</Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Ticket Information</AlertDialogTitle>
+              <AlertDialogDescription>
+                {dialogMessage}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <Button onClick={handleDialogClose}>OK</Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
     </Card>
     </div>
   )
