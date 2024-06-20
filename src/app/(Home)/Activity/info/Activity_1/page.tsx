@@ -30,17 +30,19 @@ function Activity_1() {
         </CardContent>
         <CardFooter className="flex justify-between">
           <Accordion type="multiple" className="w-full">
+            
             <AccordionItem value="Vip_Ticket">
               <AccordionTrigger> SS Ticket </AccordionTrigger>
               <AccordionContent>
                 <div className="flex justify-between">
                   Yes. It adheres to the WAI-ARIA design pattern.
                   <Button variant="outline" asChild>
-                      <Link href="/Activity/sellticket/Activity_1/SSTicket"> Buy </Link>
+                      <Link href="/Activity/sellticket/Activity_1/vip"> Buy </Link>
                   </Button>
                 </div>
               </AccordionContent>
             </AccordionItem>
+
             <AccordionItem value="Normal_Ticket">
               <AccordionTrigger> Normal Ticket </AccordionTrigger>
               <AccordionContent>
@@ -48,11 +50,12 @@ function Activity_1() {
                   Yes. It comes with default styles that matches the other
                   components&apos; aesthetic.
                   <Button variant="outline" asChild>
-                      <Link href="/Activity/sellticket/Activity_1/NormalTicket"> Buy </Link>
+                      <Link href="/Activity/sellticket/Activity_1/normal"> Buy </Link>
                   </Button>
                 </div>
               </AccordionContent>
             </AccordionItem>
+
           </Accordion>
         </CardFooter>
         <div className="flex justify-center">
