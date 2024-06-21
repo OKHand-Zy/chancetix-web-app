@@ -19,19 +19,25 @@ export const getEventsByName = async (eventNames: string) => {
   return eventInfo
 }
 
-export const getEventTypes = async (
-  eventNames: string,
+export const getEventGroups = async (
+  eventName: string,
   ticketType: string
 ) => {
   const eventData = await db.event.findFirst({
     where: {
-      name: eventNames
+      name: eventName
     }
   })
   const eventId = eventData?.id
   const eventGroupData = await db.ticketGroups.findMany({
     where: {
-      eventId: eventId
+      eventId: eventId,
+      TicketType:{
+        typeName: ticketType
+      }
+    },
+    include: {
+      TicketType: true
     }
   })
   const eventGroups = eventGroupData.map((group) => group.groupName);

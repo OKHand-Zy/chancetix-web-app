@@ -99,23 +99,28 @@ model Event {
 }
 
 model TicketTypes {
-  event         Event          @relation(fields: [eventId], references: [id])
-  eventId       String         @id
-  typeName      String
+  id            String          @id @default(cuid()) 
+  event         Event           @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId       String          
+  typeName      String  
   TicketGroup   TicketGroups[]
+  
+  @@unique([id, eventId])
 }
 
 model TicketGroups {
-  TicketType    TicketTypes @relation(fields: [eventId], references: [eventId])
-  eventId       String      @id
-  groupName     String
+  id            String          @id @default(cuid()) 
+  TicketType    TicketTypes     @relation(fields: [ticketTypeId, eventId], references: [id,eventId], onDelete: Cascade)
+  ticketTypeId  String       
+  eventId       String
+  groupName     String    
 }
 
 model PendingTicket {
   id           String   @id @default(cuid())
-  user         User?    @relation(fields: [userId], references: [id])
+  user         User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String?
-  Event        Event?   @relation(fields: [eventId], references: [id])
+  Event        Event?   @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId      String?
   serialNumber String?  @unique
   ticketType   String?  @default("normal")
@@ -134,9 +139,9 @@ model Ticket {
   position     String?      @default("free")
   price        Int?
   customerName String?
-  user         User         @relation(fields: [userId], references: [id])
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String
-  event        Event        @relation(fields: [eventId], references: [id])
+  event        Event        @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId      String
   status       TicketStatus @default(PURCHASED)
 }
@@ -161,7 +166,7 @@ model LTicket {
 
 model LTicketUser {
   id                Int     @id @default(autoincrement())
-  lticket           LTicket @relation(fields: [tickeSerNumber], references: [acSerNumber])
+  lticket           LTicket @relation(fields: [tickeSerNumber], references: [acSerNumber], onDelete: Cascade)
   tickeSerNumber    String
   volunteerType     String?
   customerName      String?
