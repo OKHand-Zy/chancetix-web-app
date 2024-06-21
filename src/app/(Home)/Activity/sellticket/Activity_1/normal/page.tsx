@@ -3,10 +3,13 @@ import { useEffect, useState } from "react";
 import { SellFrom } from "./_components/sell-from";
 import { usePathname } from 'next/navigation'
 
+import { findTicketGroups } from "@/action/snap-up-ticket/f-tix-Groups";
+
 function Activity_1_Normal() {
   const pathname = usePathname(); 
   const [eventName, setEventName] = useState("unknown");
   const [ticketType, setTicketType] = useState("unknown");
+  const [ticketGroup, setTicketGroup] = useState<string[] | null>(null);
 
   useEffect(() => {
     const regex = /\/sellticket\/([^\/]+)\/([^\/]+)/;
@@ -16,10 +19,24 @@ function Activity_1_Normal() {
       setTicketType(pathMatch[2]);
     }
   }, [pathname]);
+
+  useEffect(() => {
+    if (eventName !== "unknown" && ticketType !== "unknown") {
+      const fetchTicketGroups = async () => {
+          const ticketGroups = await findTicketGroups({eventName, ticketType});
+          setTicketGroup(ticketGroups);
+      }
+      fetchTicketGroups();
+    }
+  }, [eventName, ticketType]);
   
+
   return (
     <div className="flex justify-center">
-      <SellFrom activityName={eventName} ticketType={ticketType} ticketGroup="standard"/>
+      { eventName === "unknown" && ticketType === "unknown" && ticketGroup === null
+        ? <p>Unknown Event</p> 
+        : <SellFrom activityName={eventName} ticketType={ticketType} ticketGroup={ticketGroup || []}/>
+      }
     </div>
   );
 }

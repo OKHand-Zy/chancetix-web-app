@@ -120,6 +120,13 @@ export const checkSellTicketSchema = z.object({
   ticketGroup: z.string(),
 })
 
+export const findTicketGoupSchema = z.object({
+  eventName: z.string(),
+  ticketType: z.string(),
+})
+
+
+
 // lottery ticket
 export const LTixSchema = z.object({
   activityName: z.string(),
