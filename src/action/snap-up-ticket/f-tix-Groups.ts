@@ -17,7 +17,13 @@ export const findTicketGroups = async (
 
   const eventName = validatedFields.data.eventName;
   const ticketTypes = validatedFields.data.ticketType;
-  const ticketGroupData = await getEventGroups(eventName, ticketTypes);
-  return ticketGroupData
 
+  const ticketGroupData = await getEventGroups(eventName, ticketTypes);
+
+  if (!ticketGroupData) {
+    return [];
+  }
+
+  // 過濾掉 null 值
+  return ticketGroupData.filter((group: string | null): group is string => group !== null);
 }

@@ -52,6 +52,27 @@ export const getTicketCountForEvent = async(
     return eventData?.tickets.length || 0;
 }
 
+export const getGroupTicketCountForEvent = async(
+  eventId: string,
+  ticketType: string,
+  ticketGroup: string
+) => {
+  const groupTicketData = await db.ticketGroups.findFirst({
+    where: {
+      eventId: eventId,
+      TicketType: {
+        typeName: ticketType
+      },
+      groupName: ticketGroup
+    },
+    include: {
+      TicketType: true
+    }
+  });
+  const GroupTicketCount = groupTicketData?.groupCapacity || 0
+  return GroupTicketCount
+}
+
 export const getPendingTicketCountForEvent = async(
   eventId: string,
   ticketType: string,
