@@ -38,8 +38,6 @@ interface SellFromProps {
 
 export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ticketGroup}) => {
   const router = useRouter();
-  const [counts, setCounts] = useState<number[]>(ticketGroup.map(() => 0));
-  const [totalCount, setTotalCount] = useState<number>(0);
   const [dialogStatus, setDialogStatus] = useState<boolean>(false);
   const [dialogMessage, setDialogMessage] = useState<string>("");
   const [ticketStatus, setTicketStatus] = useState<string[]>(ticketGroup.map(() => ""));
@@ -50,10 +48,6 @@ export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ti
     z_ticketType: state.ticketType,
     z_tickets: state.tickets,
   }));
-
-  useEffect(() => {
-    setTotalCount(counts.reduce((acc, count) => acc + count, 0));
-  }, [counts]);
   
   useEffect(() => {
     const fetchTicketStatus = async () => {
@@ -67,32 +61,28 @@ export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ti
   }, [activityName, ticketType, ticketGroup]);
 
   const handleShowTotalCount = async () => {
+    
+    // change to zustand valume
+    const totalCount = z_tickets.reduce((acc, ticket) => acc + ticket.count, 0);
     if (totalCount <= 0) {
       return;
     }
   
     // 過濾出計數大於 1 的項目
-    const filteredGroups = ticketGroup
-      .map((group, index) => ({ group, count: counts[index] }))
-      .filter(item => item.count >= 1);
-  
-    if (filteredGroups.length === 0) {
-      console.log("No groups have a count greater than 1.");
-      return;
-    }
+    const filteredGroups = z_tickets.filter(ticket => ticket.count > 1);
   
     let messages: string[] = [];
   
     try {
-      await Promise.all(filteredGroups.map(async (item) => {
-        const result = await checkSellTickets({ activityName, ticketType, ticketGroup: item.group });
+      await Promise.all(filteredGroups.map(async (ticket) => {
+        const result = await checkSellTickets({ activityName, ticketType, ticketGroup: ticket.group });
   
         if (result && result.error) {
           messages.push(result.error);
         } else if (result && (result.status === "sellOut" || result.status === "Pending")) {
-          messages.push(`${item.group}'s ticket ${result.status}`);
-        } 
-
+          messages.push(`${ticket.group}'s ticket ${result.status}`);
+        }
+  
       }));
   
       if (messages.length > 0) {
@@ -111,12 +101,6 @@ export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ti
     setDialogStatus(false);
   };
 
-  const handleCountChange = (index: number, newCount: number) => {
-    const newCounts = [...counts];
-    newCounts[index] = newCount;
-    setCounts(newCounts);
-  };
-
   return (
     <div className='w-screen h-screen flex items-center justify-center'>
       <Card className="w-8/12">
@@ -129,11 +113,6 @@ export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ti
             <div key={index} className='flex justify-center items-center grid-rows-2 justify-around gap-12 p-2 border-b-4 border-slate-300'>
             <SellTicketLen
               label={group}
-              onCountChange={(newCount) => {
-                handleCountChange(index, newCount);
-                console.log(`${group} : ${newCount}`);
-              }}
-              totalCount={totalCount}
             />
             <p className='border-solid border-4 border-gray-300 p-2'>
               Ticket Status：{ticketStatus[index]}
