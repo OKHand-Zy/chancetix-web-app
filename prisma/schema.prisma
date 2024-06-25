@@ -102,7 +102,7 @@ model TicketTypes {
   id            String          @id @default(cuid()) 
   event         Event           @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId       String          
-  typeName      String  
+  typeName      String          @default("normal")
   TicketGroup   TicketGroups[]
   
   @@unique([id, eventId])
@@ -113,7 +113,8 @@ model TicketGroups {
   TicketType    TicketTypes     @relation(fields: [ticketTypeId, eventId], references: [id,eventId], onDelete: Cascade)
   ticketTypeId  String       
   eventId       String
-  groupName     String    
+  groupName     String?         @default("standard")
+  groupCapacity Int?    
 }
 
 model PendingTicket {

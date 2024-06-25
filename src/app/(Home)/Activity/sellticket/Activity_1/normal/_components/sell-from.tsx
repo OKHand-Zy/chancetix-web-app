@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/Shadcn/button';
 import {
@@ -26,6 +27,8 @@ import { SellFromNavbar } from './sell-from-Navbar';
 import SellTicketLen from "./sellticket_len";
 
 import { checkSellTickets } from '@/action/snap-up-ticket/check-tickets';
+import STicketFromStore from '@/store/STicketFromStore'
+import { stat } from 'fs';
 
 interface SellFromProps {
   activityName: string;
@@ -34,30 +37,74 @@ interface SellFromProps {
 }
 
 export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ticketGroup}) => {
+  const router = useRouter();
   const [counts, setCounts] = useState<number[]>(ticketGroup.map(() => 0));
   const [totalCount, setTotalCount] = useState<number>(0);
   const [dialogStatus, setDialogStatus] = useState<boolean>(false);
   const [dialogMessage, setDialogMessage] = useState<string>("");
+  const [ticketStatus, setTicketStatus] = useState<string[]>(ticketGroup.map(() => ""));
+
+  // zustand 訂閱值 保持在最新的狀態
+  const {z_AcName, z_ticketType, z_tickets} = STicketFromStore((state) => ({
+    z_AcName: state.activityName,
+    z_ticketType: state.ticketType,
+    z_tickets: state.tickets,
+  }));
 
   useEffect(() => {
     setTotalCount(counts.reduce((acc, count) => acc + count, 0));
   }, [counts]);
+  
+  useEffect(() => {
+    const fetchTicketStatus = async () => {
+      const statuses = await Promise.all(ticketGroup.map(async (group) => {
+        const result = await checkSellTickets({ activityName, ticketType, ticketGroup: group });
+        return result?.status || "Unknown";
+      }));
+      setTicketStatus(statuses);
+    };
+    fetchTicketStatus();
+  }, [activityName, ticketType, ticketGroup]);
 
   const handleShowTotalCount = async () => {
     if (totalCount <= 0) {
       return;
     }
-    /*
-    const result = await checkSellTickets({ activityName, ticketType, ticketGroup });
-    if (result?.status === "sell") {
-      setDialogMessage(`Ticket Count: ${result.ticketCount}`);
-    } else if (result?.status === "Pending") {
-      setDialogMessage(`Ticket Count: ${result.TicketCount}`);
-    } else if (result?.status === "sellOut") {
-      setDialogMessage(`Ticket Count: ${result.TicketCount}`);
+  
+    // 過濾出計數大於 1 的項目
+    const filteredGroups = ticketGroup
+      .map((group, index) => ({ group, count: counts[index] }))
+      .filter(item => item.count >= 1);
+  
+    if (filteredGroups.length === 0) {
+      console.log("No groups have a count greater than 1.");
+      return;
     }
-    setDialogStatus(true);
-    */
+  
+    let messages: string[] = [];
+  
+    try {
+      await Promise.all(filteredGroups.map(async (item) => {
+        const result = await checkSellTickets({ activityName, ticketType, ticketGroup: item.group });
+  
+        if (result && result.error) {
+          messages.push(result.error);
+        } else if (result && (result.status === "sellOut" || result.status === "Pending")) {
+          messages.push(`${item.group}'s ticket ${result.status}`);
+        } 
+
+      }));
+  
+      if (messages.length > 0) {
+        setDialogMessage(messages.join(`\n`));
+        setDialogStatus(true);
+      } else {
+        router.push(`/Activity/result/snap-up-ticket/step1`);
+      }
+    } catch (error) {
+      console.error("Error while fetching and processing results:", error);
+      // Handle error as needed
+    }
   };
 
   const handleDialogClose = () => {
@@ -79,8 +126,8 @@ export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ti
 
         <CardFooter className="flex justify-center flex-col">
           {ticketGroup.map((group, index) => (
+            <div key={index} className='flex justify-center items-center grid-rows-2 justify-around gap-12 p-2 border-b-4 border-slate-300'>
             <SellTicketLen
-              key={index}
               label={group}
               onCountChange={(newCount) => {
                 handleCountChange(index, newCount);
@@ -88,6 +135,10 @@ export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ti
               }}
               totalCount={totalCount}
             />
+            <p className='border-solid border-4 border-gray-300 p-2'>
+              Ticket Status：{ticketStatus[index]}
+            </p>
+            </div>
           ))}
         </CardFooter>
         <div className='flex justify-center p-4'>
@@ -101,7 +152,12 @@ export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ti
             <AlertDialogHeader>
               <AlertDialogTitle>Ticket Information</AlertDialogTitle>
               <AlertDialogDescription>
-                {dialogMessage}
+                {dialogMessage.split('\n').map((line, index) => (
+                  <span key={index}>
+                    {line}
+                    <br />
+                  </span>
+                ))}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
@@ -109,6 +165,7 @@ export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ti
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+
       </Card>
     </div>
   );
