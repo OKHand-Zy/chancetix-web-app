@@ -7,16 +7,10 @@ import STicketFromStore from '@/store/STicketFromStore'
 
 interface SellTicketLenProps {
   label?: string;
-  initialCount?: number;
-  onCountChange?: (count: number) => void;
-  totalCount?: number;
 }
 
 const SellTicketLen: React.FC<SellTicketLenProps> = ({ 
   label = 'Ticket_Name', 
-  initialCount = 0, 
-  onCountChange ,
-  totalCount = 0,
 }) => {
   // zustand 訂閱值 保持在最新的狀態
   const {z_AcName, z_ticketType, z_tickets} = STicketFromStore((state) => ({
@@ -25,50 +19,42 @@ const SellTicketLen: React.FC<SellTicketLenProps> = ({
     z_tickets: state.tickets,
   }));
 
-  function updateStoreTicketCount(
-    label : string, 
-    count : number
-  ) {
-    // update {label : count} to z_tickets
-    STicketFromStore.getState().updateTicketCount(label, count);
-  } 
-  
-  const [count, setCount] = useState<number>(initialCount);
-
   const increment = () => {
-    if (count < 4 && totalCount < 4 ) {
-      const newCount = count + 1;
-      setCount(newCount);
-      updateStoreTicketCount(label, newCount);
-      if (onCountChange) {
-        onCountChange(newCount);
-      }
+    const ticketsData = STicketFromStore.getState().tickets;
+    const totalCount = ticketsData.reduce((acc, ticket) => acc + ticket.count, 0);
+    const ticket = ticketsData.find(ticket => ticket.group === label);
+    if (ticket && totalCount < 4 || ticket && ticket.count < 4 ) {
+      const newCount = ticket.count + 1;
+      STicketFromStore.getState().updateTicketCount(label, newCount);
     }
   };
 
   const decrement = () => {
-    if (count > 0) {
-      const newCount = count - 1;
-      setCount(newCount);
-      updateStoreTicketCount(label, newCount);
-      if (onCountChange) {
-        onCountChange(newCount);
-      }
+    const ticketsData = STicketFromStore.getState().tickets;
+    const ticket = ticketsData.find(ticket => ticket.group === label);
+    if (ticket && ticket.count > 0) {
+      const newCount = ticket.count - 1;
+      STicketFromStore.getState().updateTicketCount(label, newCount);
     }
   };
+
+  const count = STicketFromStore.getState().tickets.find(ticket => ticket.group === label)?.count || 0;
+  const totalCount = STicketFromStore.getState().tickets.reduce((acc, ticket) => acc + ticket.count, 0);
 
   return (
   <>
     <div className="flex grid-rows-2 justify-around gap-12 p-2">
       <p>{label}</p>
       <div className="flex justify-around gap-4">
-        <Button variant="outline" onClick={increment}>
-          +
-        </Button>
+        {totalCount < 4 
+          ? <Button variant="outline" onClick={increment}>+</Button>
+          : <Button variant="outline" disabled>+</Button>
+        }
         <p>{count}</p>
-        <Button variant="outline" onClick={decrement}>
-          -
-        </Button>
+        {totalCount > 0
+          ? <Button variant="outline" onClick={decrement}>-</Button>
+          : <Button variant="outline" disabled>-</Button>
+        }
       </div>
     </div>
   </>
