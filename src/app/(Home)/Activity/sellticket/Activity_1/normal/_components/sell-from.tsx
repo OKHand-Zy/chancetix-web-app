@@ -27,6 +27,7 @@ import { SellFromNavbar } from './sell-from-Navbar';
 import SellTicketLen from "./sellticket_len";
 
 import { checkSellTickets } from '@/action/snap-up-ticket/check-tickets';
+import { createPendingTicket } from '@/action/snap-up-ticket/create-pending-tickets';
 import STicketFromStore from '@/store/STicketFromStore'
 import { stat } from 'fs';
 
@@ -69,32 +70,40 @@ export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ti
     }
   
     // 過濾出計數大於 1 的項目
-    const filteredGroups = z_tickets.filter(ticket => ticket.count > 1);
-  
+    const buyTickets = z_tickets.filter(ticket => ticket.count >= 1);
     let messages: string[] = [];
   
     try {
-      await Promise.all(filteredGroups.map(async (ticket) => {
+      await Promise.all(buyTickets.map(async (ticket) => {
         const result = await checkSellTickets({ activityName, ticketType, ticketGroup: ticket.group });
-  
+
         if (result && result.error) {
           messages.push(result.error);
         } else if (result && (result.status === "sellOut" || result.status === "Pending")) {
           messages.push(`${ticket.group}'s ticket ${result.status}`);
         }
-  
       }));
-  
-      if (messages.length > 0) {
-        setDialogMessage(messages.join(`\n`));
-        setDialogStatus(true);
-      } else {
-        router.push(`/Activity/result/snap-up-ticket/step1`);
-      }
     } catch (error) {
       console.error("Error while fetching and processing results:", error);
       // Handle error as needed
     }
+
+    // find postion add pennding ticket
+    const buyTicketsWithCount = buyTickets.map(ticket => ({
+      ticketGroup: ticket.group,
+      ticketCount: ticket.count,
+    }));
+    const creatResult = createPendingTicket({ ticketName: activityName, ticketType: ticketType, tickets: buyTicketsWithCount });
+    // do here
+    
+    // forwrd to next page
+    if (messages.length > 0) {
+      setDialogMessage(messages.join(`\n`));
+      setDialogStatus(true);
+    } else {
+      router.push(`/Activity/result/snap-up-ticket/step1`);
+    }
+
   };
 
   const handleDialogClose = () => {

@@ -114,7 +114,8 @@ model TicketGroups {
   ticketTypeId  String       
   eventId       String
   groupName     String?         @default("standard")
-  groupCapacity Int?    
+  groupCapacity Int?
+  price         Int? 
 }
 
 model PendingTicket {
