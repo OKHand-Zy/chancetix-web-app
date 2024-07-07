@@ -1,61 +1,66 @@
 import {create} from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware'
 
-interface TicketState {
-  activityName: string
-  ticketType: string
-  FVolunteer: string
-  FVCount: number
-  SVolunteer: string
-  SVCount: number
-  addTicket: (state: TicketState,VType:string) => void
-  reduceTicket:(state: TicketState,VType:string) => void
-  restTicket: () => void
+interface TicketGroup {
+  group: string;
+  count: number;
 }
 
+interface TicketState {
+  activityName: string;
+  ticketType: string;
+  tickets: TicketGroup[];
+  updateACName: (ACName: string) => void;
+  updateTicketType: (ticketType: string) => void;
+  addGroup: (newGroup: string) => void;
+  updateTicketCount: (groupName: string, count: number) => void;
+  reduceTicket: () => void;
+  resetTicketData: () => void;
+}
 
 const STicketFromStore = create<TicketState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       activityName: "",
       ticketType: "",
-      FVolunteer: "",
-      FVCount: 0,
-      SVolunteer: "",
-      SVCount: 0,
-      addTicket: (state: TicketState,VType:string) => {
-        switch (VType) {
-          case "FVCount" :
-            if (get().FVCount < 5) return (
-              set({ ...state, FVCount: get().FVCount + 1 })
-            )
-          case "SVCount" :
-            if (get().SVCount < 5) return (
-              set({ ...state, SVCount: get().SVCount + 1 })
-            )
-        }
+      tickets: [],
+      updateACName: (ACName: string) => {
+        set({ activityName: ACName });
       },
-      reduceTicket:(state: TicketState,VType:string) => {
-        switch (VType) {
-          case "FVCount" :
-            if(get().FVCount > 0) return (
-              set({ ...state, FVCount: get().FVCount - 1 })
-            )
-          case "SVCount" :
-            if(get().FVCount > 0) return (
-              set({ ...state, SVCount: get().SVCount - 1 })
-            )
-        } 
+      updateTicketType: (ticketType: string) => {
+        set({ ticketType });
       },
-      restTicket() {
-        
+      addGroup: (newGroup: string) => {
+        set((state) => ({
+          tickets: [...state.tickets, { group: newGroup, count: 0 }],
+        }));
+      },
+      updateTicketCount: (groupName: string, count: number) => {
+        set((state) => {
+          const updatedTickets = state.tickets.map((ticket) =>
+            ticket.group === groupName ? { ...ticket, count } : ticket
+          );
+          return { tickets: updatedTickets };
+        });
+      },
+      reduceTicket: () => {
+        set((state) => ({
+          tickets: state.tickets.slice(0, -1),
+        }));
+      },
+      resetTicketData: () => {
+        set({
+          activityName: "",
+          ticketType: "",
+          tickets: [],
+        });
       }
     }),
     {
-      name: 'STicketFrom-Storage', // name of the item in the storage (must be unique)
-      storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
+      name: 'STicketFrom-Storage',
+      storage: createJSONStorage(() => sessionStorage), // 使用 sessionStorage 作為存儲
     },
   ),
-)
+);
 
 export default STicketFromStore;

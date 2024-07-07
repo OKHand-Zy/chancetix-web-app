@@ -1,3 +1,4 @@
+import { TicketCard } from '@/app/(protected)/tickets/_components/ticket_card';
 import { UserRole } from '@prisma/client';
 import { Princess_Sofia } from 'next/font/google';
 import * as z from 'zod';
@@ -119,6 +120,21 @@ export const checkSellTicketSchema = z.object({
   ticketType: z.string(),
   ticketGroup: z.string(),
 })
+
+export const findTicketGoupSchema = z.object({
+  eventName: z.string(),
+  ticketType: z.string(),
+})
+
+export const SnapUpBuyTicketSchema = z.object({
+  ticketName: z.string(),
+  ticketType: z.string(),
+  tickets: z.array(z.object({
+    ticketGroup: z.string(),
+    ticketCount: z.number(),
+  })),
+})
+
 
 // lottery ticket
 export const LTixSchema = z.object({

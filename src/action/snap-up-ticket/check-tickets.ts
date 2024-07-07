@@ -3,8 +3,9 @@ import * as z from "zod";
 import { db } from "@/lib/db";
 
 import { checkSellTicketSchema } from "@/schemas";
-import { getTicketCountForEvent, getPendingTicketCountForEvent } from "@/data/ticket";
+import { getTicketCountForEvent, getPendingTicketCountForEvent, getGroupTicketCountForEvent } from "@/data/ticket";
 import { getEventsByName } from "@/data/event";
+import { time } from "console";
 
 export const checkSellTickets = async (
   values: z.infer<typeof checkSellTicketSchema>,
@@ -19,18 +20,24 @@ export const checkSellTickets = async (
   if (existingEventInfo?.id === undefined) {
     return { error: "Invalid fields!" };
   }
-  const existingEventCategory = existingEventInfo?.capacity
-  const existingEventId = existingEventInfo?.id
-  const existingTicketType = validatedFields.data.ticketType
-  const existingTicketGroup = validatedFields.data.ticketGroup
-  const existingTicketCount = await getTicketCountForEvent(existingEventId,existingTicketType,existingTicketGroup);
-  const existingPendingTicketCount = await getPendingTicketCountForEvent(existingEventId,existingTicketType,existingTicketGroup)
-  const remainderTicketCount = existingEventCategory-existingTicketCount-existingPendingTicketCount 
-  console.log(existingEventCategory,existingTicketCount,existingPendingTicketCount,remainderTicketCount)
+  const EventCategory = existingEventInfo?.capacity
+  const EventId = existingEventInfo?.id
+  const TicketType = validatedFields.data.ticketType
+  const TicketGroup = validatedFields.data.ticketGroup
+  
+  const TicketCount = await getTicketCountForEvent(EventId,TicketType,TicketGroup);
+  const GroupTicketCount = await getGroupTicketCountForEvent(EventId,TicketType,TicketGroup);
+  const PendingTicketCount = await getPendingTicketCountForEvent(EventId,TicketType,TicketGroup)
+  const remainderTicketCount = GroupTicketCount-TicketCount-PendingTicketCount 
+  
   if ( remainderTicketCount > 0) {
-    return remainderTicketCount
+    return { status: "sell",ticketCount: remainderTicketCount }
+  } else if (remainderTicketCount === 0 && PendingTicketCount > 0) {
+    return { status: "Pending",TicketCount: remainderTicketCount}
+  } else if (remainderTicketCount === 0 && PendingTicketCount === 0) {
+    return { status: "sellOut",TicketCount: remainderTicketCount}
   } else {
-    return 0
+    return { error: "Invalid fields!" };
   }
   
 }
