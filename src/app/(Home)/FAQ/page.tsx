@@ -31,7 +31,13 @@ export default function page() {
 
                 <AccordionItem value="Quiz2">
                   <AccordionTrigger>服務何時上線?</AccordionTrigger>
-                  <AccordionContent>預計2024年6月底上線</AccordionContent>
+                  <AccordionContent>
+                    <p>
+                    <del>預計2024年6月底上線</del>
+                    <br/>
+                    延期至2024年底
+                    </p>
+                  </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="Quiz3">

@@ -127,6 +127,7 @@ export const findTicketGoupSchema = z.object({
 })
 
 export const SnapUpBuyTicketSchema = z.object({
+  buyUser: z.string(),
   ticketName: z.string(),
   ticketType: z.string(),
   tickets: z.array(z.object({
