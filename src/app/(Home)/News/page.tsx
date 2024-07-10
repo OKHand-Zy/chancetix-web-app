@@ -5,6 +5,13 @@ import ErrorBoundary from './error'
 import { Button } from '@/components/ui/Shadcn/button'
 import { Card } from '@/components/ui/Shadcn/card'
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/Shadcn/accordion';
+
 export default function page() {
   return (
     <ErrorBoundary>
@@ -17,9 +24,14 @@ export default function page() {
               <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
                 最新消息
               </h1>
-              <p className="leading-7 [&:not(:first-child)]:mt-6">
-                目前無新訊息....
-              </p>
+              <Accordion type="single" className="w-8/12 p-10">
+                <AccordionItem value="Quiz1">
+                  <AccordionTrigger>為何延期?</AccordionTrigger>
+                  <AccordionContent>
+                    <p>因本人只有單人開發關係加上開發經驗少導致進度緩慢, 近期會去 g0v 尋找有意願人力來一起開發盡快完成!!</p>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
           </div>
           <div className='flex justify-center p-10'>
             <Button asChild>

@@ -61,23 +61,6 @@ function aboutpage({}: Props) {
               建立一個會員優先購票制度。這樣能夠讓真正的粉絲在第一時間購得票券，同時也能夠促進良好的購票粉絲關係，提升消費者滿意度。
             </li>
           </ul>
-
-          <Accordion type="multiple" className="w-8/12 p-10">
-            <AccordionItem value="item-1">
-              <AccordionTrigger>如何聯繫我們?</AccordionTrigger>
-              <AccordionContent>ChanceTix.service@gmail.com</AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="item-2">
-              <AccordionTrigger>服務何時上線?</AccordionTrigger>
-              <AccordionContent>預計2024年6月底上線</AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="item-3">
-              <AccordionTrigger>製作人?</AccordionTrigger>
-              <AccordionContent>OKH@nd.ZY</AccordionContent>
-            </AccordionItem>
-          </Accordion>
         </div>
       </Suspense>
     </ErrorBoundary>
