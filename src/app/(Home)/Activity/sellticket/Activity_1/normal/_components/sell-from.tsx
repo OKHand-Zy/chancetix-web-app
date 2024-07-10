@@ -29,7 +29,6 @@ import SellTicketLen from "./sellticket_len";
 import { checkSellTickets } from '@/action/snap-up-ticket/check-tickets';
 import { createPendingTicket } from '@/action/snap-up-ticket/create-pending-tickets';
 import STicketFromStore from '@/store/STicketFromStore'
-import { stat } from 'fs';
 
 interface SellFromProps {
   activityName: string;
@@ -93,7 +92,7 @@ export const SellFrom: React.FC<SellFromProps> = ({ activityName, ticketType, ti
       ticketGroup: ticket.group,
       ticketCount: ticket.count,
     }));
-    const creatResult = createPendingTicket({ ticketName: activityName, ticketType: ticketType, tickets: buyTicketsWithCount });
+    const creatResult = createPendingTicket({ buyUser: "test", ticketName: activityName, ticketType: ticketType, tickets: buyTicketsWithCount });
     // do here
     
     // forwrd to next page
