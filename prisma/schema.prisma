@@ -49,6 +49,7 @@ model User {
   twoFactorConfirmation TwoFactorConfirmation?
   tickets               Ticket[]
   PendingTicket         PendingTicket[]
+  Event                 Event[]
 }
 
 model VerificationToken {
@@ -93,29 +94,31 @@ model Event {
   location      String
   capacity      Int
   image         String          @default("/images/activity_img/Null.png")
+  host          User            @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  hostId        String
   tickets       Ticket[]
   TicketType    TicketTypes[]
   PendingTicket PendingTicket[]
 }
 
 model TicketTypes {
-  id            String          @id @default(cuid()) 
-  event         Event           @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  eventId       String          
-  typeName      String          @default("normal")
-  TicketGroup   TicketGroups[]
-  
+  id          String         @id @default(cuid())
+  event       Event          @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId     String
+  typeName    String         @default("normal")
+  TicketGroup TicketGroups[]
+
   @@unique([id, eventId])
 }
 
 model TicketGroups {
-  id            String          @id @default(cuid()) 
-  TicketType    TicketTypes     @relation(fields: [ticketTypeId, eventId], references: [id,eventId], onDelete: Cascade)
-  ticketTypeId  String       
+  id            String      @id @default(cuid())
+  TicketType    TicketTypes @relation(fields: [ticketTypeId, eventId], references: [id, eventId], onDelete: Cascade)
+  ticketTypeId  String
   eventId       String
-  groupName     String?         @default("standard")
+  groupName     String?     @default("standard")
   groupCapacity Int?
-  price         Int? 
+  price         Int?
 }
 
 model PendingTicket {
