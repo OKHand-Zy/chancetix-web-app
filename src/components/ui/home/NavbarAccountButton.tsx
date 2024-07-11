@@ -59,17 +59,17 @@ export const NavbarAccountButton = () => {
               <DropdownMenuLabel>My Account！</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <Link href="/settings">
+                <Link href="/profile/settings">
                   Profile 
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild> 
-                <Link href="/tickets">
+                <Link href="/profile/tickets">
                   Order
                 </Link> 
               </DropdownMenuItem>
               <DropdownMenuItem asChild> 
-                <Link href="/activitys">
+                <Link href="/profile/activitys">
                   Activate
                 </Link> 
               </DropdownMenuItem>

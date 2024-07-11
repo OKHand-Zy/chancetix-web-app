@@ -80,7 +80,7 @@ export const TicketCardOptions = ({ ticketData }: TicketDataProps) => {
     cookies.set('ticketSN', ticketData.serialNumber)
     cookies.set('userEmail', ticketData.userEmail)
     cookies.set('userName', ticketData.userName)
-    router.push('/transfer');
+    router.push('/ticket/transfer');
   };
 
   const transferDialogConfig: DialogConfig = {

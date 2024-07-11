@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from '@/components/ui/Shadcn/card';
 
-import {TicketCardOptions} from "@/app/(protected)/tickets/_components/data-table-row-actions"
+import {TicketCardOptions} from "@/app/(protected)/profile/tickets/_components/data-table-row-actions"
 
 interface TicketCardProps {
   ticket: {

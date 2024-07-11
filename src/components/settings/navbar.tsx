@@ -13,29 +13,29 @@ export const Topbar = () => {
       <div className="flex gap-x-2">
         {/*
         <Button asChild 
-          variant={pathname === "/server" ? "default" : "outline"}>
-          <Link href={"/server"}>Server</Link>
+          variant={pathname === "/profile/server" ? "default" : "outline"}>
+          <Link href={"/profile/server"}>Server</Link>
         </Button>
         <Button asChild 
-          variant={pathname === "/client" ? "default" : "outline"}>
-          <Link href={"/client"}>Client</Link>
+          variant={pathname === "/profile/client" ? "default" : "outline"}>
+          <Link href={"/profile/client"}>Client</Link>
         </Button>
         <Button asChild 
-          variant={pathname === "/admin" ? "default" : "outline"}>
-          <Link href={"/admin"}>Admin</Link>
+          variant={pathname === "/profile/admin" ? "default" : "outline"}>
+          <Link href={"/profile/admin"}>Admin</Link>
         </Button>
         */}
         <Button asChild 
-          variant={pathname === "/settings" ? "default" : "outline"}>
-          <Link href={"/settings"}>Settings</Link>
+          variant={pathname === "/profile/settings" ? "default" : "outline"}>
+          <Link href={"/profile/settings"}>Settings</Link>
         </Button>
         <Button asChild 
-          variant={pathname === "/tickets" ? "default" : "outline"}>
-          <Link href={"/tickets"}>Tickets</Link>
+          variant={pathname === "/profile/tickets" ? "default" : "outline"}>
+          <Link href={"/profile/tickets"}>Tickets</Link>
         </Button>
         <Button asChild 
-          variant={pathname === "/activitys" ? "default" : "outline"}>
-          <Link href={"/activitys"}>Activitys</Link>
+          variant={pathname === "/profile/activitys" ? "default" : "outline"}>
+          <Link href={"/profile/activitys"}>Activitys</Link>
         </Button>
       </div>
       <UserButton />
