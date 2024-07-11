@@ -15,7 +15,7 @@ import {
   TableRow,
 } from "@/components/ui/Shadcn/table"
 
-import {TicketCard} from "@/app/(protected)/tickets/_components/ticket_card"
+import {TicketCard} from "@/app/(protected)/profile/tickets/_components/ticket_card"
 
 
 type Ticket = {

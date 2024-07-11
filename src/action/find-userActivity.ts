@@ -23,6 +23,7 @@ export const findAllActivitybyUserId = async (
     return [];
   }
   console.log(existingUserTicket)
+  return existingUserTicket
   /*
    // 並行處理：同時獲取用戶名稱和事件資訊
   const [userName, eventInfo] = await Promise.all([

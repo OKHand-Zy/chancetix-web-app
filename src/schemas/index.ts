@@ -1,4 +1,4 @@
-import { TicketCard } from '@/app/(protected)/tickets/_components/ticket_card';
+import { TicketCard } from '@/app/(protected)/profile/tickets/_components/ticket_card';
 import { UserRole } from '@prisma/client';
 import { Princess_Sofia } from 'next/font/google';
 import * as z from 'zod';

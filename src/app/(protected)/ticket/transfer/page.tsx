@@ -181,7 +181,7 @@ const TransferPage = () => {
 
           <AlertDialogFooter>
             <AlertDialogAction asChild className='w-full'>
-              <Link href="/tickets">OK</Link>
+              <Link href="/profile/tickets">OK</Link>
             </AlertDialogAction>
           </AlertDialogFooter>
 
