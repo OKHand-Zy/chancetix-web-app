@@ -43,3 +43,14 @@ export const getEventGroups = async (
   const eventGroups = eventGroupData.map((group) => group.groupName);
   return eventGroups
 }
+
+export const getEventByUserId = async (userId: string) => {
+  const eventList = await db.event.findMany({
+    where: {
+      host: {
+        id: userId
+      }
+    }
+  })
+  return eventList
+}
