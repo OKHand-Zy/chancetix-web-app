@@ -63,7 +63,7 @@ const ActivitysPage = () => {
 
         <div className='flex justify-center p-2'>
           <Button asChild>
-            <Link href="/activitys/create">
+            <Link href="/activity/create-activity">
               Create Activity
             </Link>
           </Button>
