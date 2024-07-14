@@ -1,7 +1,17 @@
-
+## 主要技術列表
+- 語言：Typescript
+- 網頁框架：React 18
+- 全端框架：Next.js 14 (App Router)
+- CSS：TailwindCSS
+- UI：shadcn
+- Auth：Next-auth@^5.0.0-beta.15
+- ORM：Prisma
+- State Maneger：zustand
+- Deployment：Vercel
+- DNS：Cloudflare
 
 ## Getting Started Local Development
-1. setting .env.local
+1. setting .env
     ```bash
     # You must create custom environment variables beginning with REACT_APP_
     NEXT_PUBLIC_APP_URL="http://localhost:3000"
@@ -42,16 +52,3 @@
     bun dev
     ```
 3. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## 主要技術列表
-- 語言：Typescript
-- 網頁框架：React 18
-- 全端框架：Next.js 14 (App Router)
-- CSS：TailwindCSS
-- UI：shadcn
-- Auth：Next-auth@^5.0.0-beta.15
-- ORM：Prisma
-- State Maneger：zustand
-- Deployment：Vercel
-- DNS：Cloudflare
-
