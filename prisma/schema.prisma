@@ -1,13 +1,10 @@
-// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  // uncomment next line if you use Prisma <5.10
-  // directUrl = env("DATABASE_URL_UNPOOLED")
-}
-
-generator client {
-  provider = "prisma-client-js"
 }
 
 model Account {
@@ -16,22 +13,16 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
-}
-
-enum UserRole {
-  ADMIN
-  USER
 }
 
 model User {
@@ -42,14 +33,14 @@ model User {
   image                 String?
   password              String?
   role                  UserRole               @default(USER)
-  accounts              Account[]
   cellphone             String?
   identity              String?
   isTwoFactorEnabled    Boolean                @default(false)
-  twoFactorConfirmation TwoFactorConfirmation?
-  tickets               Ticket[]
-  PendingTicket         PendingTicket[]
+  accounts              Account[]
   Event                 Event[]
+  PendingTicket         PendingTicket[]
+  tickets               Ticket[]
+  twoFactorConfirmation TwoFactorConfirmation?
 }
 
 model VerificationToken {
@@ -81,10 +72,8 @@ model TwoFactorToken {
 
 model TwoFactorConfirmation {
   id     String @id @default(cuid())
-  userId String
+  userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([userId])
 }
 
 model Event {
@@ -94,38 +83,36 @@ model Event {
   location      String
   capacity      Int
   image         String          @default("/images/activity_img/Null.png")
-  host          User            @relation(fields: [hostId], references: [id], onDelete: Cascade)
   hostId        String
+  host          User            @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  PendingTicket PendingTicket[]
   tickets       Ticket[]
   TicketType    TicketTypes[]
-  PendingTicket PendingTicket[]
 }
 
 model TicketTypes {
   id          String         @id @default(cuid())
-  event       Event          @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId     String
   typeName    String         @default("normal")
   TicketGroup TicketGroups[]
+  event       Event          @relation(fields: [eventId], references: [id], onDelete: Cascade)
 
   @@unique([id, eventId])
 }
 
 model TicketGroups {
   id            String      @id @default(cuid())
-  TicketType    TicketTypes @relation(fields: [ticketTypeId, eventId], references: [id, eventId], onDelete: Cascade)
   ticketTypeId  String
   eventId       String
   groupName     String?     @default("standard")
   groupCapacity Int?
   price         Int?
+  TicketType    TicketTypes @relation(fields: [ticketTypeId, eventId], references: [id, eventId], onDelete: Cascade)
 }
 
 model PendingTicket {
   id           String   @id @default(cuid())
-  user         User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String?
-  Event        Event?   @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId      String?
   serialNumber String?  @unique
   ticketType   String?  @default("normal")
@@ -134,6 +121,8 @@ model PendingTicket {
   customerName String?  @default("unknown")
   price        Int?
   expires      DateTime
+  Event        Event?   @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user         User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Ticket {
@@ -144,17 +133,11 @@ model Ticket {
   position     String?      @default("free")
   price        Int?
   customerName String?
-  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String
-  event        Event        @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId      String
   status       TicketStatus @default(PURCHASED)
-}
-
-enum TicketStatus {
-  PURCHASED
-  USED
-  EXPIRED
+  event        Event        @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model LTicket {
@@ -171,12 +154,12 @@ model LTicket {
 
 model LTicketUser {
   id                Int     @id @default(autoincrement())
-  lticket           LTicket @relation(fields: [tickeSerNumber], references: [acSerNumber], onDelete: Cascade)
   tickeSerNumber    String
   volunteerType     String?
   customerName      String?
   customerCellphone String?
   customerIdentity  String?
+  lticket           LTicket @relation(fields: [tickeSerNumber], references: [acSerNumber], onDelete: Cascade)
 
   @@unique([customerCellphone, customerIdentity])
 }
@@ -206,15 +189,23 @@ model SwitchTicket {
   price        Int?
 }
 
-// 先 Pass 金流 發票 的問題
-
-// Tasks Test Data
 model Tasks {
   id       String           @id
   title    String
   status   TasksStatus
   label    labelsStatus
   priority PrioritiesStatus
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+enum TicketStatus {
+  PURCHASED
+  USED
+  EXPIRED
 }
 
 enum TasksStatus {

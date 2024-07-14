@@ -17,6 +17,18 @@ import { z } from "zod";
 import { Button } from "@/components/ui/Shadcn/button";
 import { Input } from '@/components/ui/Shadcn/input';
 
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/Shadcn/table"
+
+
 // Define the form schema
 const FormSchema = z.object({
   ActivityName: z.string().min(1, { message: "ActivityName must be at least 1 character." }),
@@ -28,9 +40,25 @@ const FormSchema = z.object({
 
 type FormValues = z.infer<typeof FormSchema>;
 
+interface TicketType {
+  type: string;
+  group: string;
+  price: string;
+  capacity: string;
+}
+
 const CreateActivityPage: React.FC = () => {  
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogMessage, setDialogMessage] = useState("");
+
+  const [ticketTypes, setTicketTypes] = useState<TicketType[]>([]);
+  const addTicketType = () => {
+    setTicketTypes([...ticketTypes, { type: '', group: '', price: '', capacity: '' }]);
+  };
+
+  const removeTicketType = (index: number) => {
+    setTicketTypes(ticketTypes.filter((_, i) => i !== index));
+  };
 
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
@@ -39,7 +67,6 @@ const CreateActivityPage: React.FC = () => {
       ActivityDate: new Date(),
       DateTime: "00:00",
       Location: "",
-      Capacity: '0',
     },
   });
 
@@ -172,23 +199,88 @@ const CreateActivityPage: React.FC = () => {
                 </FormItem>
               )}
             />
-
-            <FormField
-              control={form.control}
-              name="Capacity"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>門票數量:</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="Activity Capacity" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            
+            <Button type="button" onClick={addTicketType} className="w-full mb-2">
+              Add Tickets Type & Group 
+            </Button>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[50px]"></TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Group</TableHead>
+                  <TableHead>Price</TableHead>
+                  <TableHead>Capacity</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {ticketTypes.map((ticket, index) => (
+                  <TableRow key={index}>
+                    <TableCell>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => removeTicketType(index)}
+                        className="h-8 w-8"
+                      >
+                        X
+                      </Button>
+                    </TableCell>
+                    <TableCell>
+                      <Input
+                        placeholder="Ticket Type"
+                        value={ticket.type}
+                        onChange={(e) => {
+                          const newTicketTypes = [...ticketTypes];
+                          newTicketTypes[index].type = e.target.value;
+                          setTicketTypes(newTicketTypes);
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Input
+                        placeholder="Ticket Group"
+                        value={ticket.group}
+                        onChange={(e) => {
+                          const newTicketTypes = [...ticketTypes];
+                          newTicketTypes[index].group = e.target.value;
+                          setTicketTypes(newTicketTypes);
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Input
+                        placeholder="Ticket Price"
+                        type="number"
+                        value={ticket.price}
+                        onChange={(e) => {
+                          const newTicketTypes = [...ticketTypes];
+                          newTicketTypes[index].price = e.target.value;
+                          setTicketTypes(newTicketTypes);
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Input
+                        placeholder="Ticket Capacity"
+                        type="number"
+                        value={ticket.capacity}
+                        onChange={(e) => {
+                          const newTicketTypes = [...ticketTypes];
+                          newTicketTypes[index].capacity = e.target.value;
+                          setTicketTypes(newTicketTypes);
+                        }}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
 
             <Button type="submit" className="w-full">Activity Build!</Button>
           </form>
+
         </Form>
       </CardContent>
       
@@ -205,6 +297,7 @@ const CreateActivityPage: React.FC = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      
     </Card>
   );
 };
