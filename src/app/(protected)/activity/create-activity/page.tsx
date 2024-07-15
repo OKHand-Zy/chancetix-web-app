@@ -276,8 +276,25 @@ const CreateActivityPage: React.FC = () => {
                   </TableRow>
                 ))}
               </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <TableCell colSpan={4}>Total Ticket Capacity：</TableCell>
+                  <TableCell className="text-right">
+                    {ticketTypes.reduce((sum, ticket) => sum + (parseInt(ticket.capacity) || 0), 0)} Tickets
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell colSpan={4}>Total Ticket Price：</TableCell>
+                  <TableCell className="text-right">
+                    NT$ {ticketTypes.reduce((sum, ticket) => {
+                      const price = parseFloat(ticket.price) || 0;
+                      const capacity = parseInt(ticket.capacity) || 0;
+                      return sum + (price * capacity);
+                    }, 0).toFixed(2)} TWD
+                  </TableCell>
+                </TableRow>
+              </TableFooter>
             </Table>
-
             <Button type="submit" className="w-full">Activity Build!</Button>
           </form>
 
