@@ -35,7 +35,6 @@ const FormSchema = z.object({
   ActivityDate: z.date({ required_error: "A date of Activity is required." }),
   DateTime: z.string(),
   Location: z.string().min(1, { message: "Location must be at least 1 character." }),
-  Capacity: z.string().min(0, { message: "Capacity must be greater than 0." }),
 });
 
 type FormValues = z.infer<typeof FormSchema>;
@@ -72,13 +71,23 @@ const CreateActivityPage: React.FC = () => {
 
   const onSubmit = async (data: FormValues) => {
     console.log("Original form data:", data);
-    // 組合日期和時間
-    const [hours, minutes] = data.DateTime.split(':');
-    const combinedDateTime = new Date(data.ActivityDate);
-    combinedDateTime.setHours(parseInt(hours, 10), parseInt(minutes, 10));
-    // 轉換為 ISO 字串
+
+    // 从 ActivityDate 获取年月日
+    const activityDate = new Date(data.ActivityDate);
+    const year = activityDate.getFullYear();
+    const month = activityDate.getMonth(); // 注意：月份从0开始
+    const day = activityDate.getDate();
+
+    // 从 DateTime 获取小时和分钟
+    const [hours, minutes] = data.DateTime.split(':').map(Number);
+
+    // 创建新的 Date 对象，合并年月日和时分
+    const combinedDateTime = new Date(year, month, day, hours, minutes);
+    console.log("combin",combinedDateTime)
+    // 转换为 ISO 字符串
     const isoString = combinedDateTime.toISOString();
     console.log("ISO datetime:", isoString);
+    // 这里可以添加后续的处理逻辑，例如提交到服务器等
     
   };
 
