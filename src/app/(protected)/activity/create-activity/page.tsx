@@ -87,7 +87,6 @@ const CreateActivityPage: React.FC = () => {
     // 转换为 ISO 字符串
     const isoString = combinedDateTime.toISOString();
     console.log("ISO datetime:", isoString);
-    // 这里可以添加后续的处理逻辑，例如提交到服务器等
     
   };
 
