@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
         h-40 
         px-4 
         justify-center 
-        border-t-2
+        border-t-4
         border-gray-700 
         grid 
         grid-cols-1

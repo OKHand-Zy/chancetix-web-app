@@ -33,7 +33,7 @@ const Header: FC<HeaderProps> = () => {
         px-4 
         flex 
         justify-center 
-        border-b
+        border-b-4
         border-gray-300 
       '>
         <div className='h-16 px-4 flex justify-between items-center w-full'>

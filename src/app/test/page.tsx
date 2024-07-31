@@ -15,6 +15,8 @@ import HashLoader from "react-spinners/HashLoader";
 import { Button } from "@/components/ui/Shadcn/button";
 import { useRouter } from 'next/navigation';
 
+import ConcertTicket from "./_components/ConcertTicket";
+
 export default function TestPage() {
   const router = useRouter();
   
@@ -25,10 +27,8 @@ export default function TestPage() {
   }
   
   return (
-    <div>
-      <Button onClick={handleClick}>
-        Test
-      </Button>
+    <div className="App">
+      <ConcertTicket />
     </div>
   )
 }
